@@ -1,0 +1,14 @@
+name: App Format
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: format code
+        run: ./gradlew ktlintFormat
