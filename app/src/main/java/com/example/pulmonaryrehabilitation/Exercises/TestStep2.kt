@@ -10,5 +10,5 @@ class TestStep2: ExerciseStep,ExerciseStepDuration {
     override val visual: View
         get() = TODO("Not yet implemented")
     override val videoName: VideoNames = VideoNames.TEST
-    override val durationInSeconds: Int = 13 // test
+    override val durationInSeconds: Int = 13
 }

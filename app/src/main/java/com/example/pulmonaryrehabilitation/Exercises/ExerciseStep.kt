@@ -11,6 +11,5 @@ interface ExerciseStep {
     // a view with the icon or timer or whatever
     val videoName: VideoNames // we'll have a video loading class that loads the clip
     // based of the name
-    // test
     fun action() {}
 }
