@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "316406836027",
+    "project_id": "pulmonaryrehabilitation-64a0b",
+    "storage_bucket": "pulmonaryrehabilitation-64a0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316406836027:android:70266cb1607ac2d69a651e",
+        "android_client_info": {
+          "package_name": "com.example.pulmonaryrehabilitation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316406836027-bqdbd6pdr397be8c6o447e1ltb20p3vo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pulmonaryrehabilitation",
+            "certificate_hash": "c1f9344bb768f39c4b8e2f59a9a9006aef745ac8"
+          }
+        },
+        {
+          "client_id": "316406836027-p3bh5a6ab3uteq6318ev6jv7cl7m22bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJn--tMcu3a3QqJ20H8pZDcI7wT_VoMX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316406836027-p3bh5a6ab3uteq6318ev6jv7cl7m22bg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
