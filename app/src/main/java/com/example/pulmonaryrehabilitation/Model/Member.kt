@@ -2,15 +2,15 @@ package com.example.pulmonaryrehabilitation.Model
 
 import com.google.firebase.database.Exclude
 
+// create Member class to read from and write to the database
 class Member(
     var id: String? = "",
     var username: String? = "",
     var password: String? = "",
-    var email: String? = "",
-    var phone: String? = ""
+    var email: String? = ""
 ) {
     override fun toString(): String {
-        return "Member(id='$id', username='$username', password='$password', email='$email', phone='$phone')"
+        return "Member(id='$id', username='$username', password='$password', email='$email')"
     }
 
     @Exclude
@@ -20,7 +20,6 @@ class Member(
             "username" to username,
             "password" to password,
             "email" to email,
-            "phone" to phone
         )
     }
 }
