@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -23,51 +22,35 @@ class EmailLoginActivity : AppCompatActivity() {
             email = emailEditText.text.toString()
             password = passwordEditText.text.toString()
 //            successfully get input from email and password from front end (need authentication from back end)
-            Toast.makeText(this, email, Toast.LENGTH_LONG).show()
-            Toast.makeText(this, password, Toast.LENGTH_LONG).show()
+            authentication(email, password)
+        }
+    }
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
+    fun authentication(email: String, password: String) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
 
-                // log in sing firebase
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        // If log in  was successfully done
-                        if (task.isSuccessful) {
-                            Toast.makeText(
-                                this@EmailLoginActivity,
-                                "You are logged in successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            // login is successful takes user to main menu
-                            val intent = Intent(
-                                this@EmailLoginActivity,
-                                MainActivity :: class.java
-                            )
-                            // gets rid of extra layer of activities in stack
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            intent.putExtra(
-                                "user_id",
-                                FirebaseAuth.getInstance().currentUser!!.uid
-                            )
-                            intent.putExtra("email_id", email)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            // If log in was not successful shows error message
-                            Toast.makeText(
-                                this@EmailLoginActivity,
-                                task.exception!!.message.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+            // log in sing firebase
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    // If log in  was successfully done
+                    if (task.isSuccessful) {
+//                        Toast.makeText(this, "You are logged in successfully", Toast.LENGTH_SHORT).show()
+                        // login is successful takes user to main menu
+                        val intent = Intent(this, MainActivity :: class.java)
+                        // gets rid of extra layer of activities in stack
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.putExtra("user_id", FirebaseAuth.getInstance().currentUser!!.uid)
+                        intent.putExtra("email_id", email)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        // If log in was not successful shows error message
+//                        Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
                     }
-            } else {
-                Toast.makeText(
-                    this, "Empty fields are not allowed",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+                }
+        } else {
+//            Toast.makeText(this, "Empty fields are not allowed", Toast.LENGTH_SHORT).show()
         }
     }
 }
