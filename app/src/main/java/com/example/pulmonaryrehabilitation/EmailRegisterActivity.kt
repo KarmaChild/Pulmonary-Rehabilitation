@@ -33,6 +33,7 @@ class EmailRegisterActivity : AppCompatActivity() {
             confirmPassword = confirmPasswordEditText.text.toString()
             phone = phoneEditText.text.toString()
             username = usernameEditText.text.toString()
+            
 //            successfully get input from email and password from front end (need authentication from back end)
             Toast.makeText(this, email, Toast.LENGTH_LONG).show()
             Toast.makeText(this, username, Toast.LENGTH_LONG).show()
