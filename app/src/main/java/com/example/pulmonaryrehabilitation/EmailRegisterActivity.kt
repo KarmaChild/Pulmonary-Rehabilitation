@@ -4,49 +4,70 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pulmonaryrehabilitation.Model.Member
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class EmailRegisterActivity : AppCompatActivity() {
+
     var email = ""
     var password = ""
     var username = ""
-    var phone = ""
     var confirmPassword = ""
+    val database = Firebase.database
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_email_register)
+        // hide action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar()?.hide()
+        }
+        // variables achieved from user input
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
         val usernameEditText = findViewById<EditText>(R.id.usernameEditText)
-        val phoneEditText = findViewById<EditText>(R.id.phoneEditText)
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
         val confirmPasswordEditText = findViewById<EditText>(R.id.confirmPasswordEditText)
         val registerButton = findViewById<Button>(R.id.register)
+        val login = findViewById<TextView>(R.id.login)
 
+        // transitioning from EmailRegisterActivity to EmailLoginActivity when click log in
+        login.setOnClickListener {
+            val intent = Intent(this, EmailLoginActivity :: class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        // send user's inputs to register to the database
         registerButton.setOnClickListener {
-//          todo: code login logic here
             email = emailEditText.text.toString()
             password = passwordEditText.text.toString()
             confirmPassword = confirmPasswordEditText.text.toString()
-            phone = phoneEditText.text.toString()
             username = usernameEditText.text.toString()
 
 //            successfully get input from email and password from front end (need authentication from back end)
-            registerMember(email, password, confirmPassword, username, phone)
+            registerMember(email, password, confirmPassword, username)
         }
     }
+
+    // passed manual testing
+    // check for user's inputs, add to the database if all email is valid
     fun registerMember(
         email: String,
         password: String,
         confirmPassword: String,
         username: String,
-        phone: String
     ) {
-        if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() &&
-            username.isNotEmpty() && phone.isNotEmpty()
+        if (email.isNotEmpty() && password.isNotEmpty() &&
+            confirmPassword.isNotEmpty() &&
+            username.isNotEmpty()
         ) {
             if (password == confirmPassword) {
                 // creates an instance and create a register user with email and password
@@ -57,27 +78,54 @@ class EmailRegisterActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 // Firebase registered user
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
-                                Toast.makeText(this, "You are registered successfully", Toast.LENGTH_SHORT).show()
-                                // register is successful takes user to main menu
-                                val intent = Intent(this, MainActivity :: class.java)
+                                Toast.makeText(
+                                    this, "Successfully Registered",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                // add user data to firebase realtime database
+                                val myRef = database.getReference("Members")
+                                var mem = Member(firebaseUser.uid, username, password, email)
+                                registerRealTimeMember(mem, myRef)
+
+                                // register is successful takes user to splash activity then log in
+                                val intent = Intent(this, SplashActivity::class.java)
                                 // gets rid of extra layer of activities in stack
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra("user_id", firebaseUser.uid)
                                 intent.putExtra("email_id", email)
                                 startActivity(intent)
-                                finish()
                             } else {
                                 // If registration was not successful shows error message
-                                Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this, "Register Error",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Toast.makeText(
+                                    this, "Email Existed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     )
             } else {
-                Toast.makeText(this, "Password is not matching", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "Empty fields are not allowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Empty Fields", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    // passed manual testing
+    // add member to realtime database
+    private fun registerRealTimeMember(member: Member, myRef: DatabaseReference) {
+        val key = member.id // initialize key
+        val values = member.toMemberMap() // initialize value
+        // put key and its value to hashmap
+        val childUpdates = hashMapOf<String, Any>(
+            "$key" to values,
+        )
+        myRef.updateChildren(childUpdates)
     }
 }

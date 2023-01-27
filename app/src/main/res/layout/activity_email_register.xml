@@ -38,24 +38,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter username"
+        android:hint="Enter your first name"
         android:text=""
         app:layout_constraintEnd_toEndOf="@+id/emailEditText"
         app:layout_constraintStart_toStartOf="@+id/emailEditText"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/phoneEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Enter phone number"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
-        app:layout_constraintStart_toStartOf="@+id/usernameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
-        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -65,9 +54,9 @@
         android:hint="Enter password"
         android:inputType="textPassword"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/phoneEditText"
-        app:layout_constraintStart_toStartOf="@+id/phoneEditText"
-        app:layout_constraintTop_toBottomOf="@+id/phoneEditText"
+        app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
+        app:layout_constraintStart_toStartOf="@+id/usernameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -94,4 +83,15 @@
         app:layout_constraintEnd_toEndOf="@+id/confirmPasswordEditText"
         app:layout_constraintStart_toStartOf="@+id/confirmPasswordEditText"
         app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Already have account? Sign in"
+        app:layout_constraintTop_toBottomOf="@+id/register"
+        tools:layout_editor_absoluteX="112dp"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
