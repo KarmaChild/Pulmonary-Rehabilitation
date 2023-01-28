@@ -32,44 +32,4 @@ class MemberTest {
             member.toMemberMap()
         )
     }
-
-    @Test
-    fun getId() {
-        TODO()
-    }
-
-    @Test
-    fun setId() {
-        TODO()
-    }
-
-    @Test
-    fun getUsername() {
-        TODO()
-    }
-
-    @Test
-    fun setUsername() {
-        TODO()
-    }
-
-    @Test
-    fun getPassword() {
-        TODO()
-    }
-
-    @Test
-    fun setPassword() {
-        TODO()
-    }
-
-    @Test
-    fun getEmail() {
-        TODO()
-    }
-
-    @Test
-    fun setEmail() {
-        TODO()
-    }
 }
