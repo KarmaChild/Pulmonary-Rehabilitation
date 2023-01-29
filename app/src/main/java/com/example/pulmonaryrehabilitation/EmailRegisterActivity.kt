@@ -40,7 +40,7 @@ class EmailRegisterActivity : AppCompatActivity() {
 
         // transitioning from EmailRegisterActivity to EmailLoginActivity when click log in
         login.setOnClickListener {
-            val intent = Intent(this, EmailLoginActivity :: class.java)
+            val intent = Intent(this, DashboardActivity :: class.java)
             startActivity(intent)
             finish()
         }
