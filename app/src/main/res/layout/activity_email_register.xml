@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".EmailRegisterActivity">
 
+
     <TextView
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="300dp"
         android:fontFamily="serif"
         android:letterSpacing="0.255"
         android:padding="4dp"
@@ -18,58 +19,64 @@
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/emailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="344dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="14dp"
         android:hint="Enter email"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/registerTextView"
-        app:layout_constraintStart_toStartOf="@+id/registerTextView"
+        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+        app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
+        app:layout_constraintStart_toStartOf="@+id/usernameEditText"
         app:layout_constraintTop_toBottomOf="@+id/registerTextView"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/usernameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="344dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
         android:hint="Enter your first name"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/emailEditText"
-        app:layout_constraintStart_toStartOf="@+id/emailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerTextView"
         tools:ignore="MissingConstraints" />
-
 
     <EditText
         android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="344dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="138dp"
+        android:layout_marginBottom="13dp"
         android:hint="Enter password"
         android:inputType="textPassword"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
-        app:layout_constraintStart_toStartOf="@+id/usernameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPasswordEditText"
+        app:layout_constraintEnd_toEndOf="@+id/emailEditText"
+        app:layout_constraintStart_toStartOf="@+id/emailEditText"
+        app:layout_constraintTop_toBottomOf="@+id/registerTextView"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/confirmPasswordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="344dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="194dp"
         android:hint="Confirm password"
         android:inputType="textPassword"
         android:text=""
         app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+        app:layout_constraintTop_toBottomOf="@+id/registerTextView"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -77,10 +84,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="141dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="164dp"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="@+id/confirmPasswordEditText"
+        app:layout_constraintHorizontal_bias="0.328"
         app:layout_constraintStart_toStartOf="@+id/confirmPasswordEditText"
         app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
 
@@ -91,7 +99,20 @@
         android:layout_marginTop="28dp"
         android:text="Already have account? Sign in"
         app:layout_constraintTop_toBottomOf="@+id/register"
-        tools:layout_editor_absoluteX="112dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="112dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="230dp"
+        android:layout_height="217dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toTopOf="@+id/registerTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_outlet_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
