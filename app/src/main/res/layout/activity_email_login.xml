@@ -12,12 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:fontFamily="serif"
+        android:fontFamily="sans-serif-light"
         android:letterSpacing="0.255"
         android:padding="4dp"
         android:text="LOGIN"
         android:textSize="32dp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/emailEditText"
         app:layout_constraintStart_toStartOf="@+id/emailEditText" />
 
