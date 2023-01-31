@@ -1,13 +1,17 @@
 package com.example.pulmonaryrehabilitation.Exercises
 
+import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
+
 interface Exercise {
     val exerciseName: String
     val exerciseSteps: List<ExerciseStep>
-    val completionPoints: Int // for gamification
-    // We create 2 stacks of steps which allows a user to go
-    // back to the previous if they want
+    val completionPoints: Int
     var doStack: ArrayDeque<ExerciseStep>
     var undoStack: ArrayDeque<ExerciseStep>
-    fun addAllStepsToDoStack()
 
+    fun addStepsToDoStack()
+    fun getCurrentStep(): ExerciseStep?
+    fun goToNextStep(): ExerciseStep?
+    fun goToPreviousStep(): ExerciseStep?
+    fun resetStacks()
 }
