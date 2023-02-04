@@ -23,14 +23,14 @@ class BasicExercisePlayer(
     }
 
     override fun goNext() {
-        this.exerciseRoutine.goToNextExercise()
+
     }
 
     override fun goBack() {
-        this.exerciseRoutine.goToPreviousExercise()
+
     }
 
     override fun reset() {
-        this.exerciseRoutine.resetStacks()
+
     }
 }
