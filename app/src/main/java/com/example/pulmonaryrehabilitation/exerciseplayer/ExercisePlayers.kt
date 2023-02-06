@@ -7,3 +7,7 @@ object ExercisePlayers {
         return BasicExercisePlayer(ExerciseCollections.testCollection1())
     }
 }
+
+fun main(args: Array<String>) {
+    println(ExercisePlayers.testExercisePlayer1().play())
+}

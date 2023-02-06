@@ -8,57 +8,24 @@ import org.junit.Test
 class BasicExercisePlayerTest {
 
     @Test
+    fun getExerciseRoutine() {
+        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        assertEquals(testPlayer.exerciseRoutine.collectionName, "Test Collection 1")
+    }
+
+    @Test
     fun getExercisePlayerName() {
         val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
         assertEquals(testPlayer.exercisePlayerName, "Test Collection 1")
     }
-
-    @Test
-    fun getCurrentExercise() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-        assertEquals(testPlayer.currentExercise?.exerciseName, "Test Exercise 1")
-    }
-
-    @Test
-    fun getPreviousExercise() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-        assertEquals(testPlayer.previousExercise?.exerciseName, null)
-    }
-
-    @Test
-    fun setCurrentExercise() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-    }
-
-    @Test
-    fun setPreviousExercise() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-    }
-
-    @Test
-    fun getCurrentStep() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-        assertEquals(testPlayer.currentStep?.stepTitle, "Test Step 1")
-    }
-
-    @Test
-    fun getPreviousStep() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-        assertEquals(testPlayer.previousStep?.stepTitle, null)
-    }
-
-    @Test
-    fun setCurrentStep() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-    }
-
-    @Test
-    fun setPreviousStep() {
-        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-    }
-
     @Test
     fun play() {
+        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        val testArray = arrayListOf(
+            "Test Exercise 1", "Test Step 1", "Test Step 2",
+            "Test Exercise 2", "Test Step 1", "Test Step 2"
+        )
+        assertEquals(testPlayer.play(), testArray)
     }
 
     @Test
@@ -66,24 +33,65 @@ class BasicExercisePlayerTest {
     }
 
     @Test
-    fun goNext() {
+    fun goToNextExercise() {
         val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
-        testPlayer.goNext()
-        // assertEquals(testPlayer.currentExercise?.exerciseName, "Test Exercise 1")
+        testPlayer.goToNextExercise()
+        assertEquals(
+            testPlayer.exerciseRoutine.getCurrentExercise()?.exerciseName,
+            "Test Exercise 2"
+        )
     }
 
     @Test
-    fun goBack() {
+    fun goToPreviousExercise() {
         val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        testPlayer.goToNextExercise()
+        testPlayer.goToPreviousExercise()
+        assertEquals(
+            testPlayer.exerciseRoutine.getCurrentExercise()?.exerciseName,
+            "Test Exercise 1"
+        )
     }
 
     @Test
-    fun reset() {
+    fun goToNextStep() {
         val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        testPlayer.exerciseRoutine.getCurrentExercise()?.goToNextStep()
+        assertEquals(
+            testPlayer.exerciseRoutine.getCurrentExercise()?.getCurrentStep()?.stepTitle,
+            "Test Step 2"
+        )
     }
 
     @Test
-    fun getExerciseRoutine() {
+    fun goToPreviousStep() {
         val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        testPlayer.exerciseRoutine.getCurrentExercise()?.goToNextStep()
+        testPlayer.exerciseRoutine.getCurrentExercise()?.goToPreviousStep()
+        assertEquals(
+            testPlayer.exerciseRoutine.getCurrentExercise()?.getCurrentStep()?.stepTitle,
+            "Test Step 1"
+        )
+    }
+
+    @Test
+    fun resetExercises() {
+        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        testPlayer.goToNextExercise()
+        testPlayer.resetExercises()
+        assertEquals(
+            testPlayer.exerciseRoutine.getCurrentExercise()?.exerciseName,
+            "Test Exercise 1"
+        )
+    }
+    @Test
+    fun resetSteps() {
+        val testPlayer: ExercisePlayer = ExercisePlayers.testExercisePlayer1()
+        testPlayer.exerciseRoutine.getCurrentExercise()?.goToNextStep()
+        testPlayer.exerciseRoutine.getCurrentExercise()?.resetStacks()
+        assertEquals(
+            testPlayer.exerciseRoutine.getCurrentExercise()?.getCurrentStep()?.stepTitle,
+            "Test Step 1"
+        )
     }
 }

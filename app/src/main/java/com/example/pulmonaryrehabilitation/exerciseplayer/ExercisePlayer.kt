@@ -7,14 +7,13 @@ import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 interface ExercisePlayer {
     val exercisePlayerName: String
     val exerciseRoutine: ExerciseCollection
-    var currentExercise: Exercise?
-    var previousExercise: Exercise?
-    var currentStep: ExerciseStep?
-    var previousStep: ExerciseStep?
 
-    fun play()
+    fun play(): MutableList<String>?
     fun pause()
-    fun goNext()
-    fun goBack()
-    fun reset()
+    fun goToNextExercise(): Exercise?
+    fun goToPreviousExercise(): Exercise?
+    fun goToNextStep(): ExerciseStep?
+    fun goToPreviousStep(): ExerciseStep?
+    fun resetExercises()
+    fun resetSteps()
 }
