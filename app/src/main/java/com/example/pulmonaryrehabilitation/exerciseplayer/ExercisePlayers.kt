@@ -10,4 +10,5 @@ object ExercisePlayers {
 
 fun main(args: Array<String>) {
     println(ExercisePlayers.testExercisePlayer1().play())
+    // ExercisePlayers.testExercisePlayer1().playTimer(2)
 }

@@ -9,6 +9,7 @@ interface ExercisePlayer {
     val exerciseRoutine: ExerciseCollection
 
     fun play(): MutableList<String>?
+    fun playTimer(duration: Int)
     fun pause()
     fun goToNextExercise(): Exercise?
     fun goToPreviousExercise(): Exercise?

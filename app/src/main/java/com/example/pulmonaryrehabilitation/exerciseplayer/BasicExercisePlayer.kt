@@ -1,9 +1,12 @@
 package com.example.pulmonaryrehabilitation.exerciseplayer
 
+import android.os.CountDownTimer
 import com.example.pulmonaryrehabilitation.ExerciseCollections.ExerciseCollection
 import com.example.pulmonaryrehabilitation.Exercises.Exercise
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 
 class BasicExercisePlayer(
     override val exerciseRoutine: ExerciseCollection,
@@ -25,6 +28,22 @@ class BasicExercisePlayer(
             }
         }
         return tempList
+    }
+
+    override fun playTimer(duration: Int) {
+        assertTrue("duration must be a positive integer greater than zero", duration > 0)
+        assertFalse("duration must be a positive integer greater than zero", duration == 0)
+//        val timer = object : CountDownTimer(duration.toLong(), 1000) {
+//
+//            override fun onTick(millisUntilFinished: Long) {
+//                println("seconds remaining: " + millisUntilFinished / 1000)
+//            }
+//
+//            override fun onFinish() {
+//                println("done!")
+//            }
+//        }
+//        timer.start()
     }
 
     override fun pause() {

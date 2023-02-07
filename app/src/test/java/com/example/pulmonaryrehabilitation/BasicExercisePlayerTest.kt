@@ -94,4 +94,11 @@ class BasicExercisePlayerTest {
             "Test Step 1"
         )
     }
+
+    @Test
+    fun test() {
+        val duration = 3
+        assertTrue("duration must be a positive integer greater than zero", duration > 0)
+        assertFalse("duration must be a positive integer greater than zero", duration == 0)
+    }
 }
