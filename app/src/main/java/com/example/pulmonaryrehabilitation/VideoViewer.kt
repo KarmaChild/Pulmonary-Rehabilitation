@@ -2,6 +2,7 @@ package com.example.pulmonaryrehabilitation
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
@@ -16,7 +17,7 @@ class VideoViewer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_view)
-        videoViewer = findViewById<VideoView>(R.id.videoView)
+        videoViewer = findViewById<View>(R.id.videoView) as VideoView
 
         if (mediaControls == null) {
             // creating an object of media controller class
@@ -46,10 +47,8 @@ class VideoViewer : AppCompatActivity() {
         // after the video is completed
         videoViewer!!.setOnCompletionListener {
             Toast.makeText(
-                applicationContext, "Video completed",
-                Toast.LENGTH_LONG
+                applicationContext, "Video completed", Toast.LENGTH_LONG
             ).show()
-            true
         }
 
         // display a toast message if any
