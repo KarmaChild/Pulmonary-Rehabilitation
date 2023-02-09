@@ -7,11 +7,7 @@ import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayers
 
 class ExercisePlayerViewActivity : AppCompatActivity() {
     var exercisePlayer = ExercisePlayers.testExercisePlayer1()
-
-    var collectionName = findViewById<TextView>(R.id.exPlayerCollectionLabel)
-    var exerciseName = findViewById<TextView>(R.id.exPlayerExerciseNameLabel)
-    var stepName = findViewById<TextView>(R.id.exPlayerStepNameLabel)
-    var stepDescription = findViewById<TextView>(R.id.exPlayerStepDescriptionLabel)
+//
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,13 +16,17 @@ class ExercisePlayerViewActivity : AppCompatActivity() {
         getInfoFromPlayer()
     }
     fun getInfoFromPlayer() {
+        val collectionName: TextView = findViewById<TextView>(R.id.exPlayerCollectionLabel)
+        val exerciseName = findViewById<TextView>(R.id.exPlayerExerciseNameLabel)
+        val stepName = findViewById<TextView>(R.id.exPlayerStepNameLabel)
+        val stepDescription = findViewById<TextView>(R.id.exPlayerStepDescriptionLabel)
+
         collectionName.text = exercisePlayer.exerciseRoutine.collectionName
         exerciseName.text = exercisePlayer.exerciseRoutine.getCurrentExercise()?.exerciseName
         val routine = exercisePlayer.exerciseRoutine
         val exercise = routine?.getCurrentExercise()
         stepName.text = exercise?.exerciseName
-//        stepDescription.text =
-//            exercisePlayer.exerciseRoutine
-//                .getCurrentExercise()?.getCurrentStep()?.instruction
+
+        stepDescription.text = exercise?.getCurrentStep()?.instruction
     }
 }
