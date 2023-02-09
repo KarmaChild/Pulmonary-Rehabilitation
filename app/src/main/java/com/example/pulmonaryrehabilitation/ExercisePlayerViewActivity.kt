@@ -5,7 +5,6 @@ import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayers
-import java.util.*
 
 class ExercisePlayerViewActivity : AppCompatActivity() {
     var exercisePlayer = ExercisePlayers.testExercisePlayer1()
@@ -21,7 +20,6 @@ class ExercisePlayerViewActivity : AppCompatActivity() {
 
         startStep()
     }
-
 
     fun startStep() { // starts the timer for each step
         // this is a mock implementation for now
@@ -39,7 +37,6 @@ class ExercisePlayerViewActivity : AppCompatActivity() {
         exerciseName.text = getCurrentExerciseName()
         stepName.text = getCurrentStepName()
         stepDescription.text = getCurrentStepDescription()
-
     }
     fun startTimer(time: Int) {
         var timeLeft = time
