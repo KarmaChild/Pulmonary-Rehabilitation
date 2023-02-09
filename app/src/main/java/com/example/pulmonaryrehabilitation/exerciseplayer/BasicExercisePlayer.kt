@@ -1,6 +1,5 @@
 package com.example.pulmonaryrehabilitation.exerciseplayer
 
-import android.os.CountDownTimer
 import com.example.pulmonaryrehabilitation.ExerciseCollections.ExerciseCollection
 import com.example.pulmonaryrehabilitation.Exercises.Exercise
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
