@@ -24,6 +24,9 @@
             android:name=".ExercisePlayerViewActivity"
             android:exported="false" />
         <activity
+            android:name=".VideoViewer"
+            android:exported="true" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
