@@ -70,7 +70,7 @@ class TempExercisePlayerActivity : AppCompatActivity() {
             startCurrentStep()
         }
     }
-    //goes to the previous step
+    // goes to the previous step
     // known bug when going from previous exercise, it has an error on tap one but then goes
     fun previousTapped() {
         exercisePlayer.goToPreviousStep()
