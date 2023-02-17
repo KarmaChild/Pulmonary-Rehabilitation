@@ -6,7 +6,10 @@ interface Member {
     var password: String
     var email: String
     var medicalType: String
-    var stepHistory: String
+//    var stepGoal: Int
+//    var gamificationHistory: Map<String,Any>
+//    var usageHistory: Map<String,Any>
+//    var stepHistory: Map<String, Any>?
 
     override fun toString(): String
     fun toMemberMap(): Map<String, Any>

@@ -4,7 +4,7 @@ package com.example.pulmonaryrehabilitation.model_since_2_17
 object ModelObject {
 
     fun defaultMember(): Member {
-        return MemberClass("0", "0", "0", "0", "0", "0")
+        return MemberClass("0", "0", "0", "0", "0")
     }
 
     fun defaultExerciseData(): ExerciseData {

@@ -9,11 +9,15 @@ class MemberClass(
     override var password: String = "",
     override var email: String = "",
     override var medicalType: String = "",
-    override var stepHistory: String = ""
+//    override var stepHistory: Map<String, Any>? = null,
+//    override var stepGoal: Int,
+//    override var gamificationHistory: Map<String, Any>,
+//    override var usageHistory: Map<String, Any>
 ) : Member {
 
     override fun toString(): String {
-        return "Member(id='$id', username='$username', password='$password', email='$email', medicalType='$medicalType', stepHistory='$stepHistory')"
+        return "Member(id='$id', username='$username', password='$password', email='$email', " +
+            "medicalType='$medicalType')"
     }
 
     @Exclude
@@ -24,7 +28,7 @@ class MemberClass(
             "password" to password,
             "email" to email,
             "medicalType" to medicalType,
-            "stepHistory" to stepHistory
+//            "stepGoal" to stepGoal,
         )
     }
 }

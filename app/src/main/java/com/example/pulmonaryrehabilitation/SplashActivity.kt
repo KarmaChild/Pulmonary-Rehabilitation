@@ -24,13 +24,13 @@ class SplashActivity : AppCompatActivity() {
         DatabaseMethod().writeToDatabase("Member", database, defaultMember)
 
         val defaultExerciseData = ModelObject.defaultExerciseData()
-        DatabaseMethod().writeToDatabase("ExerciseData", database, defaultExerciseData)
+//        DatabaseMethod().writeToDatabase("ExerciseData", database, defaultExerciseData)
 
         // delete from database
 //        DatabaseMethod().deleteFromDatabase("Member", database, "0")
 
         // read from database
-        DatabaseMethod().readFromDatabase("ExerciseData", database)
+        DatabaseMethod().readFromDatabase("Member", database)
 
 //        // transitioning from splashActivity to EmailLoginActivity with 2000ms delayed
 //        Handler().postDelayed({

@@ -31,6 +31,8 @@ class DatabaseMethod : DatabaseInterface {
         myRef.addValueEventListener(dataListener)
     }
 
+    // add the input obj into Firebase database if the id is not existed,
+    // if its id is already existed in the database, it will update the value according to its id
     override fun writeToDatabase(path: String, data: FirebaseDatabase, obj: Any) {
         val myRef = data.getReference(path)
         var key = ""
