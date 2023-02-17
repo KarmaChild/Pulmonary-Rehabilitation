@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pulmonaryrehabilitation.Model.Member
+import com.example.pulmonaryrehabilitation.model_since_2_17.MemberClass
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -85,7 +85,7 @@ class EmailRegisterActivity : AppCompatActivity() {
 
                                 // add user data to firebase realtime database
                                 val myRef = database.getReference("Members")
-                                var mem = Member(firebaseUser.uid, username, password, email)
+                                var mem = MemberClass(firebaseUser.uid, username, password, email)
                                 registerRealTimeMember(mem, myRef)
 
                                 // register is successful takes user to splash activity then log in
@@ -119,9 +119,9 @@ class EmailRegisterActivity : AppCompatActivity() {
 
     // passed manual testing
     // add member to realtime database
-    private fun registerRealTimeMember(member: Member, myRef: DatabaseReference) {
-        val key = member.id // initialize key
-        val values = member.toMemberMap() // initialize value
+    private fun registerRealTimeMember(memberClass: MemberClass, myRef: DatabaseReference) {
+        val key = memberClass.id // initialize key
+        val values = memberClass.toMemberMap() // initialize value
         // put key and its value to hashmap
         val childUpdates = hashMapOf<String, Any>(
             "$key" to values,

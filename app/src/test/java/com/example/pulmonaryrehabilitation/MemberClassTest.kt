@@ -1,12 +1,12 @@
 package com.example.pulmonaryrehabilitation
 
-import com.example.pulmonaryrehabilitation.Model.Member
+import com.example.pulmonaryrehabilitation.model_since_2_17.MemberClass
 import org.junit.Assert.*
 import org.junit.Test
 
-class MemberTest {
+class MemberClassTest {
 
-    private val member = Member(
+    private val memberClass = MemberClass(
         "1", "user1", "password",
         "user1@example.com"
     )
@@ -16,7 +16,7 @@ class MemberTest {
         assertEquals(
             "Member(id='1', username='user1', password='password', " +
                 "email='user1@example.com')",
-            member.toString()
+            memberClass.toString()
         )
     }
 
@@ -29,7 +29,7 @@ class MemberTest {
                 "password" to "password",
                 "email" to "user1@example.com"
             ),
-            member.toMemberMap()
+            memberClass.toMemberMap()
         )
     }
 }
