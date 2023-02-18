@@ -7,7 +7,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pulmonaryrehabilitation.model_since_2_17.GamificationHistoryClass
 import com.example.pulmonaryrehabilitation.model_since_2_17.MemberClass
+import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
+import com.example.pulmonaryrehabilitation.model_since_2_17.StepHistoryClass
+import com.example.pulmonaryrehabilitation.model_since_2_17.UsageHistoryClass
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -85,7 +89,18 @@ class EmailRegisterActivity : AppCompatActivity() {
 
                                 // add user data to firebase realtime database
                                 val myRef = database.getReference("Members")
-                                var mem = MemberClass(firebaseUser.uid, username, password, email)
+
+                                val defaultGamificationHistory = ModelObject.defaultGamificationHistory() as GamificationHistoryClass
+                                val defaultUsageHistory = ModelObject.defaultUsageHistory() as UsageHistoryClass
+                                val defaultStepHistory = ModelObject.defaultStepHistory() as StepHistoryClass
+
+                                var mem = MemberClass(
+                                    firebaseUser.uid, username, password, email, 9000,
+                                    mapOf("datetime" to defaultGamificationHistory),
+                                    mapOf("datetime" to defaultUsageHistory),
+                                    mapOf("datetime" to defaultStepHistory)
+                                )
+
                                 registerRealTimeMember(mem, myRef)
 
                                 // register is successful takes user to splash activity then log in

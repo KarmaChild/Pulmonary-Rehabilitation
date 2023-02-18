@@ -8,16 +8,16 @@ class MemberClass(
     override var username: String = "",
     override var password: String = "",
     override var email: String = "",
-    override var medicalType: String = "",
-//    override var stepHistory: Map<String, Any>? = null,
-//    override var stepGoal: Int,
-//    override var gamificationHistory: Map<String, Any>,
-//    override var usageHistory: Map<String, Any>
+    override var stepGoal: Int,
+    override var gamificationHistory: Map<String, GamificationHistoryClass>,
+    override var usageHistory: Map<String, UsageHistoryClass>,
+    override var stepHistory: Map<String, StepHistoryClass>,
 ) : Member {
 
     override fun toString(): String {
-        return "Member(id='$id', username='$username', password='$password', email='$email', " +
-            "medicalType='$medicalType')"
+        return "MemberClass(id='$id', username='$username', password='$password'," +
+            " email='$email', gamificationHistory=$gamificationHistory, " +
+            "usageHistory=$usageHistory, stepHistory=$stepHistory)"
     }
 
     @Exclude
@@ -27,8 +27,10 @@ class MemberClass(
             "username" to username,
             "password" to password,
             "email" to email,
-            "medicalType" to medicalType,
-//            "stepGoal" to stepGoal,
+            "stepGoal" to stepGoal,
+            "gamificationHistory" to "{datetime:${gamificationHistory["datetime"]}}",
+            "usageHistory" to "{datetime:${usageHistory["datetime"]}}",
+            "stepHistory" to "{datetime:${stepHistory["datetime"]}}",
         )
     }
 }

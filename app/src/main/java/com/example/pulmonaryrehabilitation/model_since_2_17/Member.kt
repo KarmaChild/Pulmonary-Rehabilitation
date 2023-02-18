@@ -5,11 +5,10 @@ interface Member {
     var username: String
     var password: String
     var email: String
-    var medicalType: String
-//    var stepGoal: Int
-//    var gamificationHistory: Map<String,Any>
-//    var usageHistory: Map<String,Any>
-//    var stepHistory: Map<String, Any>?
+    var stepGoal: Int
+    var gamificationHistory: Map<String, GamificationHistoryClass>
+    var usageHistory: Map<String, UsageHistoryClass>
+    var stepHistory: Map<String, StepHistoryClass>
 
     override fun toString(): String
     fun toMemberMap(): Map<String, Any>

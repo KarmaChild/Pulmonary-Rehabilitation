@@ -1,6 +1,7 @@
 package com.example.pulmonaryrehabilitation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
@@ -21,6 +22,7 @@ class SplashActivity : AppCompatActivity() {
 
         // write to database
         val defaultMember = ModelObject.defaultMember()
+        Log.d("defaultMemberJSON", defaultMember.toMemberMap().toString())
         DatabaseMethod().writeToDatabase("Member", database, defaultMember)
 
         val defaultExerciseData = ModelObject.defaultExerciseData()
