@@ -10,5 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: format code
+      - name: Format Code
         run: ./gradlew ktlintFormat
+
+      - name: Run Tests
+        run: ./gradlew test
