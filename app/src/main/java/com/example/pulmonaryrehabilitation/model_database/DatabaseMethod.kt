@@ -2,15 +2,40 @@ package com.example.pulmonaryrehabilitation.model_database
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.pulmonaryrehabilitation.model_since_2_17.ExerciseDataClass
-import com.example.pulmonaryrehabilitation.model_since_2_17.MemberClass
+import com.example.pulmonaryrehabilitation.model_since_2_17.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class DatabaseMethod : DatabaseInterface {
+// Henry: what is your reasoning behind the name DatabaseMethod?
+    fun getUserDataFor(id: String, database: FirebaseDatabase): MemberClass? {
+        var userData: MemberClass? = null
+        val myRef = database.getReference("Member/$id")
+        myRef.get().addOnSuccessListener {
+            Log.i("firebase", "Got value ${it.value}")
+            val member: MemberClass? =  convertFirebaseDataToMember(it.value as HashMap<String, Any>)
+            userData = member
+        }.addOnFailureListener {
+            Log.e("firebase", "Error getting data", it)
+        }
+        return userData
+    }
+    private fun convertFirebaseDataToMember(data: HashMap<String, Any>): MemberClass? {
+
+        val member = MemberClass(
+            data.get("id") as String, data.get("username") as String,
+            data.get("password") as String, data.get("email") as String, (data.get("stepGoal") as Long).toInt(),
+            data.get("gamificationHistory") as Map<String, GamificationHistoryClass>,
+            data.get("usageHistory") as Map<String, UsageHistoryClass>,
+            data.get("stepHistory") as Map<String, StepHistoryClass>
+        )
+        return member
+    }
+
     override fun readFromDatabase(path: String, data: FirebaseDatabase) {
+        // This is for listening for database changes to get a specific user, use getUserDataFor() ↑
         val myRef = data.getReference(path)
         val dataListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
