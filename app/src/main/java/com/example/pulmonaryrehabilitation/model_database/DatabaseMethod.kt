@@ -10,26 +10,27 @@ import com.google.firebase.database.ValueEventListener
 
 class DatabaseMethod : DatabaseInterface {
 // Henry: what is your reasoning behind the name DatabaseMethod?
-    fun getUserDataFor(id: String, database: FirebaseDatabase): MemberClass? {
-        var userData: MemberClass? = null
+    fun getUserDataFor(id: String, database: FirebaseDatabase) {
         val myRef = database.getReference("Member/$id")
         myRef.get().addOnSuccessListener {
-            Log.i("firebase", "Got value ${it.value}")
-            val member: MemberClass? =  convertFirebaseDataToMember(it.value as HashMap<String, Any>)
-            userData = member
+//            Log.i("firebase", "Got value ${it.value}")
+            CurrentUser.setData(convertFirebaseDataToMember(it.value as HashMap<String, Any>))
+            print("")
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
-        return userData
     }
+
     private fun convertFirebaseDataToMember(data: HashMap<String, Any>): MemberClass? {
 
         val member = MemberClass(
-            data.get("id") as String, data.get("username") as String,
-            data.get("password") as String, data.get("email") as String, (data.get("stepGoal") as Long).toInt(),
+            data.get("id") as String, data.get("isAdmin") as Boolean, data.get("firstName") as String,
+            data.get("lastName") as String, data.get("username") as String, data.get("email") as String,
+            (data.get("stepGoal") as Long).toInt(),
             data.get("gamificationHistory") as Map<String, GamificationHistoryClass>,
             data.get("usageHistory") as Map<String, UsageHistoryClass>,
-            data.get("stepHistory") as Map<String, StepHistoryClass>
+            data.get("stepHistory") as Map<String, StepHistoryClass>,
+            data.get("questionnaireHistory") as Map<String, QuestionnaireHistoryClass>
         )
         return member
     }

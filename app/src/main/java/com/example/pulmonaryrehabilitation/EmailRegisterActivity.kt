@@ -93,12 +93,14 @@ class EmailRegisterActivity : AppCompatActivity() {
                                 val defaultGamificationHistory = ModelObject.defaultGamificationHistory() as GamificationHistoryClass
                                 val defaultUsageHistory = ModelObject.defaultUsageHistory() as UsageHistoryClass
                                 val defaultStepHistory = ModelObject.defaultStepHistory() as StepHistoryClass
+                                val defaultQuestionnaireHistory = ModelObject.defaultQuestionnaireHistory()
 
                                 var mem = MemberClass(
-                                    firebaseUser.uid, username, password, email, 9000,
+                                    firebaseUser.uid, false, "", "", username, email, 9000,
                                     mapOf("datetime" to defaultGamificationHistory),
                                     mapOf("datetime" to defaultUsageHistory),
-                                    mapOf("datetime" to defaultStepHistory)
+                                    mapOf("datetime" to defaultStepHistory),
+                                    mapOf("datetime" to defaultQuestionnaireHistory)
                                 )
 
                                 registerRealTimeMember(mem, myRef)

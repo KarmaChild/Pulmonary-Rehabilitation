@@ -20,10 +20,10 @@ class SplashActivity : AppCompatActivity() {
 
         // write to database
 //        val defaultMember = ModelObject.defaultMember()
-// //        var testMap: Map<String, GamificationHistoryClass> = mapOf("datetime" to ModelObject.defaultGamificationHistory(), "datetime2" to ModelObject.defaultGamificationHistory())
-// //        var iterateMap = defaultMember.iterateGamificationHistoryMap(testMap)
-// //        Log.d("Map gamification", "")
-//        Log.d("defaultMemberJSON", defaultMember.toMemberMap().toString())
+// // //        var testMap: Map<String, GamificationHistoryClass> = mapOf("datetime" to ModelObject.defaultGamificationHistory(), "datetime2" to ModelObject.defaultGamificationHistory())
+// // //        var iterateMap = defaultMember.iterateGamificationHistoryMap(testMap)
+// // //        Log.d("Map gamification", "")
+// //        Log.d("defaultMemberJSON", defaultMember.toMemberMap().toString())
 //        DatabaseMethod().writeToDatabase("Member", database, defaultMember)
 
 //        val defaultExerciseData = ModelObject.defaultExerciseData()
@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
 //        DatabaseMethod().deleteFromDatabase("Member", database, "0")
 
         // read from database
-//        DatabaseMethod().readFromDatabase("Member", database)
+        DatabaseMethod().readFromDatabase("Member", database)
 
 //        // transitioning from splashActivity to EmailLoginActivity with 2000ms delayed
 //        Handler().postDelayed({
@@ -41,6 +41,6 @@ class SplashActivity : AppCompatActivity() {
 //        }, 2000)
 
         // Ian's testing below
-        DatabaseMethod().getUserDataFor("0", database)
+        DatabaseMethod().getUserDataFor("1", database)
     }
 }
