@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
+import com.example.pulmonaryrehabilitation.model_since_2_17.GamificationHistoryClass
 import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -22,6 +23,9 @@ class SplashActivity : AppCompatActivity() {
 
         // write to database
         val defaultMember = ModelObject.defaultMember()
+//        var testMap: Map<String, GamificationHistoryClass> = mapOf("datetime" to ModelObject.defaultGamificationHistory(), "datetime2" to ModelObject.defaultGamificationHistory())
+//        var iterateMap = defaultMember.iterateGamificationHistoryMap(testMap)
+//        Log.d("Map gamification", "")
         Log.d("defaultMemberJSON", defaultMember.toMemberMap().toString())
         DatabaseMethod().writeToDatabase("Member", database, defaultMember)
 

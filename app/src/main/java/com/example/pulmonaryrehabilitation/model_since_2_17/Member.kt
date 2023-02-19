@@ -11,5 +11,9 @@ interface Member {
     var stepHistory: Map<String, StepHistoryClass>
 
     override fun toString(): String
+    fun iterateGamificationHistoryMap(map: Map<String, GamificationHistoryClass>): String
+    fun iterateUsageHistoryMap(map: Map<String, UsageHistoryClass>): String
+    fun iterateStepHistoryMap(map: Map<String, StepHistoryClass>): String
+
     fun toMemberMap(): Map<String, Any>
 }

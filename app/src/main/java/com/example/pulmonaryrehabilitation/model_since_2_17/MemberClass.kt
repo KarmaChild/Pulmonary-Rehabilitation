@@ -20,6 +20,33 @@ class MemberClass(
             "usageHistory=$usageHistory, stepHistory=$stepHistory)"
     }
 
+    override fun iterateGamificationHistoryMap(map: Map<String, GamificationHistoryClass>): String {
+        var gamificationHistoryContent = "{"
+        map.forEach { entry ->
+            gamificationHistoryContent += entry.key + ":" + entry.value.toString() + ","
+        }
+        gamificationHistoryContent += "}"
+        return gamificationHistoryContent
+    }
+
+    override fun iterateUsageHistoryMap(map: Map<String, UsageHistoryClass>): String {
+        var usageHistoryContent = "{"
+        map.forEach { entry ->
+            usageHistoryContent += entry.key + ":" + entry.value.toString() + ","
+        }
+        usageHistoryContent += "}"
+        return usageHistoryContent
+    }
+
+    override fun iterateStepHistoryMap(map: Map<String, StepHistoryClass>): String {
+        var stepHistoryContent = "{"
+        map.forEach { entry ->
+            stepHistoryContent += entry.key + ":" + entry.value.toString() + ","
+        }
+        stepHistoryContent += "}"
+        return stepHistoryContent
+    }
+
     @Exclude
     override fun toMemberMap(): Map<String, Any> {
         return mapOf(
@@ -28,9 +55,9 @@ class MemberClass(
             "password" to password,
             "email" to email,
             "stepGoal" to stepGoal,
-            "gamificationHistory" to "{datetime:${gamificationHistory["datetime"]}}",
-            "usageHistory" to "{datetime:${usageHistory["datetime"]}}",
-            "stepHistory" to "{datetime:${stepHistory["datetime"]}}",
+            "gamificationHistory" to iterateGamificationHistoryMap(gamificationHistory),
+            "usageHistory" to iterateUsageHistoryMap(usageHistory),
+            "stepHistory" to iterateStepHistoryMap(stepHistory),
         )
     }
 }
