@@ -9,10 +9,10 @@ interface Member {
 //    var password: String
     var email: String
     var stepGoal: Int
-    var gamificationHistory: Map<String, GamificationHistoryClass>
-    var usageHistory: Map<String, UsageHistoryClass>
-    var stepHistory: Map<String, StepHistoryClass>
-    var questionnaireHistory: Map<String, QuestionnaireHistoryClass>
+    var gamificationHistory: MutableMap<String, GamificationHistoryClass>
+    var usageHistory: MutableMap<String, UsageHistoryClass>
+    var stepHistory: MutableMap<String, StepHistoryClass>
+    var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>
 
     override fun toString(): String
 //    fun iterateGamificationHistoryMap(map: Map<String, GamificationHistoryClass>): String

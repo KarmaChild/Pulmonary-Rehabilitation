@@ -12,10 +12,10 @@ class MemberClass(
 
     override var email: String = "",
     override var stepGoal: Int,
-    override var gamificationHistory: Map<String, GamificationHistoryClass>,
-    override var usageHistory: Map<String, UsageHistoryClass>,
-    override var stepHistory: Map<String, StepHistoryClass>,
-    override var questionnaireHistory: Map<String, QuestionnaireHistoryClass>
+    override var gamificationHistory: MutableMap<String, GamificationHistoryClass>,
+    override var usageHistory: MutableMap<String, UsageHistoryClass>,
+    override var stepHistory: MutableMap<String, StepHistoryClass>,
+    override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>
 ) : Member {
 
     override fun toString(): String {

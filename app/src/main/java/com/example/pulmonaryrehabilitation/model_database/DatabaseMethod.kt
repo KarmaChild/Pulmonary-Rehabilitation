@@ -7,6 +7,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class DatabaseMethod : DatabaseInterface {
 // Henry: what is your reasoning behind the name DatabaseMethod?
@@ -27,10 +29,10 @@ class DatabaseMethod : DatabaseInterface {
             data.get("id") as String, data.get("isAdmin") as Boolean, data.get("firstName") as String,
             data.get("lastName") as String, data.get("username") as String, data.get("email") as String,
             (data.get("stepGoal") as Long).toInt(),
-            data.get("gamificationHistory") as Map<String, GamificationHistoryClass>,
-            data.get("usageHistory") as Map<String, UsageHistoryClass>,
-            data.get("stepHistory") as Map<String, StepHistoryClass>,
-            data.get("questionnaireHistory") as Map<String, QuestionnaireHistoryClass>
+            data.get("gamificationHistory") as MutableMap<String, GamificationHistoryClass>,
+            data.get("usageHistory") as MutableMap<String, UsageHistoryClass>,
+            data.get("stepHistory") as MutableMap<String, StepHistoryClass>,
+            data.get("questionnaireHistory") as MutableMap<String, QuestionnaireHistoryClass>
         )
         return member
     }
@@ -106,6 +108,50 @@ class DatabaseMethod : DatabaseInterface {
         // if the id is already existed in the database then the value will be updated instead of
         // adding
         myRef.updateChildren(childUpdates)
+    }
+    fun updateFirstNameFor(id: String, newName: String) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/firstName")
+        myReference.setValue(newName)
+    }
+    fun updateLastNameFor(id: String, newName: String) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/lastName")
+        myReference.setValue(newName)
+    }
+    fun updateStepCountGoalFor(id: String, newGoal: Int) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/stepGoal")
+        myReference.setValue(newGoal)
+    }
+    fun updateAdminStatusFor(id: String, newStatus: Boolean) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/isAdmin")
+        myReference.setValue(newStatus)
+    }
+    // TODO: These need to append to the Firebase data, not replace it as it currently does.
+    fun updateStepHistoryFor(id: String, newHistory: Map<String, StepHistoryClass>) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/stepHistory")
+        myReference.setValue(newHistory)
+    }
+    fun updateQuestionnaireHistoryFor(
+        id: String,
+        newHistory: Map<String, QuestionnaireHistoryClass>
+    ) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/questionnaireHistory")
+        myReference.setValue(newHistory)
+    }
+    fun updateUsageHistoryFor(id: String, newHistory: Map<String, UsageHistoryClass>) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/usageHistory")
+        myReference.setValue(newHistory)
+    }
+    fun updateGamificationHistory(id: String, newHistory: Map<String, GamificationHistoryClass>) {
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/gamificationHistory")
+        myReference.setValue(newHistory)
     }
 
     override fun deleteFromDatabase(path: String, data: FirebaseDatabase, id: String) {

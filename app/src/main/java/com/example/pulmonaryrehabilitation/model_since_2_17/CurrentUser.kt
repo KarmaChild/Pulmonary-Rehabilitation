@@ -1,5 +1,7 @@
 package com.example.pulmonaryrehabilitation.model_since_2_17
 
+import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
+
 /*
 CurrentUser Object Specification
 This is the connection to the users data. Anything you want to get or change, should be done through this.
@@ -26,6 +28,8 @@ object CurrentUser {
      */
     fun setData(member: MemberClass?) {
         data = member
+//        setGoal(3333)
+//        addStepHistory(4999)
     }
 
     fun getFirstName(): String {
@@ -48,5 +52,60 @@ object CurrentUser {
     }
     fun getQuestionnaireHistory(): Map<String, QuestionnaireHistoryClass> {
         return data?.questionnaireHistory ?: mapOf()
+    }
+    // note for below, it's safe to use !! because I check it's not null
+    // also it updates the local object without calling the database to avoid an unnecessary read
+    fun setFirstName(newName: String) {
+        if (data != null) {
+            data?.firstName = newName
+            DatabaseMethod().updateFirstNameFor(data!!.id, newName)
+        }
+    }
+
+    fun setLastName(newName: String) {
+        if (data != null) {
+            data?.lastName = newName
+            DatabaseMethod().updateLastNameFor(data!!.id, newName)
+        }
+    }
+    fun setAdminStatus(newStatus: Boolean) {
+        if (data != null) {
+            data?.isAdmin = newStatus
+            DatabaseMethod().updateAdminStatusFor(data!!.id, newStatus)
+        }
+    }
+    fun setGoal(newGoal: Int) {
+        if (data != null) {
+            data?.stepGoal = newGoal
+            DatabaseMethod().updateStepCountGoalFor(data!!.id, newGoal)
+        }
+    }
+    fun addStepHistory(numberSteps: Int) {
+        if (data != null) {
+            data!!.stepHistory.put("Timestamp", StepHistoryClass(numberSteps.toString(), ""))
+            DatabaseMethod().updateStepHistoryFor(data!!.id, data!!.stepHistory)
+            print("")
+        }
+    }
+    fun addQuestionnaireHistory(question: String, answer: String) {
+        if (data != null) {
+            data!!.questionnaireHistory.put("Timestamp", QuestionnaireHistoryClass(question, answer))
+            DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, data!!.questionnaireHistory)
+            print("")
+        }
+    }
+    fun addUsageHistory(exerciseDone: String) {
+        if (data != null) {
+            data!!.usageHistory.put("Timestamp", UsageHistoryClass(exerciseDone, ""))
+            DatabaseMethod().updateUsageHistoryFor(data!!.id, data!!.usageHistory)
+            print("")
+        }
+    }
+    fun addGamificationHistory(event: String, points: String) {
+        if (data != null) {
+            data!!.gamificationHistory.put("Timestamp", GamificationHistoryClass(event, points))
+            DatabaseMethod().updateGamificationHistory(data!!.id, data!!.gamificationHistory)
+            print("")
+        }
     }
 }

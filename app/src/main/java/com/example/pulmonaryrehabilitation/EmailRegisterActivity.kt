@@ -97,10 +97,10 @@ class EmailRegisterActivity : AppCompatActivity() {
 
                                 var mem = MemberClass(
                                     firebaseUser.uid, false, "", "", username, email, 9000,
-                                    mapOf("datetime" to defaultGamificationHistory),
-                                    mapOf("datetime" to defaultUsageHistory),
-                                    mapOf("datetime" to defaultStepHistory),
-                                    mapOf("datetime" to defaultQuestionnaireHistory)
+                                    mutableMapOf("datetime" to defaultGamificationHistory),
+                                    mutableMapOf("datetime" to defaultUsageHistory),
+                                    mutableMapOf("datetime" to defaultStepHistory),
+                                    mutableMapOf("datetime" to defaultQuestionnaireHistory)
                                 )
 
                                 registerRealTimeMember(mem, myRef)

@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
 //        DatabaseMethod().deleteFromDatabase("Member", database, "0")
 
         // read from database
-        DatabaseMethod().readFromDatabase("Member", database)
+//        DatabaseMethod().readFromDatabase("Member", database)
 
 //        // transitioning from splashActivity to EmailLoginActivity with 2000ms delayed
 //        Handler().postDelayed({
