@@ -1,17 +1,18 @@
 package com.example.pulmonaryrehabilitation
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
+import com.example.pulmonaryrehabilitation.Exercises.Steps.TapStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
-import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayer
-import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayers
+import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
 
 class ExercisePlayerTimerViewActivity : AppCompatActivity() {
-    lateinit var exercisePlayer: ExercisePlayer // this will be passed in
+//    lateinit var exercisePlayer: ExercisePlayer // this will be passed in
     lateinit var timer: CountDownTimer
 
     lateinit var stepTitle: TextView
@@ -20,10 +21,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer_exercise_player_view)
-        // Testing
-        exercisePlayer = ExercisePlayers.testExercisePlayer1()
-        exercisePlayer.goToNextStep()
-        // END Testing
+
 
         // Initialize views
         stepTitle = findViewById<TextView>(R.id.stepTitleLabel)
@@ -32,6 +30,13 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
 
         startStep()
     }
+    /*
+    startStep Specification
+    This grabs the data from the current step and displays it via the textfields and progress bar
+    It then double checks that this is a timer step and then starts the timer
+    Pre-Condition: The current step is a Timer Step
+    Post-Condition: Update the UI and Start the timer
+     */
     fun startStep() {
         updateLabelsWithData()
         updateProgressBarWithData()
@@ -41,13 +46,31 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
             startTimer(timerStep.duration)
         }
     }
+    /*
+    endStep Specification
+    This decides what to do after the step is completed
+    Pre-Condition: Timer ended
+    Post-Condition: Goes to next step, sees if it's a timer step or a tap step
+    If a tap set it goes to the Tap Activity
+    If not, it refreshes the current view with the new data
+     */
     fun endStep() {
+        ExercisePlayerObject.exercise.goToNextStep()
+
+
+        val step = getCurrentStep()
+        if (step?.javaClass?.kotlin == TapStep::class) {
+            val intent = Intent(this@ExercisePlayerTimerViewActivity, ExercisePlayerTapViewActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0) // gets rid of the animation
+        } else {
+            startStep()
+        }
     }
-    // timer for timer steps
-    // goes to next step automatically
-    // updates UI
+    /*
+
+     */
     fun startTimer(time: Int) {
-        var timeLeft = time
         var timeElapsed = 0
         timer = object : CountDownTimer(time.toLong() * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -75,22 +98,22 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         }
     }
     fun getCurrentStep(): ExerciseStep? {
-        return exercisePlayer.exerciseRoutine.getCurrentExercise()?.getCurrentStep()
+        return ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.getCurrentStep()
     }
 }
 // goes to the previous step
 // known bug when going from previous exercise, it has an error on tap one but then goes
-//fun previousTapped() {
+// fun previousTapped() {
 //    exercisePlayer.goToPreviousStep()
 //    if (this::timer.isInitialized) {
 //        timer.cancel()
 //    }
 //    startCurrentStep()
-//}
-//fun nextTapped() {
+// }
+// fun nextTapped() {
 //    exercisePlayer.goToNextStep()
 //    if (this::timer.isInitialized) {
 //        timer.cancel()
 //    }
 //    startCurrentStep()
-//}
+// }

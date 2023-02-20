@@ -27,6 +27,9 @@
             android:name=".ExercisePlayerTimerViewActivity"
             android:exported="false" />
         <activity
+            android:name=".ExercisePlayerTapViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".VideoViewer"
             android:exported="true" />
         <activity
