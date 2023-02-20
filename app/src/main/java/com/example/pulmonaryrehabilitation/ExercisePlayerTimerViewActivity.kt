@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TapStep
@@ -18,6 +19,18 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     lateinit var stepTitle: TextView
     lateinit var stepDescription: TextView
     lateinit var progressBar: ProgressBar
+    lateinit var videoView: VideoView
+
+    /*
+    val videoView: VideoView = findViewById(R.id.spikeID)
+        val pathString = "android.resource://" + packageName + "/" + R.raw.spikepvideo
+        val uri: Uri = Uri.parse(pathString)
+        videoView.setVideoURI(uri)
+
+        val mediaController: MediaController = MediaController(this)
+        videoView.setMediaController(mediaController)
+        mediaController.setAnchorView(videoView)
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer_exercise_player_view)
@@ -27,6 +40,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         stepTitle = findViewById<TextView>(R.id.stepTitleLabel)
         stepDescription = findViewById<TextView>(R.id.stepDescriptionLabel)
         progressBar = findViewById<ProgressBar>(R.id.timerProgressBar)
+        videoView = findViewById<VideoView>(R.id.timerVideoView)
 
         startStep()
     }
