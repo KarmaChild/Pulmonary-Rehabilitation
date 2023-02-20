@@ -28,10 +28,20 @@ object CurrentUser {
      */
     fun setData(member: MemberClass?) {
         data = member
+        // Testing ↓
 //        setGoal(3333)
 //        addStepHistory(4999)
     }
 
+    // GETTERS
+    /* Specification for each getter
+        Pre-Condition: None
+        Post-Condition:
+            It will return the desired value if 'data' has been set with a valid memberClass object
+            If not it returns a default value via the elvis operator (?:)
+            The goal of the default value is to make it clear that there was an error
+
+     */
     fun getFirstName(): String {
         return data?.firstName ?: "Error"
     }
@@ -42,19 +52,36 @@ object CurrentUser {
         return data?.stepGoal ?: -9999
     }
     fun getStepHistory(): Map<String, StepHistoryClass> {
-        return data?.stepHistory ?: mapOf()
+        return data?.stepHistory ?: mutableMapOf()
     }
     fun getGamificationHistory(): Map<String, GamificationHistoryClass> {
-        return data?.gamificationHistory ?: mapOf()
+        return data?.gamificationHistory ?: mutableMapOf()
     }
     fun getUsageHistory(): Map<String, UsageHistoryClass> {
-        return data?.usageHistory ?: mapOf()
+        return data?.usageHistory ?: mutableMapOf()
     }
     fun getQuestionnaireHistory(): Map<String, QuestionnaireHistoryClass> {
-        return data?.questionnaireHistory ?: mapOf()
+        return data?.questionnaireHistory ?: mutableMapOf()
     }
-    // note for below, it's safe to use !! because I check it's not null
-    // also it updates the local object without calling the database to avoid an unnecessary read
+    // END GETTERS
+
+
+    // SETTERS
+    /*
+    Specification for each setter
+    Pre-Condition:
+        The new value you wish to add to the database
+    Post-Condition:
+        Updates the local 'data' object to avoid an unnecessary read
+        Updates the Firebase database
+
+     // note for below, it's safe to use !! because I check it's not null
+
+     TODO: create a function that creates a timestap and replace the hard coded 'Timestamp' string
+     TODO: Once we can append to Firebase objects the collection write functions need to be
+      updated to only send the new value
+
+     */
     fun setFirstName(newName: String) {
         if (data != null) {
             data?.firstName = newName
@@ -84,28 +111,26 @@ object CurrentUser {
         if (data != null) {
             data!!.stepHistory.put("Timestamp", StepHistoryClass(numberSteps.toString(), ""))
             DatabaseMethod().updateStepHistoryFor(data!!.id, data!!.stepHistory)
-            print("")
         }
     }
     fun addQuestionnaireHistory(question: String, answer: String) {
         if (data != null) {
             data!!.questionnaireHistory.put("Timestamp", QuestionnaireHistoryClass(question, answer))
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, data!!.questionnaireHistory)
-            print("")
         }
     }
     fun addUsageHistory(exerciseDone: String) {
         if (data != null) {
             data!!.usageHistory.put("Timestamp", UsageHistoryClass(exerciseDone, ""))
             DatabaseMethod().updateUsageHistoryFor(data!!.id, data!!.usageHistory)
-            print("")
         }
     }
     fun addGamificationHistory(event: String, points: String) {
         if (data != null) {
             data!!.gamificationHistory.put("Timestamp", GamificationHistoryClass(event, points))
             DatabaseMethod().updateGamificationHistory(data!!.id, data!!.gamificationHistory)
-            print("")
         }
     }
+
+    // END SETTERS
 }

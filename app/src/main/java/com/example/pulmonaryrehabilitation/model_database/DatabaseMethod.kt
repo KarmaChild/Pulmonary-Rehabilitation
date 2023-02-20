@@ -11,34 +11,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class DatabaseMethod : DatabaseInterface {
-// Henry: what is your reasoning behind the name DatabaseMethod?
-    fun getUserDataFor(id: String, database: FirebaseDatabase) {
-        val myRef = database.getReference("Member/$id")
-        myRef.get().addOnSuccessListener {
-//            Log.i("firebase", "Got value ${it.value}")
-            CurrentUser.setData(convertFirebaseDataToMember(it.value as HashMap<String, Any>))
-            print("")
-        }.addOnFailureListener {
-            Log.e("firebase", "Error getting data", it)
-        }
-    }
 
-    private fun convertFirebaseDataToMember(data: HashMap<String, Any>): MemberClass? {
-
-        val member = MemberClass(
-            data.get("id") as String, data.get("isAdmin") as Boolean, data.get("firstName") as String,
-            data.get("lastName") as String, data.get("username") as String, data.get("email") as String,
-            (data.get("stepGoal") as Long).toInt(),
-            data.get("gamificationHistory") as MutableMap<String, GamificationHistoryClass>,
-            data.get("usageHistory") as MutableMap<String, UsageHistoryClass>,
-            data.get("stepHistory") as MutableMap<String, StepHistoryClass>,
-            data.get("questionnaireHistory") as MutableMap<String, QuestionnaireHistoryClass>
-        )
-        return member
-    }
 
     override fun readFromDatabase(path: String, data: FirebaseDatabase) {
-        // This is for listening for database changes to get a specific user, use getUserDataFor() ↑
         val myRef = data.getReference(path)
         val dataListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -109,9 +84,75 @@ class DatabaseMethod : DatabaseInterface {
         // adding
         myRef.updateChildren(childUpdates)
     }
+
+
+    override fun deleteFromDatabase(path: String, data: FirebaseDatabase, id: String) {
+        val myRef = data.getReference(path)
+
+        // 2 way for deleting data with specified path and key (id)
+        // removeValue is a pre-built Firebase method to delete object
+//        myRef.child(id).removeValue()
+        myRef.child(id).setValue(null)
+    }
+
+    // INDIVIDUAL USER METHODS
+    /*
+     getUserDataFor Specification
+     Pre-Condition:
+        id: the users ID
+        database: reference to our database
+    Post-Condition:
+        Sets the data in CurrentUser object
+        Logs failure
+
+    Note: there is a 99.9% chance you shouldn't call this function in your code.
+     */
+    fun getUserDataFor(id: String, database: FirebaseDatabase) {
+        val myRef = database.getReference("Member/$id")
+        myRef.get().addOnSuccessListener {
+//            Log.i("firebase", "Got value ${it.value}")
+            CurrentUser.setData(convertFirebaseDataToMember(it.value as HashMap<String, Any>))
+
+        }.addOnFailureListener {
+            Log.e("firebase", "Error getting data", it)
+        }
+    }
+
+    /* convertFirebaseDataToMember Specification
+    Pre-Condition:
+        data: HashMap<String, Any>
+        this is the raw data from firebase
+    Post-Condition
+         returns a MemberClass object populated with the data
+     */
+    private fun convertFirebaseDataToMember(data: HashMap<String, Any>): MemberClass? {
+        val member = MemberClass(
+            data.get("id") as String, data.get("isAdmin") as Boolean, data.get("firstName") as String,
+            data.get("lastName") as String, data.get("username") as String, data.get("email") as String,
+            (data.get("stepGoal") as Long).toInt(),
+            data.get("gamificationHistory") as MutableMap<String, GamificationHistoryClass>,
+            data.get("usageHistory") as MutableMap<String, UsageHistoryClass>,
+            data.get("stepHistory") as MutableMap<String, StepHistoryClass>,
+            data.get("questionnaireHistory") as MutableMap<String, QuestionnaireHistoryClass>
+        )
+        return member
+    }
+
+    /*
+    Specification for each of the update database functions
+    Pre-Condition:
+        id: take in the current users ID
+        newvalue: will replace the value in the firebasedata
+    Post-Condition:
+        Update database
+
+     // TODO: These need to append to the Firebase data, not replace it as it currently does.
+
+     */
     fun updateFirstNameFor(id: String, newName: String) {
         val database = Firebase.database
-        val myReference = database.getReference("Member/$id/firstName")
+        val myReference = database.getReference("Member/$id/firstName") // this is the path
+        // directly to the item in Firebase
         myReference.setValue(newName)
     }
     fun updateLastNameFor(id: String, newName: String) {
@@ -129,7 +170,6 @@ class DatabaseMethod : DatabaseInterface {
         val myReference = database.getReference("Member/$id/isAdmin")
         myReference.setValue(newStatus)
     }
-    // TODO: These need to append to the Firebase data, not replace it as it currently does.
     fun updateStepHistoryFor(id: String, newHistory: Map<String, StepHistoryClass>) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/stepHistory")
@@ -152,14 +192,5 @@ class DatabaseMethod : DatabaseInterface {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/gamificationHistory")
         myReference.setValue(newHistory)
-    }
-
-    override fun deleteFromDatabase(path: String, data: FirebaseDatabase, id: String) {
-        val myRef = data.getReference(path)
-
-        // 2 way for deleting data with specified path and key (id)
-        // removeValue is a pre-built Firebase method to delete object
-//        myRef.child(id).removeValue()
-        myRef.child(id).setValue(null)
     }
 }
