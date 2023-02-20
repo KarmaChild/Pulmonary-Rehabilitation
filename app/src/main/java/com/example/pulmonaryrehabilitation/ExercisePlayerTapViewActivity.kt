@@ -21,7 +21,6 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tap_exercise_player)
         ExercisePlayerObject.addExerciseCollection() // for testing
 
-
         // Initialize views
         stepTitle = findViewById<TextView>(R.id.tapStepTitleLabel)
         stepDescription = findViewById<TextView>(R.id.tapStepDescriptionLabel)

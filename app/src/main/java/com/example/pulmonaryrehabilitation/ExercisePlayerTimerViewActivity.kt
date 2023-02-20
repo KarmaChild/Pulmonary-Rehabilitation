@@ -1,6 +1,7 @@
 package com.example.pulmonaryrehabilitation
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.ProgressBar
@@ -35,7 +36,6 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer_exercise_player_view)
 
-
         // Initialize views
         stepTitle = findViewById<TextView>(R.id.stepTitleLabel)
         stepDescription = findViewById<TextView>(R.id.stepDescriptionLabel)
@@ -58,6 +58,10 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         if (step?.javaClass?.kotlin == TimerStep::class) {
             val timerStep = step as TimerStep
             startTimer(timerStep.duration)
+            val pathString = "android.resource://" + packageName + "/" + R.raw.testvideo
+            val uri: Uri = Uri.parse(pathString)
+            videoView.setVideoURI(uri)
+            videoView.start()
         }
     }
     /*
@@ -70,8 +74,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
      */
     fun endStep() {
         ExercisePlayerObject.exercise.goToNextStep()
-
-
+        videoView.stopPlayback()
         val step = getCurrentStep()
         if (step?.javaClass?.kotlin == TapStep::class) {
             val intent = Intent(this@ExercisePlayerTimerViewActivity, ExercisePlayerTapViewActivity::class.java)
