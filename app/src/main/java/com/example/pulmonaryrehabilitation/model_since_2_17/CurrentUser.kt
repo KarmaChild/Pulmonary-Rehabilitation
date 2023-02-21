@@ -1,5 +1,6 @@
 package com.example.pulmonaryrehabilitation.model_since_2_17
 
+import android.util.Log
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 
 /*
@@ -17,6 +18,8 @@ Feb 19, 2023
  */
 object CurrentUser {
     private var data: MemberClass? = null
+    // When searching the logs, "CurrentUser" tag can be used to filter the logs of this class
+    private val logTag: String = "CurrentUser"
 
     /*
     setData Method Specification
@@ -42,10 +45,17 @@ object CurrentUser {
             The goal of the default value is to make it clear that there was an error
 
      */
+
+    fun getUserId(): String {
+        Log.d(logTag, "getUserId invoked")
+        return data?.id ?: "Error"
+    }
     fun getFirstName(): String {
+        Log.d(logTag, "getUserId invoked")
         return data?.firstName ?: "Error"
     }
     fun getLastName(): String {
+
         return data?.lastName ?: "Error"
     }
     fun getStepGoal(): Int {
@@ -64,7 +74,6 @@ object CurrentUser {
         return data?.questionnaireHistory ?: mutableMapOf()
     }
     // END GETTERS
-
 
     // SETTERS
     /*

@@ -12,7 +12,6 @@ import com.google.firebase.ktx.Firebase
 
 class DatabaseMethod : DatabaseInterface {
 
-
     override fun readFromDatabase(path: String, data: FirebaseDatabase) {
         val myRef = data.getReference(path)
         val dataListener = object : ValueEventListener {
@@ -85,7 +84,6 @@ class DatabaseMethod : DatabaseInterface {
         myRef.updateChildren(childUpdates)
     }
 
-
     override fun deleteFromDatabase(path: String, data: FirebaseDatabase, id: String) {
         val myRef = data.getReference(path)
 
@@ -112,7 +110,6 @@ class DatabaseMethod : DatabaseInterface {
         myRef.get().addOnSuccessListener {
 //            Log.i("firebase", "Got value ${it.value}")
             CurrentUser.setData(convertFirebaseDataToMember(it.value as HashMap<String, Any>))
-
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }

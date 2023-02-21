@@ -13,6 +13,7 @@ class CurrestUserTest {
             mutableMapOf("Feb 17 11am" to ModelObject.defaultStepHistory()), mutableMapOf("Feb 16 10am" to ModelObject.defaultQuestionnaireHistory(), "Feb 19 33am" to ModelObject.defaultQuestionnaireHistory())
         )
         CurrentUser.setData(testUser)
+        assertEquals(CurrentUser.getUserId(), "1")
         assertEquals(CurrentUser.getFirstName(), "Georfe")
         assertEquals(CurrentUser.getLastName(), "Scrunkle")
         assertEquals(CurrentUser.getStepGoal(), 5000)
