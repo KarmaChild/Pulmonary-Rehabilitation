@@ -9,7 +9,6 @@ class MemberClass(
     override var firstName: String = "",
     override var lastName: String = "",
     override var username: String = "",
-
     override var email: String = "",
     override var stepGoal: Int,
     override var gamificationHistory: MutableMap<String, GamificationHistoryClass>,
