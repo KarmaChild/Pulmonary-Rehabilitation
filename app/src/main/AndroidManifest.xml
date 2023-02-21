@@ -26,6 +26,10 @@
         <activity
             android:name=".TempExercisePlayerActivity"
             android:exported="false" />
+        <activity android:name=".TestingActivity"
+            android:exported="false" />
+
+
         <activity
             android:name=".VideoViewer"
             android:exported="true" />
