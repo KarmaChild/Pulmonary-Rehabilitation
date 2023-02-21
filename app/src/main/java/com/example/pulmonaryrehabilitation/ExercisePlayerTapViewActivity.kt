@@ -2,7 +2,6 @@ package com.example.pulmonaryrehabilitation
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -14,7 +13,6 @@ import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
 
 class ExercisePlayerTapViewActivity : AppCompatActivity() {
-    private lateinit var timer: CountDownTimer
     private lateinit var detector: GestureDetectorCompat
 
     lateinit var stepTitle: TextView
@@ -37,7 +35,13 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
         }
         startStep()
     }
-
+    /*
+        onTouchEvent Specification
+        This overrides the default onTouchEvent to add swipe detection
+        If the interaction wasn't a swipe it defaults to the built in function
+        Pre-Condition: A user touch event
+        Post-Condition: Boolean that signifies the input was successfully recieved
+         */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event != null) {
             if (detector.onTouchEvent(event!!)) {
@@ -69,40 +73,66 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
         ExercisePlayerObject.exercise.goToNextStep()
         changeStep()
     }
+    /*
+    changeStep Specification
+    Looks at the current step and decides if it needs to change activities or refresh the current one
+    Pre-Condition: None
+    Post-Condition: Show the next step in the current activity or the appropriate one
+     */
     fun changeStep() {
         val step = getCurrentStep()
         if (step?.javaClass?.kotlin == TimerStep::class) {
             val intent = Intent(this@ExercisePlayerTapViewActivity, ExercisePlayerTimerViewActivity::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0) // gets rid of the animation
+        } else if (step == null) {
+            val intent = Intent(this@ExercisePlayerTapViewActivity, DashboardActivity::class.java)
+            startActivity(intent)
         } else {
             startStep()
         }
     }
-
+    /*
+    updateLabelsWithData Specification
+    Pre-Condition: None
+    Post-Condition: Updates the labels in the view with the current steps data
+     */
     fun updateLabelsWithData() {
         val step = getCurrentStep()
         stepTitle.text = step?.stepTitle
         stepDescription.text = step?.instruction
         exerciseName.text = ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.exerciseName
     }
+    /*
+        getCurrentStep Specification
+        Provides a shortcut to the current step so no need to navigate through the objects
+        Pre-Condition: None
+        Post-Condition: Returns null (if no current step) or the current step
 
+         */
     fun getCurrentStep(): ExerciseStep? {
         return ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.getCurrentStep()
     }
+    /*
+    swipeRight/swipeLeft Specifications
+    Goes to the previous or next step respectively
+    Pre-Condition: None
+    Post-Condition: Changes the current step and updates the UI
+     */
     fun swipeRight() {
         ExercisePlayerObject.exercise.goToPreviousStep()
-        val text = getCurrentStep()
+//        val text = getCurrentStep()
         changeStep()
-
-//    startCurrentStep()
     }
     fun swipeLeft() {
         ExercisePlayerObject.exercise.goToNextStep()
-        val test = getCurrentStep()
+//        val test = getCurrentStep()
         changeStep()
     }
-
+    /*
+       SwipeListener Specification
+       This is an inner class who's sole purpose is to add right and left swipes to the activity
+        */
     inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
         override fun onFling(
             downEvent: MotionEvent,
@@ -115,7 +145,7 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
 
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 // left or right swipe
-                if (Math.abs(diffX) > 100) {
+                if (Math.abs(diffX) > 100) { // 100 is the movement threshold to recognize the swipe
                     if (diffX > 0) {
                         // right swipe
                         this@ExercisePlayerTapViewActivity.swipeRight()

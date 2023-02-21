@@ -17,7 +17,6 @@ import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
 
 class ExercisePlayerTimerViewActivity : AppCompatActivity() {
-//    lateinit var exercisePlayer: ExercisePlayer // this will be passed in
     lateinit var timer: CountDownTimer
     private lateinit var detector: GestureDetectorCompat
 
@@ -27,19 +26,11 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     lateinit var videoView: VideoView
     lateinit var exerciseName: TextView
 
-    /*
-    val videoView: VideoView = findViewById(R.id.spikeID)
-        val pathString = "android.resource://" + packageName + "/" + R.raw.spikepvideo
-        val uri: Uri = Uri.parse(pathString)
-        videoView.setVideoURI(uri)
-
-        val mediaController: MediaController = MediaController(this)
-        videoView.setMediaController(mediaController)
-        mediaController.setAnchorView(videoView)
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer_exercise_player_view)
+        detector = GestureDetectorCompat(this, SwipeListener()) // detects user swipes
+        // detector functionality comes from the innerclass SwipeListener()
 
         // Initialize views
         stepTitle = findViewById<TextView>(R.id.stepTitleLabel)
@@ -47,10 +38,16 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         progressBar = findViewById<ProgressBar>(R.id.timerProgressBar)
         videoView = findViewById<VideoView>(R.id.timerVideoView)
         exerciseName = findViewById<TextView>(R.id.timerViewExerciseName)
-        detector = GestureDetectorCompat(this, SwipeListener())
 
         startStep()
     }
+    /*
+    onTouchEvent Specification
+    This overrides the default onTouchEvent to add swipe detection
+    If the interaction wasn't a swipe it defaults to the built in function
+    Pre-Condition: A user touch event
+    Post-Condition: Boolean that signifies the input was successfully recieved
+     */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event != null) {
             if (detector.onTouchEvent(event!!)) {
@@ -75,7 +72,9 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         if (step?.javaClass?.kotlin == TimerStep::class) {
             val timerStep = step as TimerStep
             startTimer(timerStep.duration)
-            val pathString = "android.resource://" + packageName + "/" + R.raw.testvideo
+            // step.video is the enum value of the video and will return R.id.videoName
+            val pathString = "android.resource://" + packageName + "/" + step.video.resource
+
             val uri: Uri = Uri.parse(pathString)
             videoView.setVideoURI(uri)
             videoView.start()
@@ -91,16 +90,26 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
      */
     fun endStep() {
         ExercisePlayerObject.exercise.goToNextStep()
-        videoView.stopPlayback()
         changeStep()
     }
+    /*
+    changeStep Specification
+    Looks at the current step and decides if it needs to change activities or refresh the current one
+    Pre-Condition: None
+    Post-Condition: Show the next step in the current activity or the appropriate one
+     */
     fun changeStep() {
+        // stop the video and timer in case they're still running
+        videoView.stopPlayback()
         timer.cancel()
         val step = getCurrentStep()
         if (step?.javaClass?.kotlin == TapStep::class) {
             val intent = Intent(this@ExercisePlayerTimerViewActivity, ExercisePlayerTapViewActivity::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0) // gets rid of the animation
+        } else if (step == null) {
+            val intent = Intent(this@ExercisePlayerTimerViewActivity, DashboardActivity::class.java)
+            startActivity(intent)
         } else {
             startStep()
         }
@@ -112,7 +121,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         var timeElapsed = 0
         timer = object : CountDownTimer(time.toLong() * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-
+                // update the progress bar
                 timeElapsed += 1
                 progressBar.progress = timeElapsed
             }
@@ -121,14 +130,23 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
             }
         }.start()
     }
-
-    fun updateLabelsWithData() {
+    /*
+    updateLabelsWithData Specification
+    Pre-Condition: None
+    Post-Condition: Updates the labels in the view with the current steps data
+     */
+    private fun updateLabelsWithData() {
         val step = getCurrentStep()
         stepTitle.text = step?.stepTitle
         stepDescription.text = step?.instruction
         exerciseName.text = ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.exerciseName
     }
-    fun updateProgressBarWithData() {
+    /*
+    updateProgressBarWithData Specification
+    Pre-Condition: None
+    Post-Condition: Changes the max of the progress bar to the duration of the step
+     */
+    private fun updateProgressBarWithData() {
         val step = getCurrentStep()
         if (step?.javaClass?.kotlin == TimerStep::class) {
             val timerStep = step as TimerStep
@@ -136,9 +154,22 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
             progressBar.progress = 0
         }
     }
-    fun getCurrentStep(): ExerciseStep? {
+    /*
+    getCurrentStep Specification
+    Provides a shortcut to the current step so no need to navigate through the objects
+    Pre-Condition: None
+    Post-Condition: Returns null (if no current step) or the current step
+
+     */
+    private fun getCurrentStep(): ExerciseStep? {
         return ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.getCurrentStep()
     }
+    /*
+    swipeRight/swipeLeft Specifications
+    Goes to the previous or next step respectively
+    Pre-Condition: None
+    Post-Condition: Changes the current step and updates the UI
+     */
     fun swipeRight() {
         ExercisePlayerObject.exercise.goToPreviousStep()
         changeStep()
@@ -149,6 +180,10 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         ExercisePlayerObject.exercise.goToNextStep()
         changeStep()
     }
+    /*
+    SwipeListener Specification
+    This is an inner class who's sole purpose is to add right and left swipes to the activity
+     */
     inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
         override fun onFling(
             downEvent: MotionEvent,
@@ -161,7 +196,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
 
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 // left or right swipe
-                if (Math.abs(diffX) > 100) {
+                if (Math.abs(diffX) > 100) { // 100 is the threshold for movement
                     if (diffX > 0) {
                         // right swipe
                         this@ExercisePlayerTimerViewActivity.swipeRight()
@@ -177,19 +212,3 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         }
     }
 }
-// goes to the previous step
-// known bug when going from previous exercise, it has an error on tap one but then goes
-// fun previousTapped() {
-//    exercisePlayer.goToPreviousStep()
-//    if (this::timer.isInitialized) {
-//        timer.cancel()
-//    }
-//    startCurrentStep()
-// }
-// fun nextTapped() {
-//    exercisePlayer.goToNextStep()
-//    if (this::timer.isInitialized) {
-//        timer.cancel()
-//    }
-//    startCurrentStep()
-// }
