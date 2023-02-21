@@ -4,10 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TapStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
@@ -16,11 +19,13 @@ import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
 class ExercisePlayerTimerViewActivity : AppCompatActivity() {
 //    lateinit var exercisePlayer: ExercisePlayer // this will be passed in
     lateinit var timer: CountDownTimer
+    private lateinit var detector: GestureDetectorCompat
 
     lateinit var stepTitle: TextView
     lateinit var stepDescription: TextView
     lateinit var progressBar: ProgressBar
     lateinit var videoView: VideoView
+    lateinit var exerciseName: TextView
 
     /*
     val videoView: VideoView = findViewById(R.id.spikeID)
@@ -41,8 +46,20 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         stepDescription = findViewById<TextView>(R.id.stepDescriptionLabel)
         progressBar = findViewById<ProgressBar>(R.id.timerProgressBar)
         videoView = findViewById<VideoView>(R.id.timerVideoView)
+        exerciseName = findViewById<TextView>(R.id.timerViewExerciseName)
+        detector = GestureDetectorCompat(this, SwipeListener())
 
         startStep()
+    }
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event != null) {
+            if (detector.onTouchEvent(event!!)) {
+                return true
+            } else {
+                return super.onTouchEvent(event)
+            }
+        }
+        return super.onTouchEvent(event)
     }
     /*
     startStep Specification
@@ -75,6 +92,10 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     fun endStep() {
         ExercisePlayerObject.exercise.goToNextStep()
         videoView.stopPlayback()
+        changeStep()
+    }
+    fun changeStep() {
+        timer.cancel()
         val step = getCurrentStep()
         if (step?.javaClass?.kotlin == TapStep::class) {
             val intent = Intent(this@ExercisePlayerTimerViewActivity, ExercisePlayerTapViewActivity::class.java)
@@ -105,6 +126,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
         val step = getCurrentStep()
         stepTitle.text = step?.stepTitle
         stepDescription.text = step?.instruction
+        exerciseName.text = ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.exerciseName
     }
     fun updateProgressBarWithData() {
         val step = getCurrentStep()
@@ -116,6 +138,43 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     }
     fun getCurrentStep(): ExerciseStep? {
         return ExercisePlayerObject.exercise.exerciseRoutine.getCurrentExercise()?.getCurrentStep()
+    }
+    fun swipeRight() {
+        ExercisePlayerObject.exercise.goToPreviousStep()
+        changeStep()
+
+//    startCurrentStep()
+    }
+    fun swipeLeft() {
+        ExercisePlayerObject.exercise.goToNextStep()
+        changeStep()
+    }
+    inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
+        override fun onFling(
+            downEvent: MotionEvent,
+            moveEvent: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            var diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
+            var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // left or right swipe
+                if (Math.abs(diffX) > 100) {
+                    if (diffX > 0) {
+                        // right swipe
+                        this@ExercisePlayerTimerViewActivity.swipeRight()
+                    } else {
+                        // left swipe
+                        this@ExercisePlayerTimerViewActivity.swipeLeft()
+                    }
+                } else {
+                    return super.onFling(downEvent, moveEvent, velocityX, velocityY)
+                }
+            }
+            return super.onFling(downEvent, moveEvent, velocityX, velocityY)
+        }
     }
 }
 // goes to the previous step
