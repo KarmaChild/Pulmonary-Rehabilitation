@@ -2,6 +2,8 @@ package com.example.pulmonaryrehabilitation.model_since_2_17
 
 import android.util.Log
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 /*
 CurrentUser Object Specification
@@ -48,7 +50,14 @@ object CurrentUser {
 
     fun getUserId(): String {
         Log.d(logTag, "getUserId() invoked")
-        return data?.id ?: "Error"
+        val user = Firebase.auth.currentUser
+        return if (user != null) {
+            user.uid
+        } else {
+            // user not signed in
+            Log.e(logTag, "user not signed in")
+            "Error"
+        }
     }
     fun getFirstName(): String {
         Log.d(logTag, "getFirstName() invoked")
