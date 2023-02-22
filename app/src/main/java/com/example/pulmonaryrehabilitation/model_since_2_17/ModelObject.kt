@@ -31,15 +31,15 @@ object ModelObject {
     }
 
     fun defaultGamificationHistory(): GamificationHistoryClass {
-        return GamificationHistoryClass("499", "404")
+        return GamificationHistoryClass("game1", "game2")
     }
 
     fun defaultUsageHistory(): UsageHistoryClass {
-        return UsageHistoryClass("499", "404")
+        return UsageHistoryClass("usage1", "usage2")
     }
 
     fun defaultStepHistory(): StepHistoryClass {
-        return StepHistoryClass("499", "404")
+        return StepHistoryClass("step1", "step2")
     }
     fun defaultQuestionnaireHistory(): QuestionnaireHistoryClass {
         return QuestionnaireHistoryClass("I am a question", "I am their answer")

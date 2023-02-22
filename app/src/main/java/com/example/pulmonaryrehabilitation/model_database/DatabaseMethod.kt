@@ -170,7 +170,10 @@ class DatabaseMethod : DatabaseInterface {
     fun updateStepHistoryFor(id: String, newHistory: Map<String, StepHistoryClass>) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/stepHistory")
-        myReference.setValue(newHistory)
+        val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
+        newHistory.values.forEach {
+            myReference.child(childName).setValue(it)
+        }
     }
     fun updateQuestionnaireHistoryFor(
         id: String,
@@ -186,11 +189,17 @@ class DatabaseMethod : DatabaseInterface {
     fun updateUsageHistoryFor(id: String, newHistory: Map<String, UsageHistoryClass>) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/usageHistory")
-        myReference.setValue(newHistory)
+        val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
+        newHistory.values.forEach {
+            myReference.child(childName).setValue(it)
+        }
     }
     fun updateGamificationHistory(id: String, newHistory: Map<String, GamificationHistoryClass>) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/gamificationHistory")
-        myReference.setValue(newHistory)
+        val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
+        newHistory.values.forEach {
+            myReference.child(childName).setValue(it)
+        }
     }
 }

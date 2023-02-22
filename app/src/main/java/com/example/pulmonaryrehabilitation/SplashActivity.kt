@@ -1,5 +1,4 @@
 package com.example.pulmonaryrehabilitation
-
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -44,5 +43,13 @@ class SplashActivity : AppCompatActivity() {
 
         // Ian's testing below
         DatabaseMethod().getUserDataFor("1", database)
+//        val test1 = mutableMapOf(CurrentUser.getCurrentDateTime() to ModelObject.defaultStepHistory())
+//        DatabaseMethod().updateStepHistoryFor("1", test1)
+//
+//        val test2 = mutableMapOf(CurrentUser.getCurrentDateTime() to ModelObject.defaultGamificationHistory())
+//        DatabaseMethod().updateGamificationHistory("1", test2)
+//
+//        val test3 = mutableMapOf(CurrentUser.getCurrentDateTime() to ModelObject.defaultUsageHistory())
+//        DatabaseMethod().updateUsageHistoryFor("1", test3)
     }
 }
