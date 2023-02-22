@@ -1,12 +1,9 @@
 package com.example.pulmonaryrehabilitation
-
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
-import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
-import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
