@@ -21,7 +21,8 @@ class MemberClass(
         // TODO update this
         return "MemberClass(id='$id', username='$username'," +
             " email='$email', gamificationHistory=$gamificationHistory, " +
-            "usageHistory=$usageHistory, stepHistory=$stepHistory)"
+            "usageHistory=$usageHistory, stepHistory=$stepHistory) ," +
+            "questionnaireHistory=$questionnaireHistory"
     }
 
     @Exclude
