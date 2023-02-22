@@ -155,33 +155,33 @@ object CurrentUser {
     fun addStepHistory(numberSteps: Int) {
         Log.d(LOG_TAG, "addStepHistory() invoked")
         if (data != null) {
-            data!!.stepHistory.put("Timestamp", StepHistoryClass(numberSteps.toString(), ""))
+            val timestamp: String = getCurrentDateTime()
+            data!!.stepHistory.put(timestamp, StepHistoryClass(numberSteps.toString(), ""))
             DatabaseMethod().updateStepHistoryFor(data!!.id, data!!.stepHistory)
         }
     }
-
     fun addQuestionnaireHistory(question: String, answer: String) {
         Log.d(LOG_TAG, "addQuestionnaireHistory() invoked")
-
-        val currentDateTime: String = getCurrentDateTime()
-
+        val timestamp: String = getCurrentDateTime()
         if (data != null) {
-            data!!.questionnaireHistory[currentDateTime] =
+            data!!.questionnaireHistory[timestamp] =
                 QuestionnaireHistoryClass(question, answer)
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, data!!.questionnaireHistory)
         }
     }
     fun addUsageHistory(exerciseDone: String) {
         Log.d(LOG_TAG, "addUsageHistory() invoked")
+        val timestamp: String = getCurrentDateTime()
         if (data != null) {
-            data!!.usageHistory.put("Timestamp", UsageHistoryClass(exerciseDone, ""))
+            data!!.usageHistory.put(timestamp, UsageHistoryClass(exerciseDone, ""))
             DatabaseMethod().updateUsageHistoryFor(data!!.id, data!!.usageHistory)
         }
     }
     fun addGamificationHistory(event: String, points: String) {
         Log.d(LOG_TAG, "addGamificationHistory() invoked")
         if (data != null) {
-            data!!.gamificationHistory.put("Timestamp", GamificationHistoryClass(event, points))
+            val timestamp: String = getCurrentDateTime()
+            data!!.gamificationHistory.put(timestamp, GamificationHistoryClass(event, points))
             DatabaseMethod().updateGamificationHistory(data!!.id, data!!.gamificationHistory)
         }
     }
