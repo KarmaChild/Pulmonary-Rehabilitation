@@ -4,6 +4,9 @@ import android.util.Log
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 /*
 CurrentUser Object Specification
@@ -21,7 +24,7 @@ Feb 19, 2023
 object CurrentUser {
     private var data: MemberClass? = null
     // When searching the logs, "CurrentUser" tag can be used to filter the logs of this class
-    private val logTag: String = "CurrentUser"
+    private const val LOG_TAG: String = "CurrentUser"
 
     /*
     setData Method Specification
@@ -49,42 +52,57 @@ object CurrentUser {
      */
 
     fun getUserId(): String {
-        Log.d(logTag, "getUserId() invoked")
+        Log.d(LOG_TAG, "getUserId() invoked")
         val user = Firebase.auth.currentUser
         return if (user != null) {
             user.uid
         } else {
             // user not signed in
-            Log.e(logTag, "user not signed in")
+            Log.e(LOG_TAG, "user not signed in")
             "Error"
         }
     }
     fun getFirstName(): String {
-        Log.d(logTag, "getFirstName() invoked")
+        Log.d(LOG_TAG, "getFirstName() invoked")
         return data?.firstName ?: "Error"
     }
     fun getLastName(): String {
-        Log.d(logTag, "getLastName() invoked")
+        Log.d(LOG_TAG, "getLastName() invoked")
         return data?.lastName ?: "Error"
     }
     fun getStepGoal(): Int {
-        Log.d(logTag, "getStepGoal() invoked")
+        Log.d(LOG_TAG, "getStepGoal() invoked")
         return data?.stepGoal ?: -9999
     }
     fun getStepHistory(): Map<String, StepHistoryClass> {
-        Log.d(logTag, "getStepHistory() invoked")
+        Log.d(LOG_TAG, "getStepHistory() invoked")
         return data?.stepHistory ?: mutableMapOf()
     }
     fun getGamificationHistory(): Map<String, GamificationHistoryClass> {
-        Log.d(logTag, "getGamificationHistory() invoked")
+        Log.d(LOG_TAG, "getGamificationHistory() invoked")
         return data?.gamificationHistory ?: mutableMapOf()
     }
     fun getUsageHistory(): Map<String, UsageHistoryClass> {
-        Log.d(logTag, "getUsageHistory() invoked")
+        Log.d(LOG_TAG, "getUsageHistory() invoked")
         return data?.usageHistory ?: mutableMapOf()
     }
+
+    /*
+    Specification for getCurrentDateTime
+        Pre-Condition: None
+        Post-Condition:
+            It will return the current UTC time in "yyyy-MM-dd HH:mm:ss:SSSSSS" format as a String
+     */
+    fun getCurrentDateTime(): String {
+        Log.d(LOG_TAG, "getCurrentDateTime() invoked")
+
+        return DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss:SSSSSS")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.now())
+    }
     fun getQuestionnaireHistory(): Map<String, QuestionnaireHistoryClass> {
-        Log.d(logTag, "getQuestionnaireHistory() invoked")
+        Log.d(LOG_TAG, "getQuestionnaireHistory() invoked")
         return data?.questionnaireHistory ?: mutableMapOf()
     }
     // END GETTERS
@@ -106,7 +124,7 @@ object CurrentUser {
 
      */
     fun setFirstName(newName: String) {
-        Log.d(logTag, "setFirstName() invoked")
+        Log.d(LOG_TAG, "setFirstName() invoked")
         if (data != null) {
             data?.firstName = newName
             DatabaseMethod().updateFirstNameFor(data!!.id, newName)
@@ -114,49 +132,54 @@ object CurrentUser {
     }
 
     fun setLastName(newName: String) {
-        Log.d(logTag, "setLastName() invoked")
+        Log.d(LOG_TAG, "setLastName() invoked")
         if (data != null) {
             data?.lastName = newName
             DatabaseMethod().updateLastNameFor(data!!.id, newName)
         }
     }
     fun setAdminStatus(newStatus: Boolean) {
-        Log.d(logTag, "setAdminStatus() invoked")
+        Log.d(LOG_TAG, "setAdminStatus() invoked")
         if (data != null) {
             data?.isAdmin = newStatus
             DatabaseMethod().updateAdminStatusFor(data!!.id, newStatus)
         }
     }
     fun setGoal(newGoal: Int) {
-        Log.d(logTag, "setGoal() invoked")
+        Log.d(LOG_TAG, "setGoal() invoked")
         if (data != null) {
             data?.stepGoal = newGoal
             DatabaseMethod().updateStepCountGoalFor(data!!.id, newGoal)
         }
     }
     fun addStepHistory(numberSteps: Int) {
-        Log.d(logTag, "addStepHistory() invoked")
+        Log.d(LOG_TAG, "addStepHistory() invoked")
         if (data != null) {
             data!!.stepHistory.put("Timestamp", StepHistoryClass(numberSteps.toString(), ""))
             DatabaseMethod().updateStepHistoryFor(data!!.id, data!!.stepHistory)
         }
     }
+
     fun addQuestionnaireHistory(question: String, answer: String) {
-        Log.d(logTag, "addQuestionnaireHistory() invoked")
+        Log.d(LOG_TAG, "addQuestionnaireHistory() invoked")
+
+        val currentDateTime: String = getCurrentDateTime()
+
         if (data != null) {
-            data!!.questionnaireHistory.put("Timestamp", QuestionnaireHistoryClass(question, answer))
+            data!!.questionnaireHistory[currentDateTime] =
+                QuestionnaireHistoryClass(question, answer)
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, data!!.questionnaireHistory)
         }
     }
     fun addUsageHistory(exerciseDone: String) {
-        Log.d(logTag, "addUsageHistory() invoked")
+        Log.d(LOG_TAG, "addUsageHistory() invoked")
         if (data != null) {
             data!!.usageHistory.put("Timestamp", UsageHistoryClass(exerciseDone, ""))
             DatabaseMethod().updateUsageHistoryFor(data!!.id, data!!.usageHistory)
         }
     }
     fun addGamificationHistory(event: String, points: String) {
-        Log.d(logTag, "addGamificationHistory() invoked")
+        Log.d(LOG_TAG, "addGamificationHistory() invoked")
         if (data != null) {
             data!!.gamificationHistory.put("Timestamp", GamificationHistoryClass(event, points))
             DatabaseMethod().updateGamificationHistory(data!!.id, data!!.gamificationHistory)
