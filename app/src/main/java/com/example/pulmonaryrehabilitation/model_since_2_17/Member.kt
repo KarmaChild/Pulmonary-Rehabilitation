@@ -6,7 +6,6 @@ interface Member {
     var firstName: String
     var lastName: String
     var username: String
-//    var password: String
     var email: String
     var stepGoal: Int
     var gamificationHistory: MutableMap<String, GamificationHistoryClass>
