@@ -1,9 +1,15 @@
 package com.example.pulmonaryrehabilitation.model_since_2_17
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 /*
 CurrentUser Object Specification
@@ -141,10 +147,18 @@ object CurrentUser {
             DatabaseMethod().updateStepHistoryFor(data!!.id, data!!.stepHistory)
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addQuestionnaireHistory(question: String, answer: String) {
+        val currentDateTime: String = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.now())
+
         Log.d(logTag, "addQuestionnaireHistory() invoked")
+
         if (data != null) {
-            data!!.questionnaireHistory.put("Timestamp", QuestionnaireHistoryClass(question, answer))
+            data!!.questionnaireHistory[currentDateTime] =
+                QuestionnaireHistoryClass(question, answer)
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, data!!.questionnaireHistory)
         }
     }
