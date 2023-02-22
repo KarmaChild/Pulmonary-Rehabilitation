@@ -108,7 +108,7 @@ class DatabaseMethod : DatabaseInterface {
     fun getUserDataFor(id: String, database: FirebaseDatabase) {
         val myRef = database.getReference("Member/$id")
         myRef.get().addOnSuccessListener {
-//            Log.i("firebase", "Got value ${it.value}")
+            Log.i("firebase", "Got value ${it.value}")
             CurrentUser.setData(convertFirebaseDataToMember(it.value as HashMap<String, Any>))
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
@@ -178,7 +178,10 @@ class DatabaseMethod : DatabaseInterface {
     ) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/questionnaireHistory")
-        myReference.setValue(newHistory)
+        val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
+        newHistory.values.forEach {
+            myReference.child(childName).setValue(it)
+        }
     }
     fun updateUsageHistoryFor(id: String, newHistory: Map<String, UsageHistoryClass>) {
         val database = Firebase.database
