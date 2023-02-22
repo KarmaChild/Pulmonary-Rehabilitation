@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
+import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
+import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -44,5 +46,13 @@ class SplashActivity : AppCompatActivity() {
 
         // Ian's testing below
         DatabaseMethod().getUserDataFor("1", database)
+//        val test1 = mutableMapOf(CurrentUser.getCurrentDateTime() to ModelObject.defaultStepHistory())
+//        DatabaseMethod().updateStepHistoryFor("1", test1)
+//
+//        val test2 = mutableMapOf(CurrentUser.getCurrentDateTime() to ModelObject.defaultGamificationHistory())
+//        DatabaseMethod().updateGamificationHistory("1", test2)
+//
+//        val test3 = mutableMapOf(CurrentUser.getCurrentDateTime() to ModelObject.defaultUsageHistory())
+//        DatabaseMethod().updateUsageHistoryFor("1", test3)
     }
 }
