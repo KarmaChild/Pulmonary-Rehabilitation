@@ -2,6 +2,7 @@ package com.example.pulmonaryrehabilitation
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -11,6 +12,7 @@ import androidx.core.view.GestureDetectorCompat
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
+import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
 
 class ExercisePlayerTapViewActivity : AppCompatActivity() {
     private lateinit var detector: GestureDetectorCompat
@@ -22,8 +24,8 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("Exercise Player", "Tap Step Started")
         setContentView(R.layout.activity_tap_exercise_player)
-        ExercisePlayerObject.addExerciseCollection() // for testing
         detector = GestureDetectorCompat(this, SwipeListener())
         // Initialize views
         stepTitle = findViewById<TextView>(R.id.tapStepTitleLabel)
@@ -82,13 +84,18 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
     fun changeStep() {
         val step = getCurrentStep()
         if (step?.javaClass?.kotlin == TimerStep::class) {
+            Log.i("Change Step", "New step is timer step (From tap step)")
             val intent = Intent(this@ExercisePlayerTapViewActivity, ExercisePlayerTimerViewActivity::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0) // gets rid of the animation
         } else if (step == null) {
+            Log.i("Change Step", "No new step, end routine (From tap step)")
+            CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)
+            // Saves the collection name in Firebase when finished
             val intent = Intent(this@ExercisePlayerTapViewActivity, DashboardActivity::class.java)
             startActivity(intent)
         } else {
+            Log.i("Change Step", "New step is tap step (Currently tap step)")
             startStep()
         }
     }
@@ -153,7 +160,9 @@ class ExercisePlayerTapViewActivity : AppCompatActivity() {
                         // left swipe
                         this@ExercisePlayerTapViewActivity.swipeLeft()
                     }
+                    Log.i("Swipe Gesture", "Successful Swipe Gesture")
                 } else {
+                    Log.i("Swipe Gesture", "Swipe was not long enough (${Math.abs(diffX)})")
                     return super.onFling(downEvent, moveEvent, velocityX, velocityY)
                 }
             }
