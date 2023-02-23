@@ -38,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
 
 //        // transitioning from splashActivity to EmailLoginActivity with 2000ms delayed
         Handler().postDelayed({
-            startActivity(Intent(this, TestingActivity::class.java))
+            startActivity(Intent(this, EmailLoginActivity::class.java))
         }, 2000)
 
         // Ian's testing below
