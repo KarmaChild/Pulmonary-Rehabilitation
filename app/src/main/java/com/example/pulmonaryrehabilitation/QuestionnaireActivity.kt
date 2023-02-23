@@ -12,7 +12,6 @@ import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
 import com.example.pulmonaryrehabilitation.model_since_2_17.QuestionnaireHistoryClass
 
-
 class QuestionnaireActivity : AppCompatActivity() {
     private val currentUser = CurrentUser.getUserId()
 
