@@ -18,8 +18,6 @@
 
         <gradient
             android:angle="45"
-            android:centerX="float"
-            android:centerY="float"
             android:endColor="#F7F6F6"
             android:gradientRadius="integer"
             android:startColor="#FFEB3B"
