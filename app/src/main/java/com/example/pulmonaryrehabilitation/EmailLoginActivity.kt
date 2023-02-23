@@ -43,7 +43,7 @@ class EmailLoginActivity : AppCompatActivity() {
 
     // passed manual testing
     // check if the user's input if it already on the database, if so allow users to sign in
-    fun authentication(email: String, password: String) {
+    private fun authentication(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             // log in sing firebase
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
