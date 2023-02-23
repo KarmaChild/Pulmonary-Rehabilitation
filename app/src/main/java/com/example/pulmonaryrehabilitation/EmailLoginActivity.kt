@@ -55,7 +55,7 @@ class EmailLoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         // login is successful takes user to main menu
-                        val intent = Intent(this, DashboardActivity :: class.java)
+                        val intent = Intent(this, QuestionnaireActivity :: class.java)
                         // gets rid of extra layer of activities in stack
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                             Intent.FLAG_ACTIVITY_CLEAR_TASK
