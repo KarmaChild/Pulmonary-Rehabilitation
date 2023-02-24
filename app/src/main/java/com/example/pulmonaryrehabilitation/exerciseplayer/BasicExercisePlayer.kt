@@ -71,8 +71,11 @@ class BasicExercisePlayer(
     override fun goToPreviousStep(): ExerciseStep? {
         if (exerciseRoutine.getCurrentExercise()?.goToPreviousStep() == null) {
             exerciseRoutine.goToPreviousExercise()
-            return exerciseRoutine.getCurrentExercise()?.getCurrentStep()
+            // should this go to the last step of the previous exercise, or the start of the previous exercise
+//            exerciseRoutine.getCurrentExercise()?.resetStacks()
+            exerciseRoutine.getCurrentExercise()?.goToPreviousStep() // goes to the last step of the previous exercise
         }
+        val test = exerciseRoutine.getCurrentExercise()
 
         return exerciseRoutine.getCurrentExercise()?.getCurrentStep()
     }

@@ -36,9 +36,9 @@ class MemberClass(
             "email" to email,
             "stepGoal" to stepGoal,
             "gamificationHistory" to gamificationHistory,
-            "usageHistory" to usageHistory,
-            "stepHistory" to stepHistory,
-            "questionnaireHistory" to questionnaireHistory
+//            "usageHistory" to usageHistory,
+//            "stepHistory" to stepHistory,
+//            "questionnaireHistory" to questionnaireHistory
         )
     }
 }
