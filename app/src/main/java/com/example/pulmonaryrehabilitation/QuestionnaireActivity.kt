@@ -45,6 +45,5 @@ class QuestionnaireActivity : AppCompatActivity() {
     private fun addAnswerToFirebaseDB(question: String, answer: String) {
         CurrentUser.addQuestionnaireHistory(question, answer)
         Log.d("QuestionnaireActivity", "current questionnaire history - " + CurrentUser.getQuestionnaireHistory().toString())
-        CurrentUser.addUsageHistory(question)
     }
 }

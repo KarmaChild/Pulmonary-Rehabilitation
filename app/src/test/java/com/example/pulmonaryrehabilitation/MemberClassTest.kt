@@ -2,7 +2,6 @@ package com.example.pulmonaryrehabilitation
 
 import com.example.pulmonaryrehabilitation.model_since_2_17.MemberClass
 import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
-import org.junit.Assert.*
 import org.junit.Test
 
 class MemberClassTest {
@@ -56,5 +55,4 @@ class MemberClassTest {
 //            memberClass.toMemberMap()
 //        )
     }
-
 }
