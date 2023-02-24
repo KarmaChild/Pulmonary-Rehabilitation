@@ -56,4 +56,5 @@ class MemberClassTest {
 //            memberClass.toMemberMap()
 //        )
     }
+
 }
