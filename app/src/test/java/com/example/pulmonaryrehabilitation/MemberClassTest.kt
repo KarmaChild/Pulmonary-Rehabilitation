@@ -2,11 +2,10 @@ package com.example.pulmonaryrehabilitation
 
 import com.example.pulmonaryrehabilitation.model_since_2_17.MemberClass
 import com.example.pulmonaryrehabilitation.model_since_2_17.ModelObject
-import org.junit.Assert.*
 import org.junit.Test
 
 class MemberClassTest {
-// NOTE: This is out of date, needs to be updated.
+    // NOTE: This is out of date, needs to be updated.
     private val memberClass = MemberClass(
         "1", true, "Georfe", "Scrunkle", "user1", "example@admin.com", 5000, mutableMapOf("Feb 19 9am" to ModelObject.defaultGamificationHistory()),
         mutableMapOf("Feb 17 10am" to ModelObject.defaultUsageHistory(), "Feb 17 11am" to ModelObject.defaultUsageHistory()),

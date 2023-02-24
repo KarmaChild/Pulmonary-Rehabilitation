@@ -5,7 +5,7 @@ import com.google.firebase.database.Exclude
 // create Member class to read from and write to the database
 class MemberClass(
     override var id: String = "",
-    override var isAdmin: Boolean = false,
+    override var isAdmin: Boolean? = false,
     override var firstName: String = "",
     override var lastName: String = "",
     override var username: String = "",
@@ -19,14 +19,15 @@ class MemberClass(
 
     override fun toString(): String {
         // TODO update this
-        return "MemberClass(id='$id', username='$username'," +
-            " email='$email', gamificationHistory=$gamificationHistory, " +
+        return "MemberClass(id='$id', isAdmin=$isAdmin, firstName=$firstName, lastName=$lastName," +
+            "  username='$username'," +
+            " email='$email', stepGoal=$stepGoal, gamificationHistory=$gamificationHistory, " +
             "usageHistory=$usageHistory, stepHistory=$stepHistory) ," +
             "questionnaireHistory=$questionnaireHistory"
     }
 
     @Exclude
-    override fun toMemberMap(): Map<String, Any> {
+    override fun toMemberMap(): Map<String, Any?> {
         return mapOf(
             "id" to id,
             "isAdmin" to isAdmin,

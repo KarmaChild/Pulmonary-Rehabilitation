@@ -105,11 +105,12 @@ class DatabaseMethod : DatabaseInterface {
 
     Note: there is a 99.9% chance you shouldn't call this function in your code.
      */
-    fun getUserDataFor(id: String, database: FirebaseDatabase) {
+    fun getUserDataFor(id: String) {
+        val database = Firebase.database
         val myRef = database.getReference("Member/$id")
         myRef.get().addOnSuccessListener {
-            Log.i("firebase", "Got value ${it.value}")
-            CurrentUser.setData(convertFirebaseDataToMember(it.value as HashMap<String, Any>))
+            Log.i("getUserDataFor", "Got value ${it.value}")
+            CurrentUser.setData(convertFirebaseDataToMember(it.value as Map<String, Any?>))
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
@@ -122,15 +123,16 @@ class DatabaseMethod : DatabaseInterface {
     Post-Condition
          returns a MemberClass object populated with the data
      */
-    private fun convertFirebaseDataToMember(data: HashMap<String, Any>): MemberClass? {
+    private fun convertFirebaseDataToMember(data: Map<String, Any?>): MemberClass? {
+        Log.d("convertFirebaseDataToMember", data.toString())
         val member = MemberClass(
-            data.get("id") as String, data.get("isAdmin") as Boolean, data.get("firstName") as String,
-            data.get("lastName") as String, data.get("username") as String, data.get("email") as String,
-            (data.get("stepGoal") as Long).toInt(),
-            data.get("gamificationHistory") as MutableMap<String, GamificationHistoryClass>,
-            data.get("usageHistory") as MutableMap<String, UsageHistoryClass>,
-            data.get("stepHistory") as MutableMap<String, StepHistoryClass>,
-            data.get("questionnaireHistory") as MutableMap<String, QuestionnaireHistoryClass>
+            data["id"] as String, data["isAdmin"] as Boolean?, data["firstName"] as String,
+            data["lastName"] as String, data.get("username") as String, data.get("email") as String,
+            (data["stepGoal"] as Long).toInt(),
+            data["gamificationHistory"] as MutableMap<String, GamificationHistoryClass>,
+            data["usageHistory"] as MutableMap<String, UsageHistoryClass>,
+            data["stepHistory"] as MutableMap<String, StepHistoryClass>,
+            data["questionnaireHistory"] as MutableMap<String, QuestionnaireHistoryClass>
         )
         return member
     }

@@ -11,7 +11,7 @@ class QuestionnaireHistoryClass(
     }
 
     @Exclude
-    fun toQuestionnaireHistoryMap(): Map<String, Any> {
+    override fun toQuestionnaireHistoryMap(): Map<String, Any> {
         return mapOf(
             "question" to question,
             "answer" to answer
