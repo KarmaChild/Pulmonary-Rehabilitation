@@ -19,9 +19,9 @@ class MemberClass(
 
     override fun toString(): String {
         // TODO update this
-        return "MemberClass(id='$id', isAdmin=$isAdmin, firstName=$firstName, lastName=$lastName," +
-            "  username='$username'," +
-            " email='$email', stepGoal=$stepGoal, gamificationHistory=$gamificationHistory, " +
+        return "MemberClass(id=$id, isAdmin=$isAdmin, firstName=$firstName, lastName=$lastName," +
+            " username=$username," +
+            " email=$email, stepGoal=$stepGoal, gamificationHistory=$gamificationHistory, " +
             "usageHistory=$usageHistory, stepHistory=$stepHistory) ," +
             "questionnaireHistory=$questionnaireHistory"
     }
