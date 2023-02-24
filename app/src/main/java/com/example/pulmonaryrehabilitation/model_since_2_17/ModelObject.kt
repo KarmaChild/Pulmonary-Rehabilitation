@@ -35,7 +35,7 @@ object ModelObject {
     }
 
     fun defaultUsageHistory(): UsageHistoryClass {
-        return UsageHistoryClass("usage1")
+        return UsageHistoryClass("usage1", "usage2")
     }
 
     fun defaultStepHistory(): StepHistoryClass {

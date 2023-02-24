@@ -176,12 +176,16 @@ object CurrentUser {
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, newHistory)
         }
     }
+
+    // Currently adding 2 items to usage history. Will need to redo this after we get more
+    // info about usage from the stakeholder
     fun addUsageHistory(exerciseDone: String) {
         Log.d(LOG_TAG, "addUsageHistory() invoked")
         val timestamp: String = getCurrentDateTime()
         if (data != null) {
-            data!!.usageHistory[timestamp] = UsageHistoryClass(exerciseDone)
-            DatabaseMethod().updateUsageHistoryFor(data!!.id, data!!.usageHistory)
+            data!!.usageHistory[timestamp] = UsageHistoryClass(exerciseDone, "item2")
+            val newHistory = mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
+            DatabaseMethod().updateUsageHistoryFor(data!!.id, newHistory)
         }
     }
     fun addGamificationHistory(event: String, points: String) {
