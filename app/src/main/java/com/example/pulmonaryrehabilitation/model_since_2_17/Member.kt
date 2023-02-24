@@ -2,7 +2,7 @@ package com.example.pulmonaryrehabilitation.model_since_2_17
 
 interface Member {
     var id: String
-    var isAdmin: Boolean
+    var isAdmin: Boolean?
     var firstName: String
     var lastName: String
     var username: String
@@ -18,5 +18,5 @@ interface Member {
 //    fun iterateUsageHistoryMap(map: Map<String, UsageHistoryClass>): String
 //    fun iterateStepHistoryMap(map: Map<String, StepHistoryClass>): String
 
-    fun toMemberMap(): Map<String, Any>
+    fun toMemberMap(): Map<String, Any?>
 }
