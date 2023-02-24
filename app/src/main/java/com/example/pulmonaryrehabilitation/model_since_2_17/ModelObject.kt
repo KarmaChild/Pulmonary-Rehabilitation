@@ -35,11 +35,11 @@ object ModelObject {
     }
 
     fun defaultUsageHistory(): UsageHistoryClass {
-        return UsageHistoryClass("usage1", "usage2")
+        return UsageHistoryClass("usage1")
     }
 
     fun defaultStepHistory(): StepHistoryClass {
-        return StepHistoryClass("step1", "step2")
+        return StepHistoryClass("step1")
     }
     fun defaultQuestionnaireHistory(): QuestionnaireHistoryClass {
         return QuestionnaireHistoryClass("I am a question", "I am their answer")
