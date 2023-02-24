@@ -3,23 +3,22 @@ package com.example.pulmonaryrehabilitation
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
-import com.example.pulmonaryrehabilitation.model_since_2_17.QuestionnaireHistoryClass
 
 class QuestionnaireActivity : AppCompatActivity() {
-    private val currentUser = CurrentUser.getUserId()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_questionnaire)
         val userName = CurrentUser.getFirstName()
+        Log.d("QuestionnaireActivity", CurrentUser.toString())
         val titleString = "I have a question for you, $userName "
         val title = findViewById<TextView>(R.id.title)
         title.text = titleString
@@ -44,9 +43,7 @@ class QuestionnaireActivity : AppCompatActivity() {
     }
 
     private fun addAnswerToFirebaseDB(question: String, answer: String) {
-        val currentTime = CurrentUser.getCurrentDateTime()
-        val questionAnswer = QuestionnaireHistoryClass(question, answer)
-        val map = mutableMapOf(currentTime to questionAnswer)
-        DatabaseMethod().updateQuestionnaireHistoryFor(currentUser, map)
+        CurrentUser.addQuestionnaireHistory(question, answer)
+        Log.d("QuestionnaireActivity", "current questionnaire history - " + CurrentUser.getQuestionnaireHistory().toString())
     }
 }
