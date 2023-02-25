@@ -22,7 +22,8 @@ class MemberClassTest {
         mutableMapOf(
             "Feb 16 10am" to ModelObject.defaultQuestionnaireHistory(),
             "Feb 19 33am" to ModelObject.defaultQuestionnaireHistory()
-        )
+        ),
+        ""
     )
 
     @Test
@@ -40,7 +41,7 @@ class MemberClassTest {
                 "stepHistory={Feb 17 11am={stepCount='step1'}}) ," +
                 "questionnaireHistory={Feb 16 10am={question='I am a question', " +
                 "answer='I am their answer'}, Feb 19 33am={question='I am a question', " +
-                "answer='I am their answer'}}",
+                "answer='I am their answer'}}, lastQuestionnaireDate=",
             memberClass.toString()
         )
     }

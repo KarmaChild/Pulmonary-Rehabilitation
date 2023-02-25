@@ -16,7 +16,6 @@ class MemberClass(
     override var stepHistory: MutableMap<String, StepHistoryClass>,
     override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>,
     override var lastQuestionnaireDate: String?
-    // add tostring
 ) : Member {
 
     override fun toString(): String {
@@ -25,7 +24,7 @@ class MemberClass(
             " username=$username," +
             " email=$email, stepGoal=$stepGoal, gamificationHistory=$gamificationHistory, " +
             "usageHistory=$usageHistory, stepHistory=$stepHistory) ," +
-            "questionnaireHistory=$questionnaireHistory"
+            "questionnaireHistory=$questionnaireHistory, lastQuestionnaireDate=$lastQuestionnaireDate"
     }
 
     @Exclude
