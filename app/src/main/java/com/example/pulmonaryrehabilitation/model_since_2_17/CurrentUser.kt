@@ -5,6 +5,7 @@ import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.time.Instant
+import java.util.concurrent.TimeUnit
 
 /*
 CurrentUser Object Specification
@@ -102,6 +103,13 @@ object CurrentUser {
         Log.d(LOG_TAG, "getLastQuestionnaireDate() invoked")
 
         return data?.lastQuestionnaireDate?.toLong()
+    }
+
+    fun daysSinceLastQuestionnaire(lastQuestionnaireDate: Long?, daysSince: Long): Boolean {
+        val currentTime: Long = getCurrentDateTime().toLong()
+        val daysToSubtract = TimeUnit.DAYS.toMillis(daysSince)
+
+        return (currentTime - daysToSubtract) > lastQuestionnaireDate!!
     }
 
     fun parseDate(date: Long) {
