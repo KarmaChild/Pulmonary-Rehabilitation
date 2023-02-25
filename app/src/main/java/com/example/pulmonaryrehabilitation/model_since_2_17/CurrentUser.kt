@@ -5,8 +5,6 @@ import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 /*
 CurrentUser Object Specification
@@ -97,10 +95,19 @@ object CurrentUser {
     fun getCurrentDateTime(): String {
         Log.d(LOG_TAG, "getCurrentDateTime() invoked")
 
-        return DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss:SSSSSS")
-            .withZone(ZoneOffset.UTC)
-            .format(Instant.now())
+        return Instant.now().toEpochMilli().toString()
+    }
+
+    fun getLastQuestionnaireDate(): Long? {
+        Log.d(LOG_TAG, "getLastQuestionnaireDate() invoked")
+
+        return data?.lastQuestionnaireDate?.toLong()
+    }
+
+    fun parseDate(date: Long) {
+        Log.d(LOG_TAG, "parseDate() invoked")
+
+        // TODO
     }
     fun getQuestionnaireHistory(): Map<String, QuestionnaireHistoryClass> {
         Log.d(LOG_TAG, "getQuestionnaireHistory() invoked")
@@ -171,6 +178,7 @@ object CurrentUser {
             // update our local map for current user
             data!!.questionnaireHistory[timestamp] =
                 QuestionnaireHistoryClass(question, answer)
+            data!!.lastQuestionnaireDate = timestamp
             // update database step value for current user
             val newHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, newHistory)
