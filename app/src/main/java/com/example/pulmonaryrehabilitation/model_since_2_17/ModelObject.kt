@@ -22,7 +22,8 @@ object ModelObject {
         return MemberClass(
             "1", true, "Georfe", "Scrunkle", "1", "example@admin.com", 5000, mutableMapOf("Feb 19 9am" to defaultGamificationHistory()),
             mutableMapOf("Feb 17 10am" to defaultUsageHistory(), "Feb 17 11am" to defaultUsageHistory()),
-            mutableMapOf("Feb 17 11am" to defaultStepHistory()), mutableMapOf("Feb 16 10am" to defaultQuestionnaireHistory(), "Feb 19 33am" to defaultQuestionnaireHistory())
+            mutableMapOf("Feb 17 11am" to defaultStepHistory()), mutableMapOf("Feb 16 10am" to defaultQuestionnaireHistory(), "Feb 19 33am" to defaultQuestionnaireHistory()),
+            ""
         )
     }
 

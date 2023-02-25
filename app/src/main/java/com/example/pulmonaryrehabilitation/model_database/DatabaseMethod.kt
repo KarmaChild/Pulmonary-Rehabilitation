@@ -132,7 +132,8 @@ class DatabaseMethod : DatabaseInterface {
             data["gamificationHistory"] as MutableMap<String, GamificationHistoryClass>,
             data["usageHistory"] as MutableMap<String, UsageHistoryClass>,
             data["stepHistory"] as MutableMap<String, StepHistoryClass>,
-            data["questionnaireHistory"] as MutableMap<String, QuestionnaireHistoryClass>
+            data["questionnaireHistory"] as MutableMap<String, QuestionnaireHistoryClass>,
+            data["lastQuestionnaireDate"] as String?
         )
         return member
     }
@@ -187,6 +188,8 @@ class DatabaseMethod : DatabaseInterface {
         newHistory.values.forEach {
             myReference.child(childName).setValue(it)
         }
+        val lastQuestionnaireRef = database.getReference("Member/$id/lastQuestionnaireDate")
+        lastQuestionnaireRef.setValue(childName)
     }
     fun updateUsageHistoryFor(id: String, newHistory: Map<String, UsageHistoryClass>) {
         val database = Firebase.database

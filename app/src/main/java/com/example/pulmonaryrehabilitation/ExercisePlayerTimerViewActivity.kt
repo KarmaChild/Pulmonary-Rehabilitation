@@ -113,7 +113,14 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
             val intent = Intent(this@ExercisePlayerTimerViewActivity, ExercisePlayerTapViewActivity::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0) // gets rid of the animation
-        } else if (step == null) {
+        } else if (step == null && CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), 3)) {
+            Log.i("Change Step", "No new step, end routine (From timer step)")
+
+            CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)
+            // Saves the collection name in Firebase when finished
+            val intent = Intent(this@ExercisePlayerTimerViewActivity, QuestionnaireActivity::class.java)
+            startActivity(intent)
+        } else if (step == null && !(CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), 3))) {
             Log.i("Change Step", "No new step, end routine (From timer step)")
 
             CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)

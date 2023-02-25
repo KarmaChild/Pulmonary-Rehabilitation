@@ -5,8 +5,7 @@ import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit
 
 /*
 CurrentUser Object Specification
@@ -92,15 +91,52 @@ object CurrentUser {
     Specification for getCurrentDateTime
         Pre-Condition: None
         Post-Condition:
-            It will return the current UTC time in "yyyy-MM-dd HH:mm:ss:SSSSSS" format as a String
+            returns the current time in the unix timestamp as a Long value type
+             which is converted to a String
      */
-    fun getCurrentDateTime(): String {
+    private fun getCurrentDateTime(): String {
         Log.d(LOG_TAG, "getCurrentDateTime() invoked")
 
-        return DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss:SSSSSS")
-            .withZone(ZoneOffset.UTC)
-            .format(Instant.now())
+        return Instant.now().toEpochMilli().toString()
+    }
+
+    /*
+    Specification for getCurrentDateTime
+        Pre-Condition: None
+        Post-Condition:
+            returns the date of when the user last finished a questionnaire
+            as a unix timestamp in Long value type
+     */
+    fun getLastQuestionnaireDate(): Long? {
+        Log.d(LOG_TAG, "getLastQuestionnaireDate() invoked")
+
+        return data?.lastQuestionnaireDate?.toLong()
+    }
+
+    /*
+    Specification for getCurrentDateTime
+        Pre-Condition:
+            lastQuestionnaireDate -  The date of when the user last finished a questionnaire
+            as a unix timestamp in Long value type
+
+            daysSince - The number of days since the last questionnaire that has to be checked
+
+        Post-Condition:
+            returns true if it has been more than number of "daysSince" user did a questionnaire
+            returns false otherwise
+     */
+    fun daysSinceLastQuestionnaire(lastQuestionnaireDate: Long?, daysSince: Long): Boolean {
+        val currentTime: Long = getCurrentDateTime().toLong()
+        val daysToSubtract = TimeUnit.DAYS.toMillis(daysSince)
+
+        return (currentTime - daysToSubtract) > lastQuestionnaireDate!!
+    }
+
+    // This function might be useful later on to parse the unix timestamp to human readable format
+    fun parseDate(date: Long) {
+        Log.d(LOG_TAG, "parseDate() invoked")
+
+        // TODO
     }
     fun getQuestionnaireHistory(): Map<String, QuestionnaireHistoryClass> {
         Log.d(LOG_TAG, "getQuestionnaireHistory() invoked")
@@ -171,6 +207,7 @@ object CurrentUser {
             // update our local map for current user
             data!!.questionnaireHistory[timestamp] =
                 QuestionnaireHistoryClass(question, answer)
+            data!!.lastQuestionnaireDate = timestamp
             // update database step value for current user
             val newHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
             DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, newHistory)

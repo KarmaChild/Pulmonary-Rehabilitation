@@ -12,6 +12,7 @@ interface Member {
     var usageHistory: MutableMap<String, UsageHistoryClass>
     var stepHistory: MutableMap<String, StepHistoryClass>
     var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>
+    var lastQuestionnaireDate: String?
 
     override fun toString(): String
 //    fun iterateGamificationHistoryMap(map: Map<String, GamificationHistoryClass>): String
