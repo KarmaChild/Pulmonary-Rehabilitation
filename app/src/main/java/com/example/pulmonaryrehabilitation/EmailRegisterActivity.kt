@@ -100,7 +100,8 @@ class EmailRegisterActivity : AppCompatActivity() {
                                     mutableMapOf("datetime" to defaultGamificationHistory),
                                     mutableMapOf("datetime" to defaultUsageHistory),
                                     mutableMapOf("datetime" to defaultStepHistory),
-                                    mutableMapOf("datetime" to defaultQuestionnaireHistory)
+                                    mutableMapOf("datetime" to defaultQuestionnaireHistory),
+                                    ""
                                 )
 
                                 registerRealTimeMember(mem, myRef)
