@@ -14,7 +14,9 @@ class MemberClass(
     override var gamificationHistory: MutableMap<String, GamificationHistoryClass>,
     override var usageHistory: MutableMap<String, UsageHistoryClass>,
     override var stepHistory: MutableMap<String, StepHistoryClass>,
-    override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>
+    override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>,
+    override var lastQuestionnaireDate: String?
+    // add tostring
 ) : Member {
 
     override fun toString(): String {
