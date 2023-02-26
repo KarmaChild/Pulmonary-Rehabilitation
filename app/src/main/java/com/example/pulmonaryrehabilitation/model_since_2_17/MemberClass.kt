@@ -5,16 +5,16 @@ import com.google.firebase.database.Exclude
 // create Member class to read from and write to the database
 class MemberClass(
     override var id: String = "",
-    override var isAdmin: Boolean? = false,
-    override var firstName: String = "",
-    override var lastName: String = "",
-    override var username: String = "",
+    override var isAdmin: Boolean = false,
+    override var firstName: String? = "",
+    override var lastName: String? = "",
+    override var username: String? = "",
     override var email: String = "",
-    override var stepGoal: Int,
-    override var gamificationHistory: MutableMap<String, GamificationHistoryClass>,
-    override var usageHistory: MutableMap<String, UsageHistoryClass>,
-    override var stepHistory: MutableMap<String, StepHistoryClass>,
-    override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>,
+    override var stepGoal: Int?,
+    override var gamificationHistory: MutableMap<String, GamificationHistoryClass>?,
+    override var usageHistory: MutableMap<String, UsageHistoryClass>?,
+    override var stepHistory: MutableMap<String, StepHistoryClass>?,
+    override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>?,
     override var lastQuestionnaireDate: String?
 ) : Member {
 

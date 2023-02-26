@@ -126,10 +126,13 @@ object CurrentUser {
             returns false otherwise
      */
     fun daysSinceLastQuestionnaire(lastQuestionnaireDate: Long?, daysSince: Long): Boolean {
+        if (lastQuestionnaireDate == null) {
+            return true
+        }
         val currentTime: Long = getCurrentDateTime().toLong()
         val daysToSubtract = TimeUnit.DAYS.toMillis(daysSince)
 
-        return (currentTime - daysToSubtract) > lastQuestionnaireDate!!
+        return (currentTime - daysToSubtract) > lastQuestionnaireDate
     }
 
     // This function might be useful later on to parse the unix timestamp to human readable format
@@ -194,7 +197,7 @@ object CurrentUser {
         if (data != null) {
             val timestamp: String = getCurrentDateTime()
             // update our local map for current user
-            data!!.stepHistory[timestamp] = StepHistoryClass(numberSteps.toString())
+            data!!.stepHistory?.set(timestamp, StepHistoryClass(numberSteps.toString()))
             // update database step value for current user
             val newHistory = mutableMapOf(timestamp to StepHistoryClass(numberSteps.toString()))
             DatabaseMethod().updateStepHistoryFor(data!!.id, newHistory)
@@ -205,8 +208,7 @@ object CurrentUser {
         val timestamp: String = getCurrentDateTime()
         if (data != null) {
             // update our local map for current user
-            data!!.questionnaireHistory[timestamp] =
-                QuestionnaireHistoryClass(question, answer)
+            data!!.questionnaireHistory?.set(timestamp, QuestionnaireHistoryClass(question, answer))
             data!!.lastQuestionnaireDate = timestamp
             // update database step value for current user
             val newHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
@@ -220,7 +222,7 @@ object CurrentUser {
         Log.d(LOG_TAG, "addUsageHistory() invoked")
         val timestamp: String = getCurrentDateTime()
         if (data != null) {
-            data!!.usageHistory[timestamp] = UsageHistoryClass(exerciseDone, "item2")
+            data!!.usageHistory?.set(timestamp, UsageHistoryClass(exerciseDone, "item2"))
             val newHistory = mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
             DatabaseMethod().updateUsageHistoryFor(data!!.id, newHistory)
         }
@@ -229,8 +231,13 @@ object CurrentUser {
         Log.d(LOG_TAG, "addGamificationHistory() invoked")
         if (data != null) {
             val timestamp: String = getCurrentDateTime()
-            data!!.gamificationHistory[timestamp] = GamificationHistoryClass(event, points)
-            DatabaseMethod().updateGamificationHistory(data!!.id, data!!.gamificationHistory)
+            data!!.gamificationHistory?.set(timestamp, GamificationHistoryClass(event, points))
+            data!!.gamificationHistory?.let {
+                DatabaseMethod().updateGamificationHistory(
+                    data!!.id,
+                    it
+                )
+            }
         }
     }
 

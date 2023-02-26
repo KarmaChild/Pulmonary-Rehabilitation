@@ -2,16 +2,16 @@ package com.example.pulmonaryrehabilitation.model_since_2_17
 
 interface Member {
     var id: String
-    var isAdmin: Boolean?
-    var firstName: String
-    var lastName: String
-    var username: String
+    var isAdmin: Boolean
+    var firstName: String?
+    var lastName: String?
+    var username: String?
     var email: String
-    var stepGoal: Int
-    var gamificationHistory: MutableMap<String, GamificationHistoryClass>
-    var usageHistory: MutableMap<String, UsageHistoryClass>
-    var stepHistory: MutableMap<String, StepHistoryClass>
-    var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>
+    var stepGoal: Int?
+    var gamificationHistory: MutableMap<String, GamificationHistoryClass>?
+    var usageHistory: MutableMap<String, UsageHistoryClass>?
+    var stepHistory: MutableMap<String, StepHistoryClass>?
+    var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>?
     var lastQuestionnaireDate: String?
 
     override fun toString(): String

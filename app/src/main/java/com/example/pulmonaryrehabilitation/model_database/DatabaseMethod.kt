@@ -110,7 +110,13 @@ class DatabaseMethod : DatabaseInterface {
         val myRef = database.getReference("Member/$id")
         myRef.get().addOnSuccessListener {
             Log.i("getUserDataFor", "Got value ${it.value}")
-            CurrentUser.setData(convertFirebaseDataToMember(it.value as Map<String, Any?>))
+            CurrentUser.setData(
+                (it.value as Map<String, Any?>?)?.let { it1 ->
+                    convertFirebaseDataToMember(
+                        it1
+                    )
+                }
+            )
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
@@ -126,13 +132,13 @@ class DatabaseMethod : DatabaseInterface {
     private fun convertFirebaseDataToMember(data: Map<String, Any?>): MemberClass? {
         Log.d("convertFirebaseDataToMember", data.toString())
         val member = MemberClass(
-            data["id"] as String, data["isAdmin"] as Boolean?, data["firstName"] as String,
-            data["lastName"] as String, data.get("username") as String, data.get("email") as String,
-            (data["stepGoal"] as Long).toInt(),
-            data["gamificationHistory"] as MutableMap<String, GamificationHistoryClass>,
-            data["usageHistory"] as MutableMap<String, UsageHistoryClass>,
-            data["stepHistory"] as MutableMap<String, StepHistoryClass>,
-            data["questionnaireHistory"] as MutableMap<String, QuestionnaireHistoryClass>,
+            data["id"] as String, data["isAdmin"] as Boolean, data["firstName"] as String?,
+            data["lastName"] as String?, data["username"] as String?, data["email"] as String,
+            (data["stepGoal"] as Long?)?.toInt(),
+            data["gamificationHistory"] as MutableMap<String, GamificationHistoryClass>?,
+            data["usageHistory"] as MutableMap<String, UsageHistoryClass>?,
+            data["stepHistory"] as MutableMap<String, StepHistoryClass>?,
+            data["questionnaireHistory"] as MutableMap<String, QuestionnaireHistoryClass>?,
             data["lastQuestionnaireDate"] as String?
         )
         return member
