@@ -15,11 +15,11 @@ jobs:
         with:
           java-version: 11
 
-      - name: run Linter
+      - name: Run Linter
         run: ./gradlew ktlintCheck
-
-      - name: Run Tests
-        run: ./gradlew test
 
       - name: Build Project
         run: ./gradlew assemble
+
+      - name: Run Tests
+        run: ./gradlew test
