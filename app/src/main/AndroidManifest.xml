@@ -15,13 +15,13 @@
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activity.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailRegisterActivity"
+            android:name=".activity.EmailRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailLoginActivity"
+            android:name=".activity.EmailLoginActivity"
             android:exported="false" />
 
 

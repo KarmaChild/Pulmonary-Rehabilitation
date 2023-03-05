@@ -1,9 +1,10 @@
-package com.example.pulmonaryrehabilitation
+package com.example.pulmonaryrehabilitation.activity
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.model.CurrentUser
 
 class DashboardActivity : AppCompatActivity() {

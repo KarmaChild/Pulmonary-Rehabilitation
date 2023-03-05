@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation
+package com.example.pulmonaryrehabilitation.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pulmonaryrehabilitation.R
+import com.example.pulmonaryrehabilitation.SplashActivity
 import com.example.pulmonaryrehabilitation.model.MemberClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

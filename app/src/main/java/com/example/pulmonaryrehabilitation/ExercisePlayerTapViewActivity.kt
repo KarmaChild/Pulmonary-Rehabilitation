@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
+import com.example.pulmonaryrehabilitation.activity.DashboardActivity
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
 import com.example.pulmonaryrehabilitation.model.CurrentUser
 
