@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.model_database
+package com.example.pulmonaryrehabilitation.database
 
 import com.google.firebase.database.FirebaseDatabase
 

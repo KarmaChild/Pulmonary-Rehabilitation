@@ -1,7 +1,7 @@
 package com.example.pulmonaryrehabilitation.model
 
 import android.util.Log
-import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
+import com.example.pulmonaryrehabilitation.database.DatabaseMethod
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.time.Instant

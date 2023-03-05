@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.model.CurrentUser
-import com.example.pulmonaryrehabilitation.model_database.DatabaseMethod
+import com.example.pulmonaryrehabilitation.database.DatabaseMethod
 import com.google.firebase.auth.FirebaseAuth
 
 class EmailLoginActivity : AppCompatActivity() {
