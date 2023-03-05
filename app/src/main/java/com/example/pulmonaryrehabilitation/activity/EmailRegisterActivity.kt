@@ -8,7 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
-import com.example.pulmonaryrehabilitation.SplashActivity
 import com.example.pulmonaryrehabilitation.model.MemberClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

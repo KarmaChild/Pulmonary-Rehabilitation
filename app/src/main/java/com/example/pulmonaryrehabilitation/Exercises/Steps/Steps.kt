@@ -1,7 +1,7 @@
 package com.example.pulmonaryrehabilitation.Exercises.Steps
 
-import com.example.pulmonaryrehabilitation.ImageNames
-import com.example.pulmonaryrehabilitation.VideoNames
+import com.example.pulmonaryrehabilitation.activity.ImageNames
+import com.example.pulmonaryrehabilitation.activity.VideoNames
 
 object Steps {
     fun testStep1(): ExerciseStep {

@@ -1,7 +1,7 @@
 package com.example.pulmonaryrehabilitation.ExerciseCollections
 
 import com.example.pulmonaryrehabilitation.Exercises.Exercise
-import com.example.pulmonaryrehabilitation.ImageNames
+import com.example.pulmonaryrehabilitation.activity.ImageNames
 
 class BasicCollection(
     override val collectionName: String,

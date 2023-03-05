@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pulmonaryrehabilitation.QuestionnaireActivity
 import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.database.DatabaseMethod
 import com.example.pulmonaryrehabilitation.model.CurrentUser

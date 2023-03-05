@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation
+package com.example.pulmonaryrehabilitation.activity
 
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pulmonaryrehabilitation.R
 
 class VideoViewer : AppCompatActivity() {
     // declaring null variable for video viewer

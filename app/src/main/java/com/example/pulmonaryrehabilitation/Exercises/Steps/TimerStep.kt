@@ -1,6 +1,6 @@
 package com.example.pulmonaryrehabilitation.Exercises.Steps
 
-import com.example.pulmonaryrehabilitation.VideoNames
+import com.example.pulmonaryrehabilitation.activity.VideoNames
 
 data class TimerStep(
     override val stepTitle: String,

@@ -25,23 +25,23 @@
             android:exported="false" />
 
 
-        <activity android:name=".TestingActivity"
+        <activity android:name=".activity.TestingActivity"
             android:exported="false" />
-        <activity android:name=".QuestionnaireActivity"
+        <activity android:name=".activity.QuestionnaireActivity"
             android:exported="false" />
 
 
         <activity
-            android:name=".ExercisePlayerTimerViewActivity"
+            android:name=".activity.ExercisePlayerTimerViewActivity"
             android:exported="false" />
         <activity
-            android:name=".ExercisePlayerTapViewActivity"
+            android:name=".activity.ExercisePlayerTapViewActivity"
             android:exported="false" />
         <activity
-            android:name=".VideoViewer"
+            android:name=".activity.VideoViewer"
             android:exported="true" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

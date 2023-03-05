@@ -1,12 +1,10 @@
-package com.example.pulmonaryrehabilitation
+package com.example.pulmonaryrehabilitation.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pulmonaryrehabilitation.activity.DashboardActivity
-import com.example.pulmonaryrehabilitation.activity.EmailLoginActivity
-import com.example.pulmonaryrehabilitation.activity.EmailRegisterActivity
+import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
 
 class TestingActivity : AppCompatActivity() {
