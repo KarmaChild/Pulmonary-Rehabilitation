@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.model_since_2_17
+package com.example.pulmonaryrehabilitation.model
 
 interface GamificationHistory {
     var itemname: String

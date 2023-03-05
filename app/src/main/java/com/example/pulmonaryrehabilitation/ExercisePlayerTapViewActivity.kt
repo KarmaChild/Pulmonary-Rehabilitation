@@ -12,7 +12,7 @@ import androidx.core.view.GestureDetectorCompat
 import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
-import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
+import com.example.pulmonaryrehabilitation.model.CurrentUser
 
 class ExercisePlayerTapViewActivity : AppCompatActivity() {
     private lateinit var detector: GestureDetectorCompat

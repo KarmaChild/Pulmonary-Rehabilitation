@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
+import com.example.pulmonaryrehabilitation.model.CurrentUser
 
 class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

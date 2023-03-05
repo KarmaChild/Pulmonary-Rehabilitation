@@ -16,7 +16,7 @@ import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TapStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
 import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
-import com.example.pulmonaryrehabilitation.model_since_2_17.CurrentUser
+import com.example.pulmonaryrehabilitation.model.CurrentUser
 
 class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     lateinit var timer: CountDownTimer

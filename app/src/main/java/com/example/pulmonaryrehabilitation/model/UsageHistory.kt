@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.model_since_2_17
+package com.example.pulmonaryrehabilitation.model
 
 // record of the amount of minutes users spend watching videos
 interface UsageHistory {
