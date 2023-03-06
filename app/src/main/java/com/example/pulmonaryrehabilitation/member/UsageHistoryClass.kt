@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.model
+package com.example.pulmonaryrehabilitation.member
 
 class UsageHistoryClass(
     override var itemname: String,

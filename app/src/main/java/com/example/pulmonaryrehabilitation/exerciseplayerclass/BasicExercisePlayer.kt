@@ -60,7 +60,6 @@ class BasicExercisePlayer(
     }
 
     override fun goToNextStep(): ExerciseStep? {
-        print("hello")
         if (exerciseRoutine.getCurrentExercise()?.goToNextStep() == null) {
             exerciseRoutine.goToNextExercise()
             return exerciseRoutine.getCurrentExercise()?.getCurrentStep()

@@ -2,7 +2,7 @@ package com.example.pulmonaryrehabilitation.database
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.pulmonaryrehabilitation.model.*
+import com.example.pulmonaryrehabilitation.member.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

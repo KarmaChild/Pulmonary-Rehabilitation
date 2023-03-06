@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.model
+package com.example.pulmonaryrehabilitation.member
 
 import android.util.Log
 import com.example.pulmonaryrehabilitation.database.DatabaseMethod

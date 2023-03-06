@@ -1,7 +1,7 @@
 package com.example.pulmonaryrehabilitation
-import com.example.pulmonaryrehabilitation.model.CurrentUser
-import com.example.pulmonaryrehabilitation.model.MemberClass
-import com.example.pulmonaryrehabilitation.model.ModelObject
+import com.example.pulmonaryrehabilitation.member.CurrentUser
+import com.example.pulmonaryrehabilitation.member.MemberClass
+import com.example.pulmonaryrehabilitation.member.ModelObject
 import org.junit.Assert.*
 import org.junit.Test
 class CurrentUserTest {

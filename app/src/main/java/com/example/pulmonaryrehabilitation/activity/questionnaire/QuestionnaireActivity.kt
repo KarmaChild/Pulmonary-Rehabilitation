@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
-import com.example.pulmonaryrehabilitation.model.CurrentUser
+import com.example.pulmonaryrehabilitation.member.CurrentUser
 
 class QuestionnaireActivity : AppCompatActivity() {
 

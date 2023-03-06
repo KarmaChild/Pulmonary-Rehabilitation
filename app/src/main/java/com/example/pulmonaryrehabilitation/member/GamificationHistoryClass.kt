@@ -1,11 +1,10 @@
-package com.example.pulmonaryrehabilitation.model
+package com.example.pulmonaryrehabilitation.member
 
 class GamificationHistoryClass(
     override var itemname: String,
     override var itemname2: String
 ) : GamificationHistory, Comparable<GamificationHistoryClass> {
     override fun compareTo(other: GamificationHistoryClass): Int {
-        println("Hello")
         val other1 = other.itemname
         val other2 = other.itemname2
         if (itemname != other1) {
