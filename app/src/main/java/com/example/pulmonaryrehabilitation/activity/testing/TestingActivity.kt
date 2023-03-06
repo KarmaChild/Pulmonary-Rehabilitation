@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.activity
+package com.example.pulmonaryrehabilitation.activity.testing
 
 import android.content.Intent
 import android.os.Bundle

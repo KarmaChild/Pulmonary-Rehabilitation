@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.activity
+package com.example.pulmonaryrehabilitation.activity.questionnaire
 
 import android.annotation.SuppressLint
 import android.content.Intent

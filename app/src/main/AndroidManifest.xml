@@ -25,9 +25,9 @@
             android:exported="false" />
 
 
-        <activity android:name=".activity.TestingActivity"
+        <activity android:name=".activity.testing.TestingActivity"
             android:exported="false" />
-        <activity android:name=".activity.QuestionnaireActivity"
+        <activity android:name=".activity.questionnaire.QuestionnaireActivity"
             android:exported="false" />
 
 
@@ -41,7 +41,7 @@
             android:name=".activity.media.VideoViewer"
             android:exported="true" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,9 +1,10 @@
-package com.example.pulmonaryrehabilitation.activity
+package com.example.pulmonaryrehabilitation.activity.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
+import com.example.pulmonaryrehabilitation.activity.testing.TestingActivity
 
 class SplashActivity : AppCompatActivity() {
 
