@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.exerciseplayer
+package com.example.pulmonaryrehabilitation.exerciseplayerclass
 
 // Why does this exist? Because Android handles passing objects in a weird way (Serialization/
 // Parcable) and out exercise player object is too complicated for this

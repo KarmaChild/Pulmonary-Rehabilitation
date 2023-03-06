@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
-import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayerObject
+import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
+import com.example.pulmonaryrehabilitation.activity.exerciseplayeractivity.ExercisePlayerTapViewActivity
+import com.example.pulmonaryrehabilitation.activity.login.EmailLoginActivity
+import com.example.pulmonaryrehabilitation.activity.login.EmailRegisterActivity
+import com.example.pulmonaryrehabilitation.exerciseplayerclass.ExercisePlayerObject
 
 class TestingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

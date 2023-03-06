@@ -15,13 +15,13 @@
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <activity
-            android:name=".activity.DashboardActivity"
+            android:name=".activity.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.EmailRegisterActivity"
+            android:name=".activity.login.EmailRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.EmailLoginActivity"
+            android:name=".activity.login.EmailLoginActivity"
             android:exported="false" />
 
 
@@ -32,10 +32,10 @@
 
 
         <activity
-            android:name=".activity.ExercisePlayerTimerViewActivity"
+            android:name=".activity.exerciseplayeractivity.ExercisePlayerTimerViewActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ExercisePlayerTapViewActivity"
+            android:name=".activity.exerciseplayeractivity.ExercisePlayerTapViewActivity"
             android:exported="false" />
         <activity
             android:name=".activity.VideoViewer"

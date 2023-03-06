@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.activity
+package com.example.pulmonaryrehabilitation.activity.dashboard
 
 import android.os.Bundle
 import android.util.Log

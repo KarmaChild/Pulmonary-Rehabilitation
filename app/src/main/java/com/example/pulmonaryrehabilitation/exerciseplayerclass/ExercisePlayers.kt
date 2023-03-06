@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.exerciseplayer
+package com.example.pulmonaryrehabilitation.exerciseplayerclass
 
 import com.example.pulmonaryrehabilitation.ExerciseCollections.ExerciseCollections
 

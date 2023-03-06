@@ -10,6 +10,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
+import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
 import com.example.pulmonaryrehabilitation.model.CurrentUser
 
 class QuestionnaireActivity : AppCompatActivity() {
