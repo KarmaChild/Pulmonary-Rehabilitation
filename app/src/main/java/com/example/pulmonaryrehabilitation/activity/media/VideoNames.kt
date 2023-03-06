@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.activity
+package com.example.pulmonaryrehabilitation.activity.media
 
 import com.example.pulmonaryrehabilitation.R
 

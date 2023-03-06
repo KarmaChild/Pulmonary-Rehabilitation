@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.activity
+package com.example.pulmonaryrehabilitation.activity.media
 
 import android.net.Uri
 import android.os.Bundle
