@@ -15,7 +15,7 @@ import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
 import com.example.pulmonaryrehabilitation.activity.questionnaire.QuestionnaireActivity
 import com.example.pulmonaryrehabilitation.exerciseplayerclass.ExercisePlayerObject
-import com.example.pulmonaryrehabilitation.model.CurrentUser
+import com.example.pulmonaryrehabilitation.member.CurrentUser
 
 class ExercisePlayerTapViewActivity : AppCompatActivity() {
     private lateinit var detector: GestureDetectorCompat

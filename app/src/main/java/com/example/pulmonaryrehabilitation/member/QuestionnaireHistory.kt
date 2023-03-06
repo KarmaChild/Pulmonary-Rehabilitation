@@ -1,4 +1,4 @@
-package com.example.pulmonaryrehabilitation.model
+package com.example.pulmonaryrehabilitation.member
 
 interface QuestionnaireHistory {
     var question: String

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.activity.questionnaire.QuestionnaireActivity
 import com.example.pulmonaryrehabilitation.database.DatabaseMethod
-import com.example.pulmonaryrehabilitation.model.CurrentUser
+import com.example.pulmonaryrehabilitation.member.CurrentUser
 import com.google.firebase.auth.FirebaseAuth
 
 class EmailLoginActivity : AppCompatActivity() {
