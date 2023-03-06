@@ -1,6 +1,6 @@
 package com.example.pulmonaryrehabilitation
 
-import com.example.pulmonaryrehabilitation.exerciseplayer.ExercisePlayers
+import com.example.pulmonaryrehabilitation.exerciseplayerclass.ExercisePlayers
 import org.junit.Assert
 import org.junit.Test
 
