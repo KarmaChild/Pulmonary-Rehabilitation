@@ -20,6 +20,8 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var collectionDescriptionTextView: TextView
     lateinit var collectionTimeTextView: TextView
     lateinit var collectionView: ConstraintLayout
+    lateinit var messageTextView: TextView
+    lateinit var menuImageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // hide action bar
@@ -42,6 +44,11 @@ class DashboardActivity : AppCompatActivity() {
         collectionNameTextView = findViewById(R.id.dashboardCollectionNameTextView)
         collectionDescriptionTextView = findViewById(R.id.dashboardCollectionDescription)
         collectionTimeTextView = findViewById(R.id.dashboardCollectionTime)
+        messageTextView = findViewById(R.id.dashboardWelcomeMessage)
+        menuImageView = findViewById(R.id.dashboardKebabMenu)
+        menuImageView.setOnClickListener {
+            goToMenu()
+        }
 
         collectionView = findViewById(R.id.dashboardCollection)
 
@@ -50,6 +57,14 @@ class DashboardActivity : AppCompatActivity() {
         initializeStreaks()
         initializeCollection()
 //        setCollectionVisibility(false)
+    }
+
+    /*
+        This will need to grab the users name (to replace Human). If we stick with "good morning"
+        we'll also need to grab the time for the correct greeting.
+     */
+    fun initializeWelcomeMessage() {
+        messageTextView.text = "Good morning, Human"
     }
 
     /**
@@ -93,5 +108,11 @@ class DashboardActivity : AppCompatActivity() {
      */
     fun goToExerciseCollection() {
         println("Hello")
+    }
+    /*
+
+     */
+    fun goToMenu() {
+        println("Menu")
     }
 }
