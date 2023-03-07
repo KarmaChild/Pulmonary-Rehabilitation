@@ -22,6 +22,10 @@ import com.example.pulmonaryrehabilitation.exerciseplayerclass.ExercisePlayerObj
 import com.example.pulmonaryrehabilitation.member.CurrentUser
 
 class ExercisePlayerTimerViewActivity : AppCompatActivity() {
+    val secondInMiliseconds: Long = 1000
+    val activityChangeAnimationTime = 0
+    val questionnaireLimitForDaysNotDone: Long = 3
+
     lateinit var timer: CountDownTimer
     private lateinit var detector: GestureDetectorCompat
 
@@ -57,7 +61,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
      */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event != null) {
-            if (detector.onTouchEvent(event!!)) {
+            if (detector.onTouchEvent(event)) {
                 return true
             } else {
                 return super.onTouchEvent(event)
@@ -115,15 +119,15 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
 
             val intent = Intent(this@ExercisePlayerTimerViewActivity, ExercisePlayerTapViewActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(0, 0) // gets rid of the animation
-        } else if (step == null && CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), 3)) {
+            overridePendingTransition(activityChangeAnimationTime, activityChangeAnimationTime) // gets rid of the animation
+        } else if (step == null && CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), questionnaireLimitForDaysNotDone)) {
             Log.i("Change Step", "No new step, end routine (From timer step)")
 
             CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)
             // Saves the collection name in Firebase when finished
             val intent = Intent(this@ExercisePlayerTimerViewActivity, QuestionnaireActivity::class.java)
             startActivity(intent)
-        } else if (step == null && !(CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), 3))) {
+        } else if (step == null && !(CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), questionnaireLimitForDaysNotDone))) {
             Log.i("Change Step", "No new step, end routine (From timer step)")
 
             CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)
@@ -139,9 +143,10 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     /*
 
      */
+
     fun startTimer(time: Int) {
         var timeElapsed = 0
-        timer = object : CountDownTimer(time.toLong() * 1000, 1000) {
+        timer = object : CountDownTimer(time.toLong() * secondInMiliseconds, secondInMiliseconds) {
             override fun onTick(millisUntilFinished: Long) {
                 // update the progress bar
                 timeElapsed += 1
@@ -209,18 +214,20 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
     This is an inner class who's sole purpose is to add right and left swipes to the activity
      */
     inner class SwipeListener : GestureDetector.SimpleOnGestureListener() {
+
+        val movementThreshold = 100
         override fun onFling(
             downEvent: MotionEvent,
             moveEvent: MotionEvent,
             velocityX: Float,
             velocityY: Float
         ): Boolean {
-            var diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
-            var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
+            val diffX = moveEvent.x.minus(downEvent.x)
+            val diffY = moveEvent.y.minus(downEvent.y)
 
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 // left or right swipe
-                if (Math.abs(diffX) > 100) { // 100 is the threshold for movement
+                if (Math.abs(diffX) > movementThreshold) { // 100 is the threshold for movement
                     if (diffX > 0) {
                         // right swipe
                         this@ExercisePlayerTimerViewActivity.swipeRight()
