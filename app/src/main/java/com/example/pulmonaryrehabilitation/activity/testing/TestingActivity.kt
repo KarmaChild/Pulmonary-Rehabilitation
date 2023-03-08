@@ -9,7 +9,6 @@ import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
 import com.example.pulmonaryrehabilitation.activity.exerciseplayeractivity.ExercisePlayerTapViewActivity
 import com.example.pulmonaryrehabilitation.activity.login.EmailLoginActivity
 import com.example.pulmonaryrehabilitation.activity.login.EmailRegisterActivity
-import com.example.pulmonaryrehabilitation.exerciseplayerclass.ExercisePlayerObject
 
 class TestingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +37,7 @@ class TestingActivity : AppCompatActivity() {
             finish()
         }
         exerciseButtton.setOnClickListener {
-            ExercisePlayerObject.addExerciseCollection() // for testing
+//            ExercisePlayerObject.addExerciseCollection() // for testing
             val intent = Intent(this, ExercisePlayerTapViewActivity :: class.java)
             startActivity(intent)
             finish()
