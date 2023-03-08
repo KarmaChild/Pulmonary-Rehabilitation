@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pulmonaryrehabilitation.R
-import com.example.pulmonaryrehabilitation.activity.testing.TestingActivity
+import com.example.pulmonaryrehabilitation.activity.login.EmailLoginActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
 
         // transitioning from splashActivity to EmailLoginActivity with 2000ms delayed
         Handler().postDelayed({
-            startActivity(Intent(this, TestingActivity::class.java))
+            startActivity(Intent(this, EmailLoginActivity::class.java))
         }, 2000)
 
         // Ian's testing below
