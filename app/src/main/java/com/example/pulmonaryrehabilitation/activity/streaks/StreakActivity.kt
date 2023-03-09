@@ -17,7 +17,7 @@ class StreakActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_streaks_page)
 
         // initializing variables of grid view with their ids.
         badgeGridView = findViewById(R.id.idGridView)

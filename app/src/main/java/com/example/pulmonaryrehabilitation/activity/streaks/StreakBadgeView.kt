@@ -23,20 +23,18 @@ internal class StreakBadgeView(
     private lateinit var badgeTextView: TextView
     private lateinit var badgeImageView: ImageView
 
-    // return the ammount of items in the badge list
+    // return the amount of items in the badge list
     override fun getCount(): Int {
 
         return badgeList.size
     }
 
-    // below function is use to return the item of grid view.
-    // not used for now, stub implementation
+    // below stub function is use to return the item of grid view.
     override fun getItem(position: Int): Any? {
         return null
     }
 
-    // below function is use to return item id of grid view.
-    // not used for now, stub implementation
+    // below stub function is use to return item id of grid view.
     override fun getItemId(position: Int): Long {
         return 0
     }
@@ -44,6 +42,7 @@ internal class StreakBadgeView(
     // in below function we are getting individual item of grid view.
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         var convertView = convertView
+
         // on blow line we are checking if layout inflater
         // is null, if it is null we are initializing it.
         if (layoutInflater == null) {
@@ -59,8 +58,8 @@ internal class StreakBadgeView(
         }
         // on below line we are initializing our course image view
         // and course text view with their ids.
-        badgeImageView = convertView!!.findViewById(R.id.idImageViewbadge)
-        badgeTextView = convertView!!.findViewById(R.id.idTextViewbadge)
+        badgeImageView = convertView!!.findViewById(R.id.idImageViewBadge)
+        badgeTextView = convertView!!.findViewById(R.id.idTextViewBadge)
         // on below line we are setting image for our course image view.
         badgeImageView.setImageResource(badgeList.get(position).badgeIcon)
         // on below line we are setting text in our course text view.
