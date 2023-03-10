@@ -79,8 +79,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     /**
-     * For now This function displays step goals as well
-     *  Later on when implemented it will display the users streaks
+     * Display user streaks on Dashboard
      */
     fun initializeStreaks() {
         val userStreaks: String = CurrentUser.getStreak()

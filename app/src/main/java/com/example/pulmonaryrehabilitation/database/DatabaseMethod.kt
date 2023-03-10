@@ -94,7 +94,7 @@ class DatabaseMethod : DatabaseInterface {
     }
 
     // INDIVIDUAL USER METHODS
-    /*
+    /**
      getUserDataFor Specification
      Pre-Condition:
         id: the users ID
@@ -104,7 +104,7 @@ class DatabaseMethod : DatabaseInterface {
         Logs failure
 
     Note: there is a 99.9% chance you shouldn't call this function in your code.
-     */
+     **/
     fun getUserDataFor(id: String) {
         val database = Firebase.database
         val myRef = database.getReference("Member/$id")
@@ -122,13 +122,13 @@ class DatabaseMethod : DatabaseInterface {
         }
     }
 
-    /* convertFirebaseDataToMember Specification
+    /** convertFirebaseDataToMember Specification
     Pre-Condition:
         data: HashMap<String, Any>
         this is the raw data from firebase
     Post-Condition
          returns a MemberClass object populated with the data
-     */
+     **/
     private fun convertFirebaseDataToMember(data: Map<String, Any?>): MemberClass? {
         Log.d("convertFirebaseDataToMember", data.toString())
         val member = MemberClass(
@@ -150,19 +150,31 @@ class DatabaseMethod : DatabaseInterface {
         return member
     }
 
+    /**
+        This function updates the number of exercises a user has completed in a week (Mon-Mon)
+        Pre-Conditions:
+            id: ID of user
+            newWeeklyExercisePoint: The number of exercises completed, init as 0
+        Post-Condition:
+            The database is updated with the users current num of exercises completed that week.
+     **/
     fun updateWeeklyExercisePoint(id: String, newWeeklyExercisePoint: String) {
-        // assertion the new streak is a valid streak
-        val database = Firebase.database
-        val myReference = database.getReference("Member/$id/weeklyExercisePoint")
-        myReference.setValue(newWeeklyExercisePoint)
-        // assertion that the streak was updated (is there a completion handler for updating?)
+        try {
+            // assertion the new streak is a valid streak
+            val database = Firebase.database
+            val myReference = database.getReference("Member/$id/weeklyExercisePoint")
+            myReference.setValue(newWeeklyExercisePoint)
+            // assertion that the streak was updated (is there a completion handler for updating?)
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in addUsageHistory()", exception)
+        }
     }
 
-    /*
+    /**
         Pre-Condition: ID of user, streak of user
         Method Purpose: Update the user's streak in Firebase.
         Post-Condition: User's streak counter is updated accordingly
-         */
+     **/
     fun updateStreak(id: String, newStreak: String) {
         try {
             // assertion the new streak is a valid streak
@@ -175,7 +187,7 @@ class DatabaseMethod : DatabaseInterface {
         }
     }
 
-    /*
+    /**
     Specification for each of the update database functions
     Pre-Condition:
         id: take in the current users ID
@@ -184,8 +196,9 @@ class DatabaseMethod : DatabaseInterface {
         Update database
 
      // TODO: These need to append to the Firebase data, not replace it as it currently does.
+     // Why?
 
-     */
+     **/
     fun updateFirstNameFor(id: String, newName: String) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/firstName") // this is the path

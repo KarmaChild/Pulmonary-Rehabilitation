@@ -26,14 +26,14 @@ object CurrentUser {
     // When searching the logs, "CurrentUser" tag can be used to filter the logs of this class
     private const val LOG_TAG: String = "CurrentUser"
 
-    /*
+    /**
     setData Method Specification
     Pre-Condition:
         Pass in a nullable Member Class. Other than testing, this will only be done via the method
         getUserDataFor() in the DatabaseMethod file.
     Post-Condition
         Sets the users data in the CurrentUser object.
-     */
+     **/
     fun setData(member: MemberClass?) {
         Log.d(LOG_TAG, "setData() invoked")
         data = member
@@ -43,14 +43,15 @@ object CurrentUser {
     }
 
     // GETTERS
-    /* Specification for each getter
+    /**
+     *  Specification for each getter
         Pre-Condition: None
         Post-Condition:
             It will return the desired value if 'data' has been set with a valid memberClass object
             If not it returns a default value via the elvis operator (?:)
             The goal of the default value is to make it clear that there was an error
 
-     */
+     **/
 
     fun getUserId(): String {
         Log.d(LOG_TAG, "getUserId() invoked")
@@ -88,13 +89,13 @@ object CurrentUser {
         return data?.usageHistory ?: mutableMapOf()
     }
 
-    /*
+    /**
     Specification for getCurrentDateTime
         Pre-Condition: None
         Post-Condition:
             returns the current time in the unix timestamp as a Long value type
              which is converted to a String
-     */
+     **/
     private fun getCurrentDateTime(): String {
         try {
             Log.d(LOG_TAG, "getCurrentDateTime() invoked")
@@ -106,20 +107,20 @@ object CurrentUser {
         }
     }
 
-    /*
+    /**
     Specification for getCurrentDateTime
         Pre-Condition: None
         Post-Condition:
             returns the date of when the user last finished a questionnaire
             as a unix timestamp in Long value type
-     */
+     **/
     fun getLastQuestionnaireDate(): Long? {
         Log.d(LOG_TAG, "getLastQuestionnaireDate() invoked")
 
         return data?.lastQuestionnaireDate?.toLong()
     }
 
-    /*
+    /**
     Specification for getCurrentDateTime
         Pre-Condition:
             lastQuestionnaireDate -  The date of when the user last finished a questionnaire
@@ -130,7 +131,7 @@ object CurrentUser {
         Post-Condition:
             returns true if it has been more than number of "daysSince" user did a questionnaire
             returns false otherwise
-     */
+     **/
     fun daysSinceLastQuestionnaire(lastQuestionnaireDate: Long?, daysSince: Long): Boolean {
         if (lastQuestionnaireDate == null) {
             return true
@@ -154,7 +155,7 @@ object CurrentUser {
     // END GETTERS
 
     // SETTERS
-    /*
+    /**
     Specification for each setter
     Pre-Condition:
         The new value you wish to add to the database
@@ -168,7 +169,7 @@ object CurrentUser {
      TODO: Once we can append to Firebase objects the collection write functions need to be
       updated to only send the new value
 
-     */
+     **/
     fun setFirstName(newName: String) {
         Log.d(LOG_TAG, "setFirstName() invoked")
         if (data != null) {
@@ -204,6 +205,13 @@ object CurrentUser {
         return data?.streak ?: "Error"
     }
 
+    /**
+     * This function gets the next Monday
+     * Pre-Conditions:
+        date: Current date from Unix epoch milli
+     * Post-Conditions:
+        tempdate.minusdays: The date of the next Monday
+     */
     fun getNextMonday(date: String): String {
         try {
             Log.d(LOG_TAG, "member getNextMonday() invoked")
@@ -218,7 +226,12 @@ object CurrentUser {
         }
     }
 
-    // converted long datetime format in usageHistory keys to normal datetime format (yyyy-MM-dd hh-mm-ss)
+
+    /**
+     * Convert the long datetime format in usageHistory keys to normal datetime format (yyyy-MM-dd hh-mm-ss)
+     * Pre-Conditions: date: The date to be formatted (String)
+     * Post-Conditions: convertedDate: The formatted date
+     */
     fun convertDate(date: String): String {
         try {
             val convertedDate = Instant.ofEpochMilli(date.toLong()).toString()
@@ -229,6 +242,12 @@ object CurrentUser {
             return ""
         }
     }
+
+    /**
+     * Get the Monday of the current week
+     * Pre-Conditions: date: The current date
+     * Post-Conditions: The Monday of the current week
+     */
     fun getMonday(date: String): String {
         try {
             Log.d(LOG_TAG, "member getMonday() invoked")
@@ -243,6 +262,9 @@ object CurrentUser {
         }
     }
 
+    /**
+     * Get the user's current number of exercises completed this week.
+     */
     fun getWeeklyExercisePoint(): String {
         try {
             Log.d(LOG_TAG, "getWeeklyExercisePoint() invoked")
@@ -252,6 +274,10 @@ object CurrentUser {
             return ""
         }
     }
+
+    /**
+     * TODO
+     */
     fun addStepHistory(numberSteps: Int) {
         Log.d(LOG_TAG, "addStepHistory() invoked")
         val timestamp: String = getCurrentDateTime()
@@ -269,6 +295,10 @@ object CurrentUser {
             DatabaseMethod().updateStepHistoryFor(data!!.id, newHistory)
         }
     }
+
+    /**
+     * TODO
+     */
     fun addQuestionnaireHistory(question: String, answer: String) {
         try {
             Log.d(LOG_TAG, "addQuestionnaireHistory() invoked")
@@ -293,6 +323,11 @@ object CurrentUser {
     }
 
     // call this everytime user are about to view streak, so we can update it in time
+    /**
+     * Update the current user's streaks and weekPoints in the database
+     * Pre-Conditions: None
+     * Post-Conditions: The user's streak and weekPoints are updated in the database accordingly.
+     */
     fun updateStreakAndPoint() {
         try {
             val now = getCurrentDateTime()
@@ -334,6 +369,9 @@ object CurrentUser {
     // info about usage from the stakeholder
     // Currently adding 2 items to usage history. Will need to redo this after we get more
     // info about usage from the stakeholder
+    /**
+     * TODO
+     */
     fun addUsageHistory(exerciseDone: String) {
         try {
             Log.d(LOG_TAG, "addUsageHistory() invoked")
@@ -366,6 +404,10 @@ object CurrentUser {
             Log.e("Error", "Exception encountered in addUsageHistory()", exception)
         }
     }
+
+    /**
+     * TODO
+     */
     fun addGamificationHistory(event: String, points: String) {
         Log.d(LOG_TAG, "addGamificationHistory() invoked")
         val timestamp: String = getCurrentDateTime()
