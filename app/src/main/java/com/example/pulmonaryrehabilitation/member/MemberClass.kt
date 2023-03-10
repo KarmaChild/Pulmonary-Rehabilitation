@@ -15,7 +15,9 @@ class MemberClass(
     override var usageHistory: MutableMap<String, UsageHistoryClass>?,
     override var stepHistory: MutableMap<String, StepHistoryClass>?,
     override var questionnaireHistory: MutableMap<String, QuestionnaireHistoryClass>?,
-    override var lastQuestionnaireDate: String?
+    override var lastQuestionnaireDate: String?,
+    override var streak: String? = "",
+    override var weeklyExercisePoint: String? = "",
 ) : Member {
 
     override fun toString(): String {
@@ -38,6 +40,8 @@ class MemberClass(
             "email" to email,
             "stepGoal" to stepGoal,
             "gamificationHistory" to gamificationHistory,
+            "streak" to streak,
+            "weeklyExercisePoint" to weeklyExercisePoint,
 //            "usageHistory" to usageHistory,
 //            "stepHistory" to stepHistory,
 //            "questionnaireHistory" to questionnaireHistory

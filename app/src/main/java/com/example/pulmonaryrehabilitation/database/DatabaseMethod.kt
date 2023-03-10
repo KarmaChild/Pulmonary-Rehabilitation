@@ -132,16 +132,47 @@ class DatabaseMethod : DatabaseInterface {
     private fun convertFirebaseDataToMember(data: Map<String, Any?>): MemberClass? {
         Log.d("convertFirebaseDataToMember", data.toString())
         val member = MemberClass(
-            data["id"] as String, data["isAdmin"] as Boolean, data["firstName"] as String?,
-            data["lastName"] as String?, data["username"] as String?, data["email"] as String,
+            data["id"] as String,
+            data["isAdmin"] as Boolean,
+            data["firstName"] as String?,
+            data["lastName"] as String?,
+            data["username"] as String?,
+            data["email"] as String,
             (data["stepGoal"] as Long?)?.toInt(),
             data["gamificationHistory"] as MutableMap<String, GamificationHistoryClass>?,
             data["usageHistory"] as MutableMap<String, UsageHistoryClass>?,
             data["stepHistory"] as MutableMap<String, StepHistoryClass>?,
             data["questionnaireHistory"] as MutableMap<String, QuestionnaireHistoryClass>?,
-            data["lastQuestionnaireDate"] as String?
+            data["lastQuestionnaireDate"] as String?,
+            data["streak"] as String?,
+            data["weeklyExercisePoint"] as String?
         )
         return member
+    }
+
+    fun updateWeeklyExercisePoint(id: String, newWeeklyExercisePoint: String) {
+        // assertion the new streak is a valid streak
+        val database = Firebase.database
+        val myReference = database.getReference("Member/$id/weeklyExercisePoint")
+        myReference.setValue(newWeeklyExercisePoint)
+        // assertion that the streak was updated (is there a completion handler for updating?)
+    }
+
+    /*
+        Pre-Condition: ID of user, streak of user
+        Method Purpose: Update the user's streak in Firebase.
+        Post-Condition: User's streak counter is updated accordingly
+         */
+    fun updateStreak(id: String, newStreak: String) {
+        try {
+            // assertion the new streak is a valid streak
+            val database = Firebase.database
+            val myReference = database.getReference("Member/$id/streak")
+            myReference.setValue(newStreak)
+            // assertion that the streak was updated (is there a completion handler for updating?)
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in updateStreak()", exception)
+        }
     }
 
     /*
@@ -198,11 +229,15 @@ class DatabaseMethod : DatabaseInterface {
         lastQuestionnaireRef.setValue(childName)
     }
     fun updateUsageHistoryFor(id: String, newHistory: Map<String, UsageHistoryClass>) {
-        val database = Firebase.database
-        val myReference = database.getReference("Member/$id/usageHistory")
-        val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
-        newHistory.values.forEach {
-            myReference.child(childName).setValue(it)
+        try {
+            val database = Firebase.database
+            val myReference = database.getReference("Member/$id/usageHistory")
+            val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
+            newHistory.values.forEach {
+                myReference.child(childName).setValue(it)
+            }
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in updateUsageHistoryFor()", exception)
         }
     }
     fun updateGamificationHistory(id: String, newHistory: Map<String, GamificationHistoryClass>) {
