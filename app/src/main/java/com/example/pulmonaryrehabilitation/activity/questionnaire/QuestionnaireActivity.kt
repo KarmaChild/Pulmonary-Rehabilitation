@@ -38,6 +38,9 @@ class QuestionnaireActivity : AppCompatActivity() {
             val answerString = "${checkedAnswer.text}"
             addAnswerToFirebaseDB(questionString, answerString)
 
+            // update user streak and point
+            CurrentUser.updateStreakAndPoint()
+
             val intent = Intent(this, DashboardActivity :: class.java)
             startActivity(intent)
             finish()
