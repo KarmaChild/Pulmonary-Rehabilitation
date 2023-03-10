@@ -96,9 +96,14 @@ object CurrentUser {
              which is converted to a String
      */
     private fun getCurrentDateTime(): String {
-        Log.d(LOG_TAG, "getCurrentDateTime() invoked")
+        try {
+            Log.d(LOG_TAG, "getCurrentDateTime() invoked")
 
-        return Instant.now().toEpochMilli().toString()
+            return Instant.now().toEpochMilli().toString()
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in getCurrentDateTime()", exception)
+            return ""
+        }
     }
 
     /*
@@ -200,32 +205,52 @@ object CurrentUser {
     }
 
     fun getNextMonday(date: String): String {
-        Log.d(LOG_TAG, "member getNextMonday() invoked")
-        val yyyy = Integer.parseInt(date.subSequence(0, 4).toString())
-        val mm = Integer.parseInt(date.subSequence(5, 7).toString())
-        val dd = Integer.parseInt(date.subSequence(8, 10).toString())
-        val tempDate = LocalDate.of(yyyy, mm, dd)
-        return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1 - 7).toString()
+        try {
+            Log.d(LOG_TAG, "member getNextMonday() invoked")
+            val yyyy = Integer.parseInt(date.subSequence(0, 4).toString())
+            val mm = Integer.parseInt(date.subSequence(5, 7).toString())
+            val dd = Integer.parseInt(date.subSequence(8, 10).toString())
+            val tempDate = LocalDate.of(yyyy, mm, dd)
+            return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1 - 7).toString()
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in getNextMonday()", exception)
+            return ""
+        }
     }
 
     // converted long datetime format in usageHistory keys to normal datetime format (yyyy-MM-dd hh-mm-ss)
     fun convertDate(date: String): String {
-        val convertedDate = Instant.ofEpochMilli(date.toLong()).toString()
-        Log.d(LOG_TAG, "member calculateStreak() convertDate() invoked - $convertedDate")
-        return convertedDate
+        try {
+            val convertedDate = Instant.ofEpochMilli(date.toLong()).toString()
+            Log.d(LOG_TAG, "member calculateStreak() convertDate() invoked - $convertedDate")
+            return convertedDate
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in convertDate()", exception)
+            return ""
+        }
     }
     fun getMonday(date: String): String {
-        Log.d(LOG_TAG, "member getMonday() invoked")
-        val yyyy = Integer.parseInt(date.subSequence(0, 4).toString())
-        val mm = Integer.parseInt(date.subSequence(5, 7).toString())
-        val dd = Integer.parseInt(date.subSequence(8, 10).toString())
-        val tempDate = LocalDate.of(yyyy, mm, dd)
-        return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1).toString()
+        try {
+            Log.d(LOG_TAG, "member getMonday() invoked")
+            val yyyy = Integer.parseInt(date.subSequence(0, 4).toString())
+            val mm = Integer.parseInt(date.subSequence(5, 7).toString())
+            val dd = Integer.parseInt(date.subSequence(8, 10).toString())
+            val tempDate = LocalDate.of(yyyy, mm, dd)
+            return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1).toString()
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in getMonday()", exception)
+            return ""
+        }
     }
 
     fun getWeeklyExercisePoint(): String {
-        Log.d(LOG_TAG, "getWeeklyExercisePoint() invoked")
-        return data?.weeklyExercisePoint ?: "Error"
+        try {
+            Log.d(LOG_TAG, "getWeeklyExercisePoint() invoked")
+            return data?.weeklyExercisePoint ?: "Error"
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in getWeeklyExercisePoint()", exception)
+            return ""
+        }
     }
     fun addStepHistory(numberSteps: Int) {
         Log.d(LOG_TAG, "addStepHistory() invoked")
@@ -245,56 +270,63 @@ object CurrentUser {
         }
     }
     fun addQuestionnaireHistory(question: String, answer: String) {
-        Log.d(LOG_TAG, "addQuestionnaireHistory() invoked")
-        val timestamp: String = getCurrentDateTime()
+        try {
+            Log.d(LOG_TAG, "addQuestionnaireHistory() invoked")
+            val timestamp: String = getCurrentDateTime()
+            if (data != null) {
+                if (data!!.questionnaireHistory == null) {
+                    data!!.questionnaireHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
+                    val newHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
+                    DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, newHistory)
+                }
 
-        if (data != null) {
-            if (data!!.questionnaireHistory == null) {
-                data!!.questionnaireHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
+                // update our local map for current user
+                data!!.questionnaireHistory?.set(timestamp, QuestionnaireHistoryClass(question, answer))
+                data!!.lastQuestionnaireDate = timestamp
+                // update database step value for current user
                 val newHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
                 DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, newHistory)
             }
-
-            // update our local map for current user
-            data!!.questionnaireHistory?.set(timestamp, QuestionnaireHistoryClass(question, answer))
-            data!!.lastQuestionnaireDate = timestamp
-            // update database step value for current user
-            val newHistory = mutableMapOf(timestamp to QuestionnaireHistoryClass(question, answer))
-            DatabaseMethod().updateQuestionnaireHistoryFor(data!!.id, newHistory)
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in addQuestoinnaireHistory()", exception)
         }
     }
 
     // call this everytime user are about to view streak, so we can update it in time
     fun updateStreakAndPoint() {
-        val now = getCurrentDateTime()
-        if (data != null) {
-            if (data!!.usageHistory != null) {
-                val usageHistorySize = data!!.usageHistory?.size
-                // get the latest usage history date
-                val latestDate =
-                    usageHistorySize?.let { data!!.usageHistory?.keys?.elementAt(it - 1) }
+        try {
+            val now = getCurrentDateTime()
+            if (data != null) {
+                if (data!!.usageHistory != null) {
+                    val usageHistorySize = data!!.usageHistory?.size
+                    // get the latest usage history date
+                    val latestDate =
+                        usageHistorySize?.let { data!!.usageHistory?.keys?.elementAt(it - 1) }
 
-                // case 1 (time diff between {latest and now}.getMonday = 1 or != 0, point = 0
-                if (latestDate?.let { convertDate(it) }?.let { getMonday(it) } != getMonday(
-                        convertDate(now)
-                    )
-                ) {
-                    DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
+                    // case 1 (time diff between {latest and now}.getMonday = 1 or != 0, point = 0
+                    if (latestDate?.let { convertDate(it) }?.let { getMonday(it) } != getMonday(
+                            convertDate(now)
+                        )
+                    ) {
+                        DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
+                    }
+
+                    // case 2 (time diff between {latest and now}.getMonday >= 2 or !=0 and !=1, point = 0, streak = 0
+                    if (
+                        latestDate?.let { convertDate(it) }?.let { getMonday(it) }
+                        != getMonday(convertDate(now)) &&
+                        latestDate?.let { convertDate(it) }?.let { getNextMonday(it) }
+                        != getMonday(convertDate(now))
+                    ) {
+                        DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
+                        DatabaseMethod().updateStreak(data!!.id, "0")
+                    }
+
+                    // case 3 (time diff between {latest and now}.getMonday = 0, nothing happen
                 }
-
-                // case 2 (time diff between {latest and now}.getMonday >= 2 or !=0 and !=1, point = 0, streak = 0
-                if (
-                    latestDate?.let { convertDate(it) }?.let { getMonday(it) }
-                    != getMonday(convertDate(now)) &&
-                    latestDate?.let { convertDate(it) }?.let { getNextMonday(it) }
-                    != getMonday(convertDate(now))
-                ) {
-                    DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
-                    DatabaseMethod().updateStreak(data!!.id, "0")
-                }
-
-                // case 3 (time diff between {latest and now}.getMonday = 0, nothing happen
             }
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in updateStreakAndPoint()", exception)
         }
     }
 
@@ -303,31 +335,35 @@ object CurrentUser {
     // Currently adding 2 items to usage history. Will need to redo this after we get more
     // info about usage from the stakeholder
     fun addUsageHistory(exerciseDone: String) {
-        Log.d(LOG_TAG, "addUsageHistory() invoked")
-        val timestamp: String = getCurrentDateTime()
-        var previousDate: String
+        try {
+            Log.d(LOG_TAG, "addUsageHistory() invoked")
+            val timestamp: String = getCurrentDateTime()
+            var previousDate: String
 
-        if (data != null) {
-            if (data!!.usageHistory == null) {
-                data!!.usageHistory =
-                    mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
+            if (data != null) {
+                if (data!!.usageHistory == null) {
+                    data!!.usageHistory =
+                        mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
+                    val newHistory = mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
+                    DatabaseMethod().updateUsageHistoryFor(data!!.id, newHistory)
+
+                    // streak = 0, weekly point = 1
+                    DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "1")
+                    DatabaseMethod().updateStreak(data!!.id, "0")
+                }
+                data!!.usageHistory?.set(timestamp, UsageHistoryClass(exerciseDone, "item2"))
                 val newHistory = mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
                 DatabaseMethod().updateUsageHistoryFor(data!!.id, newHistory)
 
-                // streak = 0, weekly point = 1
-                DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "1")
-                DatabaseMethod().updateStreak(data!!.id, "0")
+                val newPoint = getWeeklyExercisePoint().toInt() + 1
+                DatabaseMethod().updateWeeklyExercisePoint(data!!.id, newPoint.toString())
+                if (newPoint == 3) {
+                    val newStreak = getStreak().toInt() + 1
+                    DatabaseMethod().updateStreak(data!!.id, newStreak.toString())
+                }
             }
-            data!!.usageHistory?.set(timestamp, UsageHistoryClass(exerciseDone, "item2"))
-            val newHistory = mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
-            DatabaseMethod().updateUsageHistoryFor(data!!.id, newHistory)
-
-            val newPoint = getWeeklyExercisePoint().toInt() + 1
-            DatabaseMethod().updateWeeklyExercisePoint(data!!.id, newPoint.toString())
-            if (newPoint == 3) {
-                val newStreak = getStreak().toInt() + 1
-                DatabaseMethod().updateStreak(data!!.id, newStreak.toString())
-            }
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in addUsageHistory()", exception)
         }
     }
     fun addGamificationHistory(event: String, points: String) {
