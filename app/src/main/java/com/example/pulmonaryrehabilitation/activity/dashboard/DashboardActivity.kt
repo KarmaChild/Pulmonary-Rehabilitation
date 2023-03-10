@@ -83,7 +83,7 @@ class DashboardActivity : AppCompatActivity() {
      *  Later on when implemented it will display the users streaks
      */
     fun initializeStreaks() {
-        val userStreaks: String = CurrentUser.getStepGoal().toString()
+        val userStreaks: String = CurrentUser.getStreak()
         streakTextView.text = userStreaks
     }
 
