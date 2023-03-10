@@ -87,12 +87,20 @@ class EmailRegisterActivity : AppCompatActivity() {
                             val myRef = database.getReference("Member")
 
                             val mem = MemberClass(
-                                firebaseUser.uid, false, null, null, username, email, null,
+                                firebaseUser.uid,
+                                false,
+                                null,
+                                null,
+                                username,
+                                email,
                                 null,
                                 null,
                                 null,
                                 null,
-                                null
+                                null,
+                                null,
+                                "0",
+                                "0"
                             )
 
                             registerRealTimeMember(mem, myRef)
