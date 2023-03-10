@@ -6,7 +6,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.time.Instant
 import java.time.LocalDate
+import java.util.*
 import java.util.concurrent.TimeUnit
+import org.junit.Assert
 
 /*
 CurrentUser Object Specification
@@ -27,12 +29,12 @@ object CurrentUser {
     private const val LOG_TAG: String = "CurrentUser"
 
     /**
-    setData Method Specification
-    Pre-Condition:
-        Pass in a nullable Member Class. Other than testing, this will only be done via the method
-        getUserDataFor() in the DatabaseMethod file.
-    Post-Condition
-        Sets the users data in the CurrentUser object.
+     setData Method Specification
+     Pre-Condition:
+     Pass in a nullable Member Class. Other than testing, this will only be done via the method
+     getUserDataFor() in the DatabaseMethod file.
+     Post-Condition
+     Sets the users data in the CurrentUser object.
      **/
     fun setData(member: MemberClass?) {
         Log.d(LOG_TAG, "setData() invoked")
@@ -45,11 +47,11 @@ object CurrentUser {
     // GETTERS
     /**
      *  Specification for each getter
-        Pre-Condition: None
-        Post-Condition:
-            It will return the desired value if 'data' has been set with a valid memberClass object
-            If not it returns a default value via the elvis operator (?:)
-            The goal of the default value is to make it clear that there was an error
+     Pre-Condition: None
+     Post-Condition:
+     It will return the desired value if 'data' has been set with a valid memberClass object
+     If not it returns a default value via the elvis operator (?:)
+     The goal of the default value is to make it clear that there was an error
 
      **/
 
@@ -90,11 +92,11 @@ object CurrentUser {
     }
 
     /**
-    Specification for getCurrentDateTime
-        Pre-Condition: None
-        Post-Condition:
-            returns the current time in the unix timestamp as a Long value type
-             which is converted to a String
+     Specification for getCurrentDateTime
+     Pre-Condition: None
+     Post-Condition:
+     returns the current time in the unix timestamp as a Long value type
+     which is converted to a String
      **/
     private fun getCurrentDateTime(): String {
         try {
@@ -108,11 +110,11 @@ object CurrentUser {
     }
 
     /**
-    Specification for getCurrentDateTime
-        Pre-Condition: None
-        Post-Condition:
-            returns the date of when the user last finished a questionnaire
-            as a unix timestamp in Long value type
+     Specification for getCurrentDateTime
+     Pre-Condition: None
+     Post-Condition:
+     returns the date of when the user last finished a questionnaire
+     as a unix timestamp in Long value type
      **/
     fun getLastQuestionnaireDate(): Long? {
         Log.d(LOG_TAG, "getLastQuestionnaireDate() invoked")
@@ -121,16 +123,16 @@ object CurrentUser {
     }
 
     /**
-    Specification for getCurrentDateTime
-        Pre-Condition:
-            lastQuestionnaireDate -  The date of when the user last finished a questionnaire
-            as a unix timestamp in Long value type
+     Specification for getCurrentDateTime
+     Pre-Condition:
+     lastQuestionnaireDate -  The date of when the user last finished a questionnaire
+     as a unix timestamp in Long value type
 
-            daysSince - The number of days since the last questionnaire that has to be checked
+     daysSince - The number of days since the last questionnaire that has to be checked
 
-        Post-Condition:
-            returns true if it has been more than number of "daysSince" user did a questionnaire
-            returns false otherwise
+     Post-Condition:
+     returns true if it has been more than number of "daysSince" user did a questionnaire
+     returns false otherwise
      **/
     fun daysSinceLastQuestionnaire(lastQuestionnaireDate: Long?, daysSince: Long): Boolean {
         if (lastQuestionnaireDate == null) {
@@ -156,18 +158,18 @@ object CurrentUser {
 
     // SETTERS
     /**
-    Specification for each setter
-    Pre-Condition:
-        The new value you wish to add to the database
-    Post-Condition:
-        Updates the local 'data' object to avoid an unnecessary read
-        Updates the Firebase database
+     Specification for each setter
+     Pre-Condition:
+     The new value you wish to add to the database
+     Post-Condition:
+     Updates the local 'data' object to avoid an unnecessary read
+     Updates the Firebase database
 
      // note for below, it's safe to use !! because I check it's not null
 
      TODO: create a function that creates a timestamp and replace the hard coded 'Timestamp' string
      TODO: Once we can append to Firebase objects the collection write functions need to be
-      updated to only send the new value
+     updated to only send the new value
 
      **/
     fun setFirstName(newName: String) {
@@ -201,31 +203,52 @@ object CurrentUser {
     }
 
     fun getStreak(): String {
-        Log.d(LOG_TAG, "getStreak() invoked")
+        Log.d(LOG_TAG, "CurrentUser.getStreak() invoked")
         return data?.streak ?: "Error"
     }
 
     /**
      * This function gets the next Monday
      * Pre-Conditions:
-        date: Current date from Unix epoch milli
+     date: Current converted date from Unix epoch milli
      * Post-Conditions:
-        tempdate.minusdays: The date of the next Monday
+     tempdate.minusdays: The date of the next Monday
      */
     fun getNextMonday(date: String): String {
+        Assert.assertNotNull("Assertion in CurrentUser.getNextMonday: Date is null", date)
         try {
-            Log.d(LOG_TAG, "member getNextMonday() invoked")
+            Log.d(LOG_TAG, "CurrentUser.getNextMonday() invoked")
             val yyyy = Integer.parseInt(date.subSequence(0, 4).toString())
             val mm = Integer.parseInt(date.subSequence(5, 7).toString())
             val dd = Integer.parseInt(date.subSequence(8, 10).toString())
             val tempDate = LocalDate.of(yyyy, mm, dd)
+
+            // Assert that the current year equals yyyy
+            Assert.assertEquals(
+                "Assertion in CurrentUser.getNextMonday: Year is not the same",
+                Calendar.getInstance().get(Calendar.YEAR), yyyy
+            )
+
+            // Assert that current month equals mm
+            // TODO: TEST THIS - can be added to getMonday if passes
+            Assert.assertEquals(
+                "Assertion in CurrentUser.getNextMonday: Month is not the same",
+                Calendar.getInstance().get(Calendar.MONTH + 1), mm
+            )
+
+            // Assert that current day equals dd
+            // TODO: TEST THIS - can be added to getMonday if passes
+            Assert.assertEquals(
+                "Assertion in CurrentUser.getNextMonday: Day is not the same",
+                Calendar.getInstance().get(Calendar.DATE), dd
+            )
+
             return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1 - 7).toString()
         } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in getNextMonday()", exception)
+            Log.e("Error", "Exception encountered in CurrentUser.getNextMonday()", exception)
             return ""
         }
     }
-
 
     /**
      * Convert the long datetime format in usageHistory keys to normal datetime format (yyyy-MM-dd hh-mm-ss)
@@ -233,12 +256,13 @@ object CurrentUser {
      * Post-Conditions: convertedDate: The formatted date
      */
     fun convertDate(date: String): String {
+        Assert.assertNotNull("Assertion in CurrentUser.convertDate: Date is null", date)
         try {
             val convertedDate = Instant.ofEpochMilli(date.toLong()).toString()
-            Log.d(LOG_TAG, "member calculateStreak() convertDate() invoked - $convertedDate")
+            Log.d(LOG_TAG, "CurrentUser.calculateStreak() convertDate() invoked - $convertedDate")
             return convertedDate
         } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in convertDate()", exception)
+            Log.e("Error", "Exception encountered in CurrentUser.convertDate()", exception)
             return ""
         }
     }
@@ -249,15 +273,16 @@ object CurrentUser {
      * Post-Conditions: The Monday of the current week
      */
     fun getMonday(date: String): String {
+        Assert.assertNotNull("Assertion in CurrentUser.getMonday: Date is null", date)
         try {
-            Log.d(LOG_TAG, "member getMonday() invoked")
+            Log.d(LOG_TAG, "CurrentUser.getMonday() invoked")
             val yyyy = Integer.parseInt(date.subSequence(0, 4).toString())
             val mm = Integer.parseInt(date.subSequence(5, 7).toString())
             val dd = Integer.parseInt(date.subSequence(8, 10).toString())
             val tempDate = LocalDate.of(yyyy, mm, dd)
             return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1).toString()
         } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in getMonday()", exception)
+            Log.e("Error", "Exception encountered in CurrentUser.getMonday()", exception)
             return ""
         }
     }
@@ -266,13 +291,8 @@ object CurrentUser {
      * Get the user's current number of exercises completed this week.
      */
     fun getWeeklyExercisePoint(): String {
-        try {
-            Log.d(LOG_TAG, "getWeeklyExercisePoint() invoked")
-            return data?.weeklyExercisePoint ?: "Error"
-        } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in getWeeklyExercisePoint()", exception)
-            return ""
-        }
+        Log.d(LOG_TAG, "CurrentUser.getWeeklyExercisePoint() invoked")
+        return data?.weeklyExercisePoint ?: "Error"
     }
 
     /**
@@ -343,7 +363,19 @@ object CurrentUser {
                             convertDate(now)
                         )
                     ) {
+                        Log.d(
+                            LOG_TAG,
+                            "CurrentUser.updateStreakAndPoint invoked: " +
+                                "Last exercise completed in previous week"
+                        )
                         DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
+
+                        // TODO: TEST THIS
+                        Assert.assertNotEquals(
+                            "CurrentUser.updateStreakAndPoint invoked:" +
+                                "User weekPoint is not zero",
+                            "0", getWeeklyExercisePoint()
+                        )
                     }
 
                     // case 2 (time diff between {latest and now}.getMonday >= 2 or !=0 and !=1, point = 0, streak = 0
@@ -353,15 +385,38 @@ object CurrentUser {
                         latestDate?.let { convertDate(it) }?.let { getNextMonday(it) }
                         != getMonday(convertDate(now))
                     ) {
+                        Log.d(
+                            LOG_TAG,
+                            "CurrentUser.updateStreakAndPoint invoked: " +
+                                "User hasn't done an exercise in at least 2 weeks"
+                        )
                         DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
                         DatabaseMethod().updateStreak(data!!.id, "0")
+
+                        // Assert if streak and weekly point are not zero
+                        // TODO: TEST THIS
+                        Assert.assertNotEquals(
+                            "CurrentUser.updateStreakAndPoint invoked:" +
+                                "User streak is not zero",
+                            "0", getStreak()
+                        )
+                        Assert.assertNotEquals(
+                            "CurrentUser.updateStreakAndPoint invoked:" +
+                                "User weekPoint is not zero",
+                            "0", getWeeklyExercisePoint()
+                        )
                     }
 
                     // case 3 (time diff between {latest and now}.getMonday = 0, nothing happen
+                    Log.d(
+                        LOG_TAG,
+                        "CurrentUser.updateStreakAndPoint invoked: " +
+                            "User finished the required exercises for this week"
+                    )
                 }
             }
         } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in updateStreakAndPoint()", exception)
+            Log.e("Error", "Exception encountered in CurrentUser.updateStreakAndPoint()", exception)
         }
     }
 
@@ -374,7 +429,7 @@ object CurrentUser {
      */
     fun addUsageHistory(exerciseDone: String) {
         try {
-            Log.d(LOG_TAG, "addUsageHistory() invoked")
+            Log.d(LOG_TAG, "CurrentUser.addUsageHistory() invoked")
             val timestamp: String = getCurrentDateTime()
             var previousDate: String
 
@@ -388,20 +443,50 @@ object CurrentUser {
                     // streak = 0, weekly point = 1
                     DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "1")
                     DatabaseMethod().updateStreak(data!!.id, "0")
+
+                    Log.d(
+                        LOG_TAG,
+                        "CurrentUser.addUsageHistory invoked: " +
+                            "New usage history added, updated streak and exercisePoint"
+                    )
+
+                    // Assert if streak = 0 and weekly point = 1
+                    // TODO: TEST THIS
+                    Assert.assertNotEquals(
+                        "CurrentUser.addUsageHistory invoked:" +
+                            "User streak is not zero",
+                        "0", getStreak()
+                    )
+                    Assert.assertNotEquals(
+                        "CurrentUser.addUsageHistory invoked:" +
+                            "User weekPoint is not one",
+                        "1", getWeeklyExercisePoint()
+                    )
                 }
+
                 data!!.usageHistory?.set(timestamp, UsageHistoryClass(exerciseDone, "item2"))
                 val newHistory = mutableMapOf(timestamp to UsageHistoryClass(exerciseDone, "item2"))
                 DatabaseMethod().updateUsageHistoryFor(data!!.id, newHistory)
 
+                Log.d(
+                    LOG_TAG,
+                    "CurrentUser.addUsageHistory invoked:" +
+                        "Increment weeklyExercisePoint every time the newUsageHistory is added "
+                )
                 val newPoint = getWeeklyExercisePoint().toInt() + 1
                 DatabaseMethod().updateWeeklyExercisePoint(data!!.id, newPoint.toString())
                 if (newPoint == 3) {
                     val newStreak = getStreak().toInt() + 1
+                    Log.d(
+                        LOG_TAG,
+                        "CurrentUser.addUsageHistory invoked:" +
+                            "Increment streak by one if weeklyExercisePoint is 3"
+                    )
                     DatabaseMethod().updateStreak(data!!.id, newStreak.toString())
                 }
             }
         } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in addUsageHistory()", exception)
+            Log.e("Error", "Exception encountered in CurrentUser.addUsageHistory()", exception)
         }
     }
 
