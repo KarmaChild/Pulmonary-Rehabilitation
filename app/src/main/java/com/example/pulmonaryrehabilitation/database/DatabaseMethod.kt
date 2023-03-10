@@ -164,11 +164,15 @@ class DatabaseMethod : DatabaseInterface {
         Post-Condition: User's streak counter is updated accordingly
          */
     fun updateStreak(id: String, newStreak: String) {
-        // assertion the new streak is a valid streak
-        val database = Firebase.database
-        val myReference = database.getReference("Member/$id/streak")
-        myReference.setValue(newStreak)
-        // assertion that the streak was updated (is there a completion handler for updating?)
+        try {
+            // assertion the new streak is a valid streak
+            val database = Firebase.database
+            val myReference = database.getReference("Member/$id/streak")
+            myReference.setValue(newStreak)
+            // assertion that the streak was updated (is there a completion handler for updating?)
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in updateStreak()", exception)
+        }
     }
 
     /*
@@ -225,11 +229,15 @@ class DatabaseMethod : DatabaseInterface {
         lastQuestionnaireRef.setValue(childName)
     }
     fun updateUsageHistoryFor(id: String, newHistory: Map<String, UsageHistoryClass>) {
-        val database = Firebase.database
-        val myReference = database.getReference("Member/$id/usageHistory")
-        val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
-        newHistory.values.forEach {
-            myReference.child(childName).setValue(it)
+        try {
+            val database = Firebase.database
+            val myReference = database.getReference("Member/$id/usageHistory")
+            val childName: String = newHistory.keys.toString().substring(1, newHistory.keys.toString().length - 1)
+            newHistory.values.forEach {
+                myReference.child(childName).setValue(it)
+            }
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in updateUsageHistoryFor()", exception)
         }
     }
     fun updateGamificationHistory(id: String, newHistory: Map<String, GamificationHistoryClass>) {
