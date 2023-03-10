@@ -5,9 +5,9 @@ import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pulmonaryrehabilitation.R
 import java.util.*
 import kotlin.collections.ArrayList
-import com.example.pulmonaryrehabilitation.R
 
 class StreakActivity : AppCompatActivity() {
 
@@ -26,8 +26,7 @@ class StreakActivity : AppCompatActivity() {
         // on below line we are adding data to
         // our badge list with image and badge name, as well as description and unlock Id.
 
-
-//        badgeList = badgeList + StreakBadgeData("C++", R.drawable.c)
+        badgeList = badgeList + StreakBadgeData("Mile1", "123", R.drawable.badgeicon, 1)
 //        badgeList = badgeList + StreakBadgeData("Java", R.drawable.java)
 //        badgeList = badgeList + StreakBadgeData("Android", R.drawable.android)
 //        badgeList = badgeList + StreakBadgeData("Python", R.drawable.python)

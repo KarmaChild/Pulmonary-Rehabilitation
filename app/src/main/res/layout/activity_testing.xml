@@ -37,12 +37,23 @@
         app:layout_constraintTop_toBottomOf="@+id/gotoLogin" />
 
     <Button
-        android:id="@+id/goToExercisePlayer"
+        android:id="@+id/gotoStreaksPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="46dp"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="20dp"
+        android:text="Streaks Page"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gotoRegister" />
+
+    <Button
+        android:id="@+id/goToExercisePlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="116dp"
         android:text="Start Test Exercise"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gotoDashboard" />
+        app:layout_constraintTop_toBottomOf="@+id/gotoStreaksPage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

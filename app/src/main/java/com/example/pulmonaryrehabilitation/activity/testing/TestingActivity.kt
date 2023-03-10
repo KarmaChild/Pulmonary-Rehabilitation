@@ -9,6 +9,7 @@ import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
 import com.example.pulmonaryrehabilitation.activity.exerciseplayeractivity.ExercisePlayerTapViewActivity
 import com.example.pulmonaryrehabilitation.activity.login.EmailLoginActivity
 import com.example.pulmonaryrehabilitation.activity.login.EmailRegisterActivity
+import com.example.pulmonaryrehabilitation.activity.streaks.StreakActivity
 
 class TestingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,8 @@ class TestingActivity : AppCompatActivity() {
         val dashboardButton = findViewById<Button>(R.id.gotoDashboard)
         val loginButton = findViewById<Button>(R.id.gotoLogin)
         val registerButton = findViewById<Button>(R.id.gotoRegister)
-        val exerciseButtton = findViewById<Button>(R.id.goToExercisePlayer)
+        val exerciseButton = findViewById<Button>(R.id.goToExercisePlayer)
+        val streakButton = findViewById<Button>(R.id.gotoStreaksPage)
 
         dashboardButton.setOnClickListener {
             val intent = Intent(this, DashboardActivity :: class.java)
@@ -36,7 +38,13 @@ class TestingActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        exerciseButtton.setOnClickListener {
+
+        streakButton.setOnClickListener {
+            val intent = Intent(this,StreakActivity :: class.java )
+            startActivity(intent)
+            finish()
+        }
+        exerciseButton.setOnClickListener {
 //            ExercisePlayerObject.addExerciseCollection() // for testing
             val intent = Intent(this, ExercisePlayerTapViewActivity :: class.java)
             startActivity(intent)
