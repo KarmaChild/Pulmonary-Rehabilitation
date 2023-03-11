@@ -26,7 +26,7 @@ class QuestionnaireActivity : AppCompatActivity() {
         title.text = titleString
 
         val questionString = "How do you feel today?"
-
+        CurrentUser.updateStreakAndPoint()
         val question = findViewById<TextView>(R.id.question)
         question.text = questionString
         val submitAnswer = findViewById<Button>(R.id.submit_answer)
