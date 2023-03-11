@@ -1,12 +1,22 @@
 package com.example.pulmonaryrehabilitation
+import android.util.Log
 import com.example.pulmonaryrehabilitation.member.CurrentUser
 import com.example.pulmonaryrehabilitation.member.MemberClass
 import com.example.pulmonaryrehabilitation.member.ModelObject
+import io.mockk.every
+import io.mockk.mockkStatic
 import org.junit.Assert.*
 import org.junit.Test
 class CurrentUserTest {
     @Test
     fun testingCurrentUser() {
+        mockkStatic(Log::class)
+        every { Log.v(any(), any()) } returns 0
+        every { Log.d(any(), any()) } returns 0
+        every { Log.i(any(), any()) } returns 0
+        every { Log.e(any(), any()) } returns 0
+        every { Log.e(any(), any(), any()) } returns 0
+
         val testUser = MemberClass(
             "1", true, "Georfe", "Scrunkle", "1", "example@admin.com",
             5000,
@@ -31,6 +41,13 @@ class CurrentUserTest {
 
     @Test
     fun getMondayTest() {
+        mockkStatic(Log::class)
+        every { Log.v(any(), any()) } returns 0
+        every { Log.d(any(), any()) } returns 0
+        every { Log.i(any(), any()) } returns 0
+        every { Log.e(any(), any()) } returns 0
+        every { Log.e(any(), any(), any()) } returns 0
+
         assertEquals(CurrentUser.getMonday("2023-03-08T16:29:03.790Z"), "2023-03-06")
         assertEquals(CurrentUser.getMonday("2023-03-06T16:29:03.790Z"), "2023-03-06")
         assertEquals(CurrentUser.getMonday("2023-03-12T16:29:03.790Z"), "2023-03-06")
@@ -42,6 +59,13 @@ class CurrentUserTest {
     }
     @Test
     fun getConvertDate() {
+        mockkStatic(Log::class)
+        every { Log.v(any(), any()) } returns 0
+        every { Log.d(any(), any()) } returns 0
+        every { Log.i(any(), any()) } returns 0
+        every { Log.e(any(), any()) } returns 0
+        every { Log.e(any(), any(), any()) } returns 0
+
         assertEquals(CurrentUser.convertDate("1678292943790"), "2023-03-08T16:29:03.790Z")
         assertEquals(CurrentUser.convertDate("1679295979954"), "2023-03-20T07:06:19.954Z")
         assertEquals(CurrentUser.convertDate("1689295999954"), "2023-07-14T00:53:19.954Z")
@@ -52,6 +76,13 @@ class CurrentUserTest {
     }
     @Test
     fun getNextMondayTest() {
+        mockkStatic(Log::class)
+        every { Log.v(any(), any()) } returns 0
+        every { Log.d(any(), any()) } returns 0
+        every { Log.i(any(), any()) } returns 0
+        every { Log.e(any(), any()) } returns 0
+        every { Log.e(any(), any(), any()) } returns 0
+
         assertEquals(CurrentUser.getNextMonday("2023-03-08T16:29:03.790Z"), "2023-03-13")
         assertEquals(CurrentUser.getNextMonday("2023-03-06T16:29:03.790Z"), "2023-03-13")
         assertEquals(CurrentUser.getNextMonday("2023-03-12T16:29:03.790Z"), "2023-03-13")
