@@ -208,7 +208,7 @@ object CurrentUser {
     }
 
     /**
-     * This function gets the next Monday
+     * This function gets the next Monday (format of "yyyy-mm-dd")
      * Pre-Conditions:
      date: Current converted date from Unix epoch milli
      * Post-Conditions:
@@ -222,28 +222,13 @@ object CurrentUser {
             val mm = Integer.parseInt(date.subSequence(5, 7).toString())
             val dd = Integer.parseInt(date.subSequence(8, 10).toString())
             val tempDate = LocalDate.of(yyyy, mm, dd)
-
-            // Assert that the current year equals yyyy
+            val nextMonday = tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1 - 7).toString()
             Assert.assertEquals(
-                "Assertion in CurrentUser.getNextMonday: Year is not the same",
-                Calendar.getInstance().get(Calendar.YEAR), yyyy
+                "Assertion in CurrentUser.getNextMonday(): unexpected length of the return string",
+                10, nextMonday.length
             )
 
-            // Assert that current month equals mm
-            // TODO: TEST THIS - can be added to getMonday if passes
-            Assert.assertEquals(
-                "Assertion in CurrentUser.getNextMonday: Month is not the same",
-                Calendar.getInstance().get(Calendar.MONTH + 1), mm
-            )
-
-            // Assert that current day equals dd
-            // TODO: TEST THIS - can be added to getMonday if passes
-            Assert.assertEquals(
-                "Assertion in CurrentUser.getNextMonday: Day is not the same",
-                Calendar.getInstance().get(Calendar.DATE), dd
-            )
-
-            return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1 - 7).toString()
+            return nextMonday
         } catch (exception: Exception) {
             Log.e("Error", "Exception encountered in CurrentUser.getNextMonday()", exception)
             return ""
@@ -280,7 +265,13 @@ object CurrentUser {
             val mm = Integer.parseInt(date.subSequence(5, 7).toString())
             val dd = Integer.parseInt(date.subSequence(8, 10).toString())
             val tempDate = LocalDate.of(yyyy, mm, dd)
-            return tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1).toString()
+
+            val monday = tempDate.minusDays(tempDate.dayOfWeek.value.toLong() - 1).toString()
+            Assert.assertEquals(
+                "Assertion in CurrentUser.getMonday(): unexpected length of the return string",
+                10, monday.length
+            )
+            return monday
         } catch (exception: Exception) {
             Log.e("Error", "Exception encountered in CurrentUser.getMonday()", exception)
             return ""
@@ -359,6 +350,7 @@ object CurrentUser {
                         usageHistorySize?.let { data!!.usageHistory?.keys?.elementAt(it - 1) }
 
                     // case 1 (time diff between {latest and now}.getMonday = 1 or != 0, point = 0
+                    // now (current time) is on the upcoming week of the latestDate
                     if (latestDate?.let { convertDate(it) }?.let { getMonday(it) } != getMonday(
                             convertDate(now)
                         )
@@ -369,6 +361,7 @@ object CurrentUser {
                                 "Last exercise completed in previous week"
                         )
                         DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
+                        data!!.weeklyExercisePoint = "0"
 
                         // TODO: TEST THIS
                         Assert.assertNotEquals(
@@ -379,6 +372,7 @@ object CurrentUser {
                     }
 
                     // case 2 (time diff between {latest and now}.getMonday >= 2 or !=0 and !=1, point = 0, streak = 0
+                    // there is at least 2 weeks in between now (current date) and the latest usage history date
                     if (
                         latestDate?.let { convertDate(it) }?.let { getMonday(it) }
                         != getMonday(convertDate(now)) &&
@@ -392,6 +386,8 @@ object CurrentUser {
                         )
                         DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
                         DatabaseMethod().updateStreak(data!!.id, "0")
+                        data!!.weeklyExercisePoint = "0"
+                        data!!.streak = "0"
 
                         // Assert if streak and weekly point are not zero
                         // TODO: TEST THIS
@@ -408,6 +404,7 @@ object CurrentUser {
                     }
 
                     // case 3 (time diff between {latest and now}.getMonday = 0, nothing happen
+                    // when now (current date) and the latest usage history date is on the same week
                     Log.d(
                         LOG_TAG,
                         "CurrentUser.updateStreakAndPoint invoked: " +
@@ -442,7 +439,9 @@ object CurrentUser {
 
                     // streak = 0, weekly point = 1
                     DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "1")
+                    data!!.weeklyExercisePoint = "1"
                     DatabaseMethod().updateStreak(data!!.id, "0")
+                    data!!.streak = "0"
 
                     Log.d(
                         LOG_TAG,
@@ -455,12 +454,12 @@ object CurrentUser {
                     Assert.assertNotEquals(
                         "CurrentUser.addUsageHistory invoked:" +
                             "User streak is not zero",
-                        "0", getStreak()
+                        getStreak(), "0"
                     )
                     Assert.assertNotEquals(
                         "CurrentUser.addUsageHistory invoked:" +
                             "User weekPoint is not one",
-                        "1", getWeeklyExercisePoint()
+                        getWeeklyExercisePoint(), "1"
                     )
                 }
 
@@ -474,6 +473,7 @@ object CurrentUser {
                         "Increment weeklyExercisePoint every time the newUsageHistory is added "
                 )
                 val newPoint = getWeeklyExercisePoint().toInt() + 1
+                data!!.weeklyExercisePoint = newPoint.toString()
                 DatabaseMethod().updateWeeklyExercisePoint(data!!.id, newPoint.toString())
                 if (newPoint == 3) {
                     val newStreak = getStreak().toInt() + 1
@@ -482,6 +482,7 @@ object CurrentUser {
                         "CurrentUser.addUsageHistory invoked:" +
                             "Increment streak by one if weeklyExercisePoint is 3"
                     )
+                    data!!.streak = newStreak.toString()
                     DatabaseMethod().updateStreak(data!!.id, newStreak.toString())
                 }
             }
