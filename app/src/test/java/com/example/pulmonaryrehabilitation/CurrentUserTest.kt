@@ -28,4 +28,37 @@ class CurrentUserTest {
         assertEquals(CurrentUser.getStepGoal(), 5000)
         assertEquals(CurrentUser.getLastQuestionnaireDate(), null)
     }
+
+    @Test
+    fun getMondayTest() {
+        assertEquals(CurrentUser.getMonday("2023-03-08T16:29:03.790Z"), "2023-03-06")
+        assertEquals(CurrentUser.getMonday("2023-03-06T16:29:03.790Z"), "2023-03-06")
+        assertEquals(CurrentUser.getMonday("2023-03-12T16:29:03.790Z"), "2023-03-06")
+        assertEquals(CurrentUser.getMonday("2023-03-20T07:06:19.954Z"), "2023-03-20")
+        assertEquals(CurrentUser.getMonday("2023-07-14T00:53:19.954Z"), "2023-07-10")
+        assertEquals(CurrentUser.getMonday("2022-07-31T20:39:59.999Z"), "2022-07-25")
+        assertEquals(CurrentUser.getMonday("1991-02-16T01:11:06.666Z"), "1991-02-11")
+        assertEquals(CurrentUser.getMonday("2040-06-02T03:57:02.222Z"), "2040-05-28")
+    }
+    @Test
+    fun getConvertDate() {
+        assertEquals(CurrentUser.convertDate("1678292943790"), "2023-03-08T16:29:03.790Z")
+        assertEquals(CurrentUser.convertDate("1679295979954"), "2023-03-20T07:06:19.954Z")
+        assertEquals(CurrentUser.convertDate("1689295999954"), "2023-07-14T00:53:19.954Z")
+        assertEquals(CurrentUser.convertDate("1659299999999"), "2022-07-31T20:39:59.999Z")
+        assertEquals(CurrentUser.convertDate("1666666666666"), "2022-10-25T02:57:46.666Z")
+        assertEquals(CurrentUser.convertDate("666666666666"), "1991-02-16T01:11:06.666Z")
+        assertEquals(CurrentUser.convertDate("2222222222222"), "2040-06-02T03:57:02.222Z")
+    }
+    @Test
+    fun getNextMondayTest() {
+        assertEquals(CurrentUser.getNextMonday("2023-03-08T16:29:03.790Z"), "2023-03-13")
+        assertEquals(CurrentUser.getNextMonday("2023-03-06T16:29:03.790Z"), "2023-03-13")
+        assertEquals(CurrentUser.getNextMonday("2023-03-12T16:29:03.790Z"), "2023-03-13")
+        assertEquals(CurrentUser.getNextMonday("2023-03-20T07:06:19.954Z"), "2023-03-27")
+        assertEquals(CurrentUser.getNextMonday("2023-07-14T00:53:19.954Z"), "2023-07-17")
+        assertEquals(CurrentUser.getNextMonday("2022-07-31T20:39:59.999Z"), "2022-08-01")
+        assertEquals(CurrentUser.getNextMonday("1991-02-16T01:11:06.666Z"), "1991-02-18")
+        assertEquals(CurrentUser.getNextMonday("2040-06-02T03:57:02.222Z"), "2040-06-04")
+    }
 }
