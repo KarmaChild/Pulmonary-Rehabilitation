@@ -129,7 +129,7 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
             startActivity(intent)
         } else if (step == null && !(CurrentUser.daysSinceLastQuestionnaire(CurrentUser.getLastQuestionnaireDate(), questionnaireLimitForDaysNotDone))) {
             Log.i("Change Step", "No new step, end routine (From timer step)")
-
+            CurrentUser.updateStreakAndPoint()
             CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)
             // Saves the collection name in Firebase when finished
             val intent = Intent(this@ExercisePlayerTimerViewActivity, DashboardActivity::class.java)
