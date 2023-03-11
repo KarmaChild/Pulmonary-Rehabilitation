@@ -1,7 +1,9 @@
 package com.example.pulmonaryrehabilitation.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
+import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.example.pulmonaryrehabilitation.member.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -9,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import org.junit.Assert
 
 class DatabaseMethod : DatabaseInterface {
 
@@ -94,17 +97,17 @@ class DatabaseMethod : DatabaseInterface {
     }
 
     // INDIVIDUAL USER METHODS
-    /*
+    /**
      getUserDataFor Specification
      Pre-Condition:
-        id: the users ID
-        database: reference to our database
-    Post-Condition:
-        Sets the data in CurrentUser object
-        Logs failure
+     id: the users ID
+     database: reference to our database
+     Post-Condition:
+     Sets the data in CurrentUser object
+     Logs failure
 
-    Note: there is a 99.9% chance you shouldn't call this function in your code.
-     */
+     Note: there is a 99.9% chance you shouldn't call this function in your code.
+     **/
     fun getUserDataFor(id: String) {
         val database = Firebase.database
         val myRef = database.getReference("Member/$id")
@@ -122,13 +125,13 @@ class DatabaseMethod : DatabaseInterface {
         }
     }
 
-    /* convertFirebaseDataToMember Specification
-    Pre-Condition:
-        data: HashMap<String, Any>
-        this is the raw data from firebase
-    Post-Condition
-         returns a MemberClass object populated with the data
-     */
+    /** convertFirebaseDataToMember Specification
+     Pre-Condition:
+     data: HashMap<String, Any>
+     this is the raw data from firebase
+     Post-Condition
+     returns a MemberClass object populated with the data
+     **/
     private fun convertFirebaseDataToMember(data: Map<String, Any?>): MemberClass? {
         Log.d("convertFirebaseDataToMember", data.toString())
         val member = MemberClass(
@@ -150,42 +153,83 @@ class DatabaseMethod : DatabaseInterface {
         return member
     }
 
+    /**
+     This function updates the number of exercises a user has completed in a week (Mon-Mon)
+     Pre-Conditions:
+     id: ID of user
+     newWeeklyExercisePoint: The number of exercises completed, init as 0
+     Post-Condition:
+     The database is updated with the users current num of exercises completed that week.
+     **/
+    @SuppressLint("RestrictedApi")
     fun updateWeeklyExercisePoint(id: String, newWeeklyExercisePoint: String) {
-        // assertion the new streak is a valid streak
-        val database = Firebase.database
-        val myReference = database.getReference("Member/$id/weeklyExercisePoint")
-        myReference.setValue(newWeeklyExercisePoint)
-        // assertion that the streak was updated (is there a completion handler for updating?)
+        try {
+            // assertion the new streak is a valid streak
+            Assert.assertNotNull(
+                "DatabaseMethod.updateWeeklyExercisePoint invoked:" +
+                    "User ID is null",
+                id
+            )
+            Assert.assertNotNull(
+                "DatabaseMethod.updateWeeklyExercisePoint invoked:" +
+                    "User newWeeklyExercisePoint is null",
+                newWeeklyExercisePoint
+            )
+
+            Log.d(LOG_TAG, "DatabaseMethod.updateWeeklyExercisePoint invoked")
+
+            val database = Firebase.database
+            val myReference = database.getReference("Member/$id/weeklyExercisePoint")
+            myReference.setValue(newWeeklyExercisePoint)
+            // assertion that the streak was updated (is there a completion handler for updating?)
+        } catch (exception: Exception) {
+            Log.e("Error", "Exception encountered in DatabaseMethod.updateWeeklyExercisePoint", exception)
+        }
     }
 
-    /*
-        Pre-Condition: ID of user, streak of user
-        Method Purpose: Update the user's streak in Firebase.
-        Post-Condition: User's streak counter is updated accordingly
-         */
+    /**
+     Pre-Condition: ID of user, streak of user
+     Method Purpose: Update the user's streak in Firebase.
+     Post-Condition: User's streak counter is updated accordingly
+     **/
+    @SuppressLint("RestrictedApi")
     fun updateStreak(id: String, newStreak: String) {
         try {
             // assertion the new streak is a valid streak
+            Assert.assertNotNull(
+                "DatabaseMethod.updateStreak invoked:" +
+                    "User ID is null",
+                id
+            )
+            Assert.assertNotNull(
+                "DatabaseMethod.updateStreak invoked:" +
+                    "User newStreak is null",
+                newStreak
+            )
+
+            Log.d(LOG_TAG, "DatabaseMethod.updateStreak invoked")
+
             val database = Firebase.database
             val myReference = database.getReference("Member/$id/streak")
             myReference.setValue(newStreak)
             // assertion that the streak was updated (is there a completion handler for updating?)
         } catch (exception: Exception) {
-            Log.e("Error", "Exception encountered in updateStreak()", exception)
+            Log.e("Error", "Exception encountered in DatabaseMethod.updateStreak()", exception)
         }
     }
 
-    /*
-    Specification for each of the update database functions
-    Pre-Condition:
-        id: take in the current users ID
-        newvalue: will replace the value in the firebasedata
-    Post-Condition:
-        Update database
+    /**
+     Specification for each of the update database functions
+     Pre-Condition:
+     id: take in the current users ID
+     newvalue: will replace the value in the firebasedata
+     Post-Condition:
+     Update database
 
      // TODO: These need to append to the Firebase data, not replace it as it currently does.
+     // Why?
 
-     */
+     **/
     fun updateFirstNameFor(id: String, newName: String) {
         val database = Firebase.database
         val myReference = database.getReference("Member/$id/firstName") // this is the path

@@ -1,5 +1,6 @@
 package com.example.pulmonaryrehabilitation.activity.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.example.pulmonaryrehabilitation.R
+import com.example.pulmonaryrehabilitation.activity.exerciseplayeractivity.ExercisePlayerTapViewActivity
 import com.example.pulmonaryrehabilitation.member.CurrentUser
 
 class DashboardActivity : AppCompatActivity() {
@@ -56,6 +58,7 @@ class DashboardActivity : AppCompatActivity() {
         initializeStepCounter()
         initializeStreaks()
         initializeCollection()
+
 //        setCollectionVisibility(false)
     }
 
@@ -79,11 +82,10 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     /**
-     * For now This function displays step goals as well
-     *  Later on when implemented it will display the users streaks
+     * Display user streaks on Dashboard
      */
     fun initializeStreaks() {
-        val userStreaks: String = CurrentUser.getStepGoal().toString()
+        val userStreaks: String = CurrentUser.getStreak()
         streakTextView.text = userStreaks
     }
 
@@ -107,7 +109,9 @@ class DashboardActivity : AppCompatActivity() {
         This will grab the exercise collection and send it to the exercise player
      */
     fun goToExerciseCollection() {
-        println("Hello")
+        val intent = Intent(this, ExercisePlayerTapViewActivity :: class.java)
+        startActivity(intent)
+        finish()
     }
     /*
 
