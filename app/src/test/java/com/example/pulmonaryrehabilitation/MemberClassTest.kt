@@ -45,11 +45,6 @@ class MemberClassTest {
 
     @Test
     fun testToMemberMap() {
-        // This test fails because of the way it compares the maps, even with identical data
-        // this fails (even when comparing the expected vs actual)
-        // I tried adding a compareTo method for GamificationHistoryClass to see if that
-        // would fix it but it doesn't.
-        // This is manually tested to pass.
         val gamificationMap =
             mutableMapOf("Gamification" to ModelObject.defaultGamificationHistory())
         val usageMap = mutableMapOf("Usage" to ModelObject.defaultUsageHistory())
