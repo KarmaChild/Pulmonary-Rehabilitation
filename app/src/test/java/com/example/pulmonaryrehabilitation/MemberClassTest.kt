@@ -29,16 +29,16 @@ class MemberClassTest {
 
     @Test
     fun testToString() {
-
-        assertEquals("MemberClass(id=1, isAdmin=true, firstName=Georfe, " +
-                "lastName=Scrunkle, username=user1, email=example@admin.com, stepGoal=5000, "     +
-                "gamificationHistory={Feb 19 9am={itemname='game1', itemname2='game2'}}," +
-                " usageHistory={Feb 17 10am={itemname='usage1', itemname2='usage2'}, " +
-                "Feb 17 11am={itemname='usage1', itemname2='usage2'}}, " +
-                "stepHistory={Feb 17 11am={stepCount='step1'}}) ," +
-                "questionnaireHistory={Feb 16 10am={question='I am a question', " +
-                "answer='I am their answer'}, Feb 19 33am={question='I am a question', " +
-                "answer='I am their answer'}}, lastQuestionnaireDate=",
+        assertEquals(
+            "MemberClass(id=1, isAdmin=true, firstName=Georfe, " +
+            "lastName=Scrunkle, username=user1, email=example@admin.com, stepGoal=5000, " +
+            "gamificationHistory={Feb 19 9am={itemname='game1', itemname2='game2'}}," +
+            " usageHistory={Feb 17 10am={itemname='usage1', itemname2='usage2'}, " +
+            "Feb 17 11am={itemname='usage1', itemname2='usage2'}}, " +
+            "stepHistory={Feb 17 11am={stepCount='step1'}}) ," +
+            "questionnaireHistory={Feb 16 10am={question='I am a question', " +
+            "answer='I am their answer'}, Feb 19 33am={question='I am a question', " +
+            "answer='I am their answer'}}, lastQuestionnaireDate=",
             memberClass.toString()
         )
     }
