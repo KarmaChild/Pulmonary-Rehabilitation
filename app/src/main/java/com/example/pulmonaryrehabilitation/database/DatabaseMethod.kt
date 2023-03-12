@@ -3,7 +3,6 @@ package com.example.pulmonaryrehabilitation.database
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.example.pulmonaryrehabilitation.member.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import org.junit.Assert
 
 class DatabaseMethod : DatabaseInterface {
+    private val LOG_TAG: String = "DatabaseMethod"
 
     override fun readFromDatabase(path: String, data: FirebaseDatabase) {
         val myRef = data.getReference(path)

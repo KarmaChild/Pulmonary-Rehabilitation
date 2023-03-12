@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.activity.splash.SplashActivity
 import com.example.pulmonaryrehabilitation.member.CurrentUser
@@ -27,6 +26,7 @@ class EmailRegisterActivity : AppCompatActivity() {
     private var username = ""
     private var confirmPassword = ""
     private val database = Firebase.database
+    private val LOG_TAG: String = "EmailRegisterActivity"
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
