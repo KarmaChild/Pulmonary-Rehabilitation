@@ -40,7 +40,7 @@ class TestingActivity : AppCompatActivity() {
         }
 
         streakButton.setOnClickListener {
-            val intent = Intent(this,StreakActivity :: class.java )
+            val intent = Intent(this, StreakActivity :: class.java)
             startActivity(intent)
             finish()
         }
