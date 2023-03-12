@@ -6,7 +6,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.time.Instant
 import java.time.LocalDate
-import java.util.*
 import java.util.concurrent.TimeUnit
 import org.junit.Assert
 
@@ -363,8 +362,7 @@ object CurrentUser {
                         DatabaseMethod().updateWeeklyExercisePoint(data!!.id, "0")
                         data!!.weeklyExercisePoint = "0"
 
-                        // TODO: TEST THIS
-                        Assert.assertNotEquals(
+                        Assert.assertEquals(
                             "CurrentUser.updateStreakAndPoint invoked:" +
                                 "User weekPoint is not zero",
                             "0", getWeeklyExercisePoint()
@@ -389,14 +387,14 @@ object CurrentUser {
                         data!!.weeklyExercisePoint = "0"
                         data!!.streak = "0"
 
-                        // Assert if streak and weekly point are not zero
+                        // Assert streak and weekly point are zero
                         // TODO: TEST THIS
-                        Assert.assertNotEquals(
+                        Assert.assertEquals(
                             "CurrentUser.updateStreakAndPoint invoked:" +
                                 "User streak is not zero",
                             "0", getStreak()
                         )
-                        Assert.assertNotEquals(
+                        Assert.assertEquals(
                             "CurrentUser.updateStreakAndPoint invoked:" +
                                 "User weekPoint is not zero",
                             "0", getWeeklyExercisePoint()
