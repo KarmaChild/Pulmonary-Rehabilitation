@@ -16,8 +16,10 @@ import com.example.pulmonaryrehabilitation.Exercises.Steps.ExerciseStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TapStep
 import com.example.pulmonaryrehabilitation.Exercises.Steps.TimerStep
 import com.example.pulmonaryrehabilitation.R
+import com.example.pulmonaryrehabilitation.activity.dashboard.BadgeActivity
 import com.example.pulmonaryrehabilitation.activity.dashboard.DashboardActivity
 import com.example.pulmonaryrehabilitation.activity.questionnaire.QuestionnaireActivity
+import com.example.pulmonaryrehabilitation.database.DatabaseMethod
 import com.example.pulmonaryrehabilitation.exerciseplayerclass.ExercisePlayerObject
 import com.example.pulmonaryrehabilitation.member.CurrentUser
 
@@ -131,9 +133,31 @@ class ExercisePlayerTimerViewActivity : AppCompatActivity() {
             Log.i("Change Step", "No new step, end routine (From timer step)")
             CurrentUser.updateStreakAndPoint()
             CurrentUser.addUsageHistory(ExercisePlayerObject.exercise.exerciseRoutine.collectionName)
-            // Saves the collection name in Firebase when finished
-            val intent = Intent(this@ExercisePlayerTimerViewActivity, DashboardActivity::class.java)
-            startActivity(intent)
+            DatabaseMethod().getUserDataFor(CurrentUser.getUserId())
+            if (
+                CurrentUser.getWeeklyExercisePoint() == "3" && (
+                    CurrentUser.getStreak() == "1" ||
+                        CurrentUser.getStreak() == "2" || CurrentUser.getStreak() == "4" ||
+                        CurrentUser.getStreak() == "8" || CurrentUser.getStreak() == "16"
+                    )
+            ) {
+                // update user streak and point
+                CurrentUser.updateStreakAndPoint()
+
+                // go to badge activity when streak increase to 1, 2, 4, 8
+                val intent = Intent(this@ExercisePlayerTimerViewActivity, BadgeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else if (CurrentUser.getWeeklyExercisePoint() != "3") {
+                // update user streak and point
+                CurrentUser.updateStreakAndPoint()
+
+                // go to dashboard activity when no streak increase, or not in specified case
+                val intent =
+                    Intent(this@ExercisePlayerTimerViewActivity, DashboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         } else {
             Log.i("Change Step", "New step is timer step (Currently timer step)")
 
