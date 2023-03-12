@@ -1,10 +1,8 @@
 package com.example.pulmonaryrehabilitation
 import android.util.Log
-import com.example.pulmonaryrehabilitation.member.CurrentUser
-import com.example.pulmonaryrehabilitation.member.MemberClass
-import com.example.pulmonaryrehabilitation.member.ModelObject
 import io.mockk.every
 import io.mockk.mockkStatic
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
 class CurrentUserTest {
@@ -91,5 +89,92 @@ class CurrentUserTest {
         assertEquals(CurrentUser.getNextMonday("2022-07-31T20:39:59.999Z"), "2022-08-01")
         assertEquals(CurrentUser.getNextMonday("1991-02-16T01:11:06.666Z"), "1991-02-18")
         assertEquals(CurrentUser.getNextMonday("2040-06-02T03:57:02.222Z"), "2040-06-04")
+    }
+
+    @Test
+    fun exerciseDataToStringTest() {
+        val test = ExerciseDataClass("id", "video", "title", "medicalType", "description")
+        Assert.assertEquals(
+            "ExerciseDataClass(id='id', video='video', title='title', medicalType='medicalType', description='description')",
+            test.toString()
+        )
+    }
+
+    @Test
+    fun toExerciseDataMapTest() {
+        val test = ExerciseDataClass("id", "video", "title", "medicalType", "description")
+        val testMap = mutableMapOf<String, Any>("id" to "id", "video" to "video", "title" to "title", "medicalType" to "medicalType", "description" to "description")
+        Assert.assertEquals(testMap, test.toExerciseDataMap())
+    }
+
+    @Test
+    fun questionnaireHistoryToStringTest() {
+        val test = QuestionnaireHistoryClass("question", "answer")
+        Assert.assertEquals(
+            "{question='question', answer='answer'}",
+            test.toString()
+        )
+    }
+
+    @Test
+    fun toQuestionnaireHistoryMapTest() {
+        val test = QuestionnaireHistoryClass("question", "answer")
+        val testMap = mutableMapOf<String, Any>("question" to "question", "answer" to "answer")
+        Assert.assertEquals(testMap, test.toQuestionnaireHistoryMap())
+    }
+
+    @Test
+    fun stepHistoryToStringTest() {
+        val test = StepHistoryClass("stepCount")
+        Assert.assertEquals(
+            "{stepCount='stepCount'}",
+            test.toString()
+        )
+    }
+
+    @Test
+    fun usageHistoryToStringTest() {
+        val test = UsageHistoryClass("itemname", "itemname2")
+        Assert.assertEquals(
+            "{itemname='itemname', itemname2='itemname2'}",
+            test.toString()
+        )
+    }
+
+    @Test
+    fun gamificationHistoryToStringTest() {
+        val test = GamificationHistoryClass("itemname", "itemname2")
+        Assert.assertEquals(
+            "{itemname='itemname', itemname2='itemname2'}",
+            test.toString()
+        )
+    }
+
+    @Test
+    fun toCompareToTestCase1() {
+        val test = GamificationHistoryClass("itemname", "itemname2")
+        val test2 = GamificationHistoryClass("itemname", "itemname2")
+        Assert.assertEquals(0, test.compareTo(test2))
+    }
+
+    @Test
+    fun toCompareToTestCase2() {
+        val test = GamificationHistoryClass("itemname", "itemname2")
+        val test2 = GamificationHistoryClass("itemname1", "itemname2")
+        Assert.assertEquals(-1, test.compareTo(test2))
+    }
+
+    @Test
+    fun toCompareToTestCase3() {
+        val test = GamificationHistoryClass("itemname", "itemname2")
+        val test2 = GamificationHistoryClass("itemname", "itemname1")
+        Assert.assertEquals(-1, test.compareTo(test2))
+    }
+
+    @Test
+    fun toCompareToTestCase4() {
+        val test = GamificationHistoryClass("itemname", "itemname2")
+        val test2 = GamificationHistoryClass("itemname1", "itemname1")
+        Assert.assertEquals(-1, test.compareTo(test2))
     }
 }
