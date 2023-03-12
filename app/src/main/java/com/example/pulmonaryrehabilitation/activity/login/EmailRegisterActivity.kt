@@ -1,14 +1,18 @@
 package com.example.pulmonaryrehabilitation.activity.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.example.pulmonaryrehabilitation.R
 import com.example.pulmonaryrehabilitation.activity.splash.SplashActivity
+import com.example.pulmonaryrehabilitation.member.CurrentUser
 import com.example.pulmonaryrehabilitation.member.MemberClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,6 +28,7 @@ class EmailRegisterActivity : AppCompatActivity() {
     private var confirmPassword = ""
     private val database = Firebase.database
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_email_register)
@@ -55,6 +60,63 @@ class EmailRegisterActivity : AppCompatActivity() {
 
 //            successfully get input from email and password from front end (need authentication from back end)
             registerMember(email, password, confirmPassword, username)
+
+            if (CurrentUser.getGamificationHistory().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but gamificationHistory is Empty"
+                )
+            }
+            if (CurrentUser.getUsageHistory().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but usageHistory is Empty"
+                )
+            }
+            if (CurrentUser.getStepHistory().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but stepHistory is Empty"
+                )
+            }
+            if (CurrentUser.getQuestionnaireHistory().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but questionnaireHistory is Empty"
+                )
+            }
+            if (CurrentUser.getLastQuestionnaireDate().toString().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but lastQuestionnaireDate is Empty"
+                )
+            }
+            if (CurrentUser.getFirstName().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but firstName is Empty"
+                )
+            }
+            if (CurrentUser.getLastName().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but lastName is Empty"
+                )
+            }
+            if (CurrentUser.getStepGoal().toString().isEmpty()) {
+                Log.w(
+                    LOG_TAG,
+                    "Warning in EmailRegisterActivity.onCreate(): " +
+                        "Member created successfully but stepGoal is Empty"
+                )
+            }
         }
     }
 
