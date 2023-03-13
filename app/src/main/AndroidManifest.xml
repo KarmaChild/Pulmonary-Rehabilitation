@@ -15,33 +15,33 @@
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activity.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailRegisterActivity"
+            android:name=".activity.login.EmailRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailLoginActivity"
+            android:name=".activity.login.EmailLoginActivity"
             android:exported="false" />
 
 
-        <activity android:name=".TestingActivity"
+        <activity android:name=".activity.testing.TestingActivity"
             android:exported="false" />
-        <activity android:name=".QuestionnaireActivity"
+        <activity android:name=".activity.questionnaire.QuestionnaireActivity"
             android:exported="false" />
 
 
         <activity
-            android:name=".ExercisePlayerTimerViewActivity"
+            android:name=".activity.exerciseplayeractivity.ExercisePlayerTimerViewActivity"
             android:exported="false" />
         <activity
-            android:name=".ExercisePlayerTapViewActivity"
+            android:name=".activity.exerciseplayeractivity.ExercisePlayerTapViewActivity"
             android:exported="false" />
         <activity
-            android:name=".VideoViewer"
+            android:name=".activity.media.VideoViewer"
             android:exported="true" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
